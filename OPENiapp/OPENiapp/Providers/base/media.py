@@ -47,6 +47,10 @@ class bcMedia:
     def post_photo_to_account(self, data):
         """ POST API_PATH/[ACCOUNT_ID]/photos """
         return defaultMethodResponse
+
+    def get_all_photos_for_album(self, data):
+        """ GET API_PATH/[ACCOUNT_ID]/photos """
+        return defaultMethodResponse
         
     def post_photo_to_album(self, data):
         """ POST API_PATH/[ALBUM_ID]/photos """

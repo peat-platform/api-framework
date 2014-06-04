@@ -5,6 +5,9 @@ OPENiapp/.idea
 
 OPENiapp/OPENiapp.pyproj
 OPENiapp/OPENiapp.pyproj.user
+OPENiapp/web.config
+OPENiapp/bin/*
+OPENiapp/obj/*
 
 .idea/*
 

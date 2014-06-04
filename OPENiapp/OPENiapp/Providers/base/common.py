@@ -1,6 +1,19 @@
 defJsonRes = "Doesn't Exist"
 defaultMethodResponse = "Not supported by this service"
 
+def check_if_exists(data, check, otherwise = defJsonRes):
+    """ Loop through the  """
+    checkArray = check.split('.')
+    ret = data
+    for allChecks in checkArray:
+        if hasattr(ret, allChecks):
+            ret = getattr(ret, allChecks)
+        elif isinstance(ret, (list, dict)) and (allChecks in ret):
+            ret = ret[allChecks]
+        else:
+            return otherwise
+    return ret
+
 def format_file(file_title, file_description, file_format, file_size, file_icon):
     return {
                 "title": file_title,
@@ -34,15 +47,15 @@ def format_location(location_latitude, location_longtitude, location_height):
                 "height": location_height
             }
 
-def format_tags(tags_id, tags_name, tag_created_time, tag_edited_time, tag_deleted_time, tags_x_location, tags_y_location):
+def format_tags(data):
     return {
-                "id": tags_id,
-                "name": tags_name,
+                "id": data['id'],
+                "name": data['name'],
                 "time":
-                    { "created_time": tag_created_time,
-                      "edited_time": tag_edited_time,
-                      "deleted_time": tag_deleted_time
+                    { "created_time": data['time_created_time'],
+                      "edited_time": data['time_edited_time'],
+                      "deleted_time": data['time_deleted_time']
                     },
-                "x-location": tags_x_location,
-                "y-location": tags_y_location,
+                "x-location": data['x-location'],
+                "y-location": data['y-location']
             }

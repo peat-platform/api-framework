@@ -17,7 +17,6 @@ class fbMedia(bcMedia):
         # /photo_id (ie /10153665526210315)
         raw_data = self.connector.get('/' + data['photo_id'])
 
-
         names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'created_time', 'edited_time', 'deleted_time', 'height', 'width']
 
         fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
@@ -36,23 +35,96 @@ class fbMedia(bcMedia):
 
         # Curate tag array from Facebook
         tag_array = []
-        for tag in raw_data['tags']['data']:
-            tag_array.append(format_tags(tag['id'], tag['name'], tag['created_time'], '', '', tag['x'], tag['y']))
+        if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
+            for tag in raw_data['tags']['data']:
+                    tag_names = ['id', 'name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'x-location', 'y-location']
+                    tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
+                    tag_alternatives = ['', '', '', '', '', '', '']
+                    tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
+                    tag_array.append(format_tags(tag_data))
         response['data']['tags'] = tag_array
         
         return { 'response': response }
     
     def get_all_photos_for_account(self, data):
         """ Get all photos for an account """
-        return self.connector.get(self.data.user_id+'/photos')
+        # /account_id (ie /675350314/photos)
+        raw_datas = self.connector.get(data['user_id'] +'/photos')
+
+        names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'created_time', 'edited_time', 'deleted_time', 'height', 'width']
+
+        fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
+
+        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+
+        response = {
+                    'meta':
+                        {
+                         'total_count': len(raw_datas['data']),
+                         'previous': self.check_if_exists(raw_datas, 'paging.previous', ''),
+                         'next': self.check_if_exists(raw_datas, 'paging.next', '')
+                        },
+                    'data': []
+                    }
+
+        for idx, raw_data in enumerate(raw_datas['data']):
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_photo_response(data))
+
+            # Curate tag array from Facebook
+            tag_array = []
+            if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
+                for tag in raw_data['tags']['data']:
+                    tag_names = ['id', 'name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'x-location', 'y-location']
+                    tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
+                    tag_alternatives = ['', '', '', '', '', '', '']
+                    tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
+                    tag_array.append(format_tags(tag_data))
+            response['data'][idx]['tags'] = tag_array
+        
+        return { 'response': response }
 
     def post_photo_to_account(self, data):
         """ Post a photo to a simple account """
         return self.connector.post(path = self.data.user_id+'/photos', source = open(self.data.path_string, 'rb'))
+    
+    def get_all_photos_for_album(self, data):
+        """ Get all photos for an album """
+        # /album_id (ie /10150259489830315/photos)
+        raw_datas = self.connector.get(data['album_id'] +'/photos')
 
-    def post_photo_to_account(self, data):
-        """ Post a photo to an album """
-        return self.connector.post(path = self.data.album_id+'/photos', source = open(self.data.path_string, 'rb'))
+        names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'created_time', 'edited_time', 'deleted_time', 'height', 'width']
+
+        fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
+
+        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+
+        response = {
+                    'meta':
+                        {
+                         'total_count': len(raw_datas['data']),
+                         'previous': self.check_if_exists(raw_datas, 'paging.previous', ''),
+                         'next': self.check_if_exists(raw_datas, 'paging.next', '')
+                        },
+                    'data': []
+                    }
+
+        for idx, raw_data in enumerate(raw_datas['data']):
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_photo_response(data))
+
+            # Curate tag array from Facebook
+            tag_array = []
+            if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
+                for tag in raw_data['tags']['data']:
+                    tag_names = ['id', 'name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'x-location', 'y-location']
+                    tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
+                    tag_alternatives = ['', '', '', '', '', '', '']
+                    tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
+                    tag_array.append(format_tags(tag_data))
+            response['data'][idx]['tags'] = tag_array
+        
+        return { 'response': response }
 
     def share_photo(self, data):
         """ Share a photo """
@@ -138,6 +210,7 @@ class fbMedia(bcMedia):
                         },
                     'data': self.format_folder_response(data)
                     }
+        response['data']['data'] = self.get_all_photos_for_album
         return { 'response': response }
 
     #   endregion Folder Aggregation
