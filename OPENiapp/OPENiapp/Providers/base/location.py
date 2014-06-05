@@ -1,4 +1,4 @@
-from variables import defJsonRes, defaultMethodResponse
+from common import *
 
 class bcLocation:
     #   region Location API
