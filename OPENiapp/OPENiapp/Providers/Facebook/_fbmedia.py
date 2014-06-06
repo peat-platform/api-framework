@@ -3,9 +3,12 @@ from OPENiapp.Providers.base.common import *
 
 class fbMedia(bcMedia):
     """ This class is used to:
-        1. Get user's Photos
-        2. Get OPENi album Photos
-        3. Post Photos to OPENi album
+        1. Get a Facebook User's Photo
+        2. Get all Facebook User's Photos
+        3. Post Photos to a Facebook User
+        4. Get an album's Photos
+
+        5. Get a Facebook Album as OPENi's folder
     """
     #   region Media API
     
