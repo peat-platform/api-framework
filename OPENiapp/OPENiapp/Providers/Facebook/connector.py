@@ -1,10 +1,11 @@
 from facepy import GraphAPI
 from OPENiapp.Providers.baseConnector import basicProvider
 from _fbmedia import fbMedia
+from _fbprofiles import fbProfiles
 #from OPENiapp.Providers.Facebook import _fbmedia
 
 # For testing purposes go to https://developers.facebook.com/tools/explorer/ and play
-class provider(basicProvider, fbMedia):
+class provider(basicProvider, fbMedia, fbProfiles):
     """ This class is used to:
         1. Make the connection to the Facebook Graph API
         2. Get user's Photos
