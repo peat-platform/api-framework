@@ -3,10 +3,9 @@ from OPENiapp.Providers.base.common import *
 
 class fbMedia(bcMedia):
     """ This class is used to:
-        1. Make the connection to the Facebook connector API
-        2. Get user's Photos
-        3. Get OPENi album Photos
-        4. Post Photos to OPENi album
+        1. Get user's Photos
+        2. Get OPENi album Photos
+        3. Post Photos to OPENi album
     """
     #   region Media API
     
@@ -21,7 +20,7 @@ class fbMedia(bcMedia):
 
         fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
 
-        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
@@ -55,7 +54,7 @@ class fbMedia(bcMedia):
 
         fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
 
-        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
                     'meta':
@@ -97,7 +96,7 @@ class fbMedia(bcMedia):
 
         fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
 
-        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
                     'meta':
