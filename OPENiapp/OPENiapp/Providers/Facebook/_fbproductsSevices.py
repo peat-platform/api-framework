@@ -38,7 +38,7 @@ class fbProductsServices(bcProductsServices):
 
     def get_all_applications_for_account(self, params):
         """ GET API_PATH/[ACCOUNT_ID]/applications """
-        # /photo_id (ie /10153665526210315)
+        # /account_id (ie /675350314/applications)
         raw_datas = self.connector.get('/' + params['user_id'] + '/applications/developer')
 
         names = ['id', 'object_type', 'service', 'url', 'application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks']
@@ -106,5 +106,84 @@ class fbProductsServices(bcProductsServices):
     #   endregion Connections
 
     #   endregion Application Object
+
+
+    #   region Secondary Objects
+
+    #   region Score Object
+
+    def get_scores_from_account(self, data):
+        """ GET API_PATH/{ACCOUNT_ID}/scores """
+        # /account_id/scores (ie /675350314/scores)
+        raw_datas = self.connector.get('/' + params['account_id'] + '/scores')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'value', 'target_id']
+
+        fields = ['id', 'object_type', 'service', 'link', 'user.id', 'user.name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'score', 'target_id']
+
+        alternatives = ['', 'score', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '']
+
+        response = {
+                    'meta':
+                        {
+                         'total_count': len(raw_datas['data']),
+                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                         'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_score_response(data))
+                
+        return { 'response': response }
+    
+    def get_scores_from_game(self, data):
+        """ GET API_PATH/{GAME_ID}/scores """
+        # /app_id/scores (ie /722334637784491/score)
+        raw_datas = self.connector.get('/' + params['app_id'] + '/score')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'value', 'target_id']
+
+        fields = ['id', 'object_type', 'service', 'link', 'user.id', 'user.name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'score', 'target_id']
+
+        alternatives = ['', 'score', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '']
+
+        response = {
+                    'meta':
+                        {
+                         'total_count': len(raw_datas['data']),
+                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                         'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_score_response(data))
+                
+        return { 'response': response }
+
+    # Does not work due to FB's wrong documentation
+    def post_score_to_account(self, data):
+        """ POST API_PATH/{GAME_ID}/scores """
+        # /account_id/scores (ie /675350314/scores)
+        response = self.connector.post(
+            '/' + params['account_id'],
+            score = check_if_exists(params, 'score', '')
+            )
+        return { 'response': response }
+
+    def delete_all_scores_from_game(self, data):
+        """ DELETE API_PATH/{GAME_ID}/scores """
+        # /account_id/scores (ie /675350314/scores)
+        response = self.connector.delete(
+            '/' + params['account_id']
+            )
+        return { 'response': response }
+
+    #   endregion Score Objects
+
+    #   endregion Secondary Objects
 
     #   endregion Products And Services API

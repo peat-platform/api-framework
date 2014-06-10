@@ -106,8 +106,32 @@ class bcProductsServices:
 
     #   region Score Object
 
+    def format_score_response(self, data):
+        response = {
+                        "id": data['id'],
+                        "objectType": data['object_type'],
+                        "service": data['service'],
+                        "url": data['url'],
+                        "from": format_person(data['from_id'],
+                                              data['from_name'],
+                                              data['from_surname'],
+                                              data['from_middlename'],
+                                              data['from_birthdate'],
+                                              data['from_organizations']),
+                        "time": format_time(data['time_created_time'],
+                                            data['time_edited_time'],
+                                            data['time_deleted_time']),
+                        "value": data['value'],
+                        "target_id": data['target_id'],
+                   }
+        return response
+
     def get_scores_from_account(self, data):
         """ GET API_PATH/{ACCOUNT_ID}/scores """
+        return defaultMethodResponse
+
+    def get_scores_from_user(self, data):
+        """ GET API_PATH/{USER_ID}/scores """
         return defaultMethodResponse
 
     def get_scores_from_game(self, data):
