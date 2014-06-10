@@ -10,6 +10,7 @@ requests-oauthlib>=0.3.0
 simplejson
 facepy
 twython
+dropbox
 django-tastypie
 python-instagram
 google-api-python-client
