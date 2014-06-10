@@ -1,4 +1,4 @@
-from variables import defJsonRes, defaultMethodResponse
+from common import *
 
 class bcActivity:
     #   region Activity API
@@ -9,33 +9,43 @@ class bcActivity:
 
     def format_event_response(self, data):
         response = {
-                        "id": data[0],
-                        "objectType": data[1],
-                        "service": data[2],
-                        "url": data[3],
+                        "id": data['id'],
+                        "objectType": data['object_type'],
+                        "service": data['service'],
+                        "url": data['url'],
                         "from":{
-                               "id": data[4],
-                               "username": data[5],
-                               "url": data[6]
+                               "id": data['from_id'],
+                               "name": data['from_name'],
+                               "surname": data['from_surname'],
+                               "middlename": data['from_middlename'],
+                               "birthdate": data['from_birthdate']
                                },
                         "place":{
-                            "text": data[7],
+                            "name": data['place_name'],
+                            "description": data['place_description'],
+                            "category": data['place_category'],
                             "address":{
-                                "street": data[8],
-                                "number": data[9]
+                                "street": data['place_address_street'],
+                                "number": data['place_address_number'],
+                                "apartment": data['place_address_apartment'],
+                                "city": data['place_address_city'],
+                                "locality": data['place_address_locality'],
+                                "country": data['place_address_country'],
+                                "zip": data['place_address_zip']
                                 },
                             "location":{
-                                "latitude": data[10],
-                                "longtitude": data[11]
+                                "latitude": data['place_location_latitude'],
+                                "longtitude": data['place_location_longitude'],
+                                "height": data['place_location_height']
                                 }
                         },
                         "duration":{
-                                "starts_time": data[12],
-                                "ends_time": data[13]
+                                "starts_time": data['duration_starts_time'],
+                                "ends_time": data['duration_ends_time']
                         },
-                        "title": data[14],
-                        "description": data[15],
-                        "picture": data[16]
+                        "description": data['description'],
+                        "picture": data['picture'],
+                        "title": data['title']
                    }
         return response
     
