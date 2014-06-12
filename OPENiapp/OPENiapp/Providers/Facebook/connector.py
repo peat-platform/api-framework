@@ -5,7 +5,7 @@ from _fbprofiles import fbProfiles
 from _fbactivity import fbActivity
 
 # For testing purposes go to https://developers.facebook.com/tools/explorer/ and play
-class provider(basicProvider, fbMedia, fbProfiles, fbActivity):
+class provider(basicProvider, fbActivity, fbMedia, fbProductsServices, fbProfiles):
     """ This class is used to:
         1. Make the connection to the Facebook Graph API
         2. Get user's Photos

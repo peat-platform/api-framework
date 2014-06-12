@@ -75,4 +75,9 @@ class bcActivity:
 
     #   endregion Badge Object
 
+
+    #   region Secondary Objects
+
+    #   endregion Secondary Objects
+
     #   endregion Activity API
