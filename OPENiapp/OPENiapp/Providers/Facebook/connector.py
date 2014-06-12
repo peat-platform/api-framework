@@ -1,8 +1,9 @@
 from facepy import GraphAPI
 from OPENiapp.Providers.baseConnector import basicProvider
-from _fbmedia import fbMedia
-from _fbprofiles import fbProfiles
 from _fbactivity import fbActivity
+from _fbmedia import fbMedia
+from _fbproductsServices import fbProductsServices
+from _fbprofiles import fbProfiles
 
 # For testing purposes go to https://developers.facebook.com/tools/explorer/ and play
 class provider(basicProvider, fbActivity, fbMedia, fbProductsServices, fbProfiles):
