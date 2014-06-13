@@ -9,17 +9,6 @@ class bcActivity:
 
     def format_event_response(self, data):
         response = {
-                        "id": data['id'],
-                        "objectType": data['object_type'],
-                        "service": data['service'],
-                        "url": data['url'],
-                        "from":{
-                               "id": data['from_id'],
-                               "name": data['from_name'],
-                               "surname": data['from_surname'],
-                               "middlename": data['from_middlename'],
-                               "birthdate": data['from_birthdate']
-                               },
                         "place":{
                             "name": data['place_name'],
                             "description": data['place_description'],
@@ -47,6 +36,7 @@ class bcActivity:
                         "picture": data['picture'],
                         "title": data['title']
                    }
+        response.update(format_generic(data))
         return response
     
     def get_an_event(self, data):

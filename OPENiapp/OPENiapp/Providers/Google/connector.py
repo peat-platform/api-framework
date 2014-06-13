@@ -31,7 +31,7 @@ class GOPprovider(basicProvider):
                         },
                     'data': [self.format_place_response(data)]
                     }
-        return { 'response': response }
+        return response
 
     def get_nearby_places(self, data):
         """ EXTRA!!! Find nearby places """
@@ -49,7 +49,7 @@ class GOPprovider(basicProvider):
         for raw_data in raw_datas.places:
             data = self.get_fields(raw_data, fields, alternatives)
             response['data'].append(self.format_place_response(data))
-        return { 'response': response }
+        return response
 
     def add_a_place(self, data):
         """ EXTRA!!! Add a new place """
@@ -63,7 +63,7 @@ class GOPprovider(basicProvider):
                         'added_place_reference': raw_data.reference,
                         'added_place_id': raw_data.id
                     }
-        return { 'response': response }
+        return response
     
     def delete_a_place(self, data):
         """ DELETE API_PATH/[PLACE_ID] """

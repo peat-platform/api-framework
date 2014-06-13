@@ -7,6 +7,7 @@ class fbMedia(bcMedia):
         2. Get all Facebook User's Photos
         3. Post Photos to a Facebook User
         4. Get an album's Photos
+        4. Post to an album's Photos
 
         5. Get a Facebook Album as OPENi's folder
     """
@@ -15,49 +16,52 @@ class fbMedia(bcMedia):
     #   region Photo Object
 
     def get_a_photo(self, params):
-        """ Get a photo by its id """
+        """ GET API_PATH/[PHOTO_ID] """
         # /photo_id (ie /10153665526210315)
         raw_data = self.connector.get('/' + params['photo_id'])
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'height', 'width'])
 
-        names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'created_time', 'edited_time', 'deleted_time', 'height', 'width']
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'height', 'width']
 
-        fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
-
-        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
                     'meta':
                         {
                          'total_count': 1,
-                         'next': None
+                         'previous': defJsonRes,
+                         'next': defJsonRes
                         },
-                    'data': self.format_photo_response(data)
+                    'data': [self.format_photo_response(data)]
                     }
 
         # Curate tag array from Facebook
         tag_array = []
         if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
             for tag in raw_data['tags']['data']:
-                    tag_names = ['id', 'name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'x-location', 'y-location']
+                    tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
                     tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-        response['data']['tags'] = tag_array
+        response['data'][0]['tags'] = tag_array
         
-        return { 'response': response }
+        return response
     
     def get_all_photos_for_account(self, params):
-        """ Get all photos for an account """
-        # /account_id (ie /675350314/photos)
+        """ GET API_PATH/[ACCOUNT_ID]/photos """
+        # /account_id/photos (ie /675350314/photos)
         raw_datas = self.connector.get(params['user_id'] +'/photos')
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'height', 'width'])
 
-        names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'created_time', 'edited_time', 'deleted_time', 'height', 'width']
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'height', 'width']
 
-        fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
-
-        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
                     'meta':
@@ -77,29 +81,36 @@ class fbMedia(bcMedia):
             tag_array = []
             if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
                 for tag in raw_data['tags']['data']:
-                    tag_names = ['id', 'name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'x-location', 'y-location']
+                    tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
                     tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
             response['data'][idx]['tags'] = tag_array
         
-        return { 'response': response }
+        return response
 
     def post_photo_to_account(self, params):
-        """ Post a photo to a simple account """
-        return self.connector.post(path = self.params.user_id+'/photos', source = open(self.params.path_string, 'rb'))
+        """ POST API_PATH/[ACCOUNT_ID]/photos """
+        # /account_id/photos (ie /675350314/photos)
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            if (check_if_exists(params, 'source') != defJsonRes):
+                return self.connector.post(path = self.params.user_id+'/photos', source = open(self.params.path_string, 'rb'))
+            elif (check_if_exists(params, 'url') != defJsonRes):
+                return self.connector.post(path = self.params.user_id+'/photos', url = open(self.params.url, 'rb'))
+        return "Insufficient Parameters"
     
     def get_all_photos_for_album(self, params):
         """ Get all photos for an album """
-        # /album_id (ie /10150259489830315/photos)
+        # /album_id/photos (ie /10150259489830315/photos)
         raw_datas = self.connector.get(params['album_id'] +'/photos')
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'height', 'width'])
 
-        names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'location_latitude', 'location_longtitude', 'location_height', 'tags', 'created_time', 'edited_time', 'deleted_time', 'height', 'width']
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'height', 'width']
 
-        fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'place.location.latitude', 'place.location.longtitude', 'place.location.height', 'tags.data', 'created_time', 'updated_time', 'deleted_time', 'height', 'width']
-
-        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
                     'meta':
@@ -119,26 +130,31 @@ class fbMedia(bcMedia):
             tag_array = []
             if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
                 for tag in raw_data['tags']['data']:
-                    tag_names = ['id', 'name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'x-location', 'y-location']
+                    tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
                     tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
             response['data'][idx]['tags'] = tag_array
         
-        return { 'response': response }
+        return response
+        
+    def post_photo_to_album(self, data):
+        """ POST API_PATH/[ALBUM_ID]/photos """
+        # /album_id/photos (ie /10150259489830315/photos)
+        if (check_if_exists(params, 'album_id') != defJsonRes):
+            if (check_if_exists(params, 'source') != defJsonRes):
+                return self.connector.post(path = self.params.album_id+'/photos', source = open(self.params.path_string, 'rb'))
+            elif (check_if_exists(params, 'url') != defJsonRes):
+                return self.connector.post(path = self.params.album_id+'/photos', url = open(self.params.url, 'rb'))
+        return "Insufficient Parameters"
 
-    def share_photo(self, params):
-        """ Share a photo """
-        return {'result': 'Not applicable'}
-
-    def edit_photo_object(self, params):
-        """ Edit a photo object """
-        return {'result': 'Not applicable'}
-
-    def delete_photo_object(self, params):
-        """ Delete a photo object """
-        return self.connector.delete(self.params.photo_id)
+    def delete_a_photo(self, params):
+        """ DELETE API_PATH/[PHOTO_ID] """
+        # /photo_id (ie /10153665526210315)
+        if (check_if_exists(params, 'photo_id') != defJsonRes):
+            return self.connector.delete(self.params.photo_id)
+        return "Insufficient Parameters"
     
 
     #   region Connections
@@ -198,32 +214,37 @@ class fbMedia(bcMedia):
         # /album_id (ie /10153665525255315)
         raw_data = self.connector.get('/' + params['album_id'])
         raw_data2 = self.connector.get('/' + params['album_id'] + '/photos')
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'data'])
 
-        names = ['id', 'object_type', 'service', 'url', 'file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'from_organizations', 'created_time', 'edited_time', 'deleted_time', 'data']
-        fields = ['id', 'object_type', 'service', 'link', 'name', 'description', 'format', 'size', 'icon', 'from.id', 'from.name', 'from.surname', 'from.middlename', 'from.birthdate', 'from.organizations', 'created_time', 'updated_time', 'deleted_time', 'data']
-        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'data']
+
+        alternatives = ['', 'album', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
                     'meta':
                         {
                          'total_count': 1,
-                         'next': None
+                         'previous': defJsonRes,
+                         'next': defJsonRes
                         },
-                    'data': self.format_folder_response(data)
+                    'data': [self.format_folder_response(data)]
                     }
-        response['data']['data'] = self.get_all_photos_for_album({'album_id': params['album_id']})
-        return { 'response': response }
+        response['data'][0]['data'] = self.get_all_photos_for_album({'album_id': params['album_id']})
+        return response
     
     def post_folder_to_account(self, params):
         """ POST API_PATH/[ACCOUNT_ID] """
         # /account_id (ie /675350314)
-        response = self.connector.post(
-            '/' + params['account_id'] + '/albums',
-            name = data['name'],
-            message = check_if_exists(params, 'message', ''),
-            privacy = check_if_exists(params, 'privacy', {}))
-        return { 'response': response }
+        if (check_if_exists(params, 'account_id') != defJsonRes):
+            return self.connector.post(
+                    '/' + params['account_id'] + '/albums',
+                    name = data['name'],
+                    message = check_if_exists(params, 'message', ''),
+                    privacy = check_if_exists(params, 'privacy', {}))
+        return "Insufficient Parameters"
 
     #   endregion Folder Aggregation
 

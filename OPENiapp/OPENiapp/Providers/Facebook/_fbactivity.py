@@ -16,33 +16,36 @@ class fbActivity(bcActivity):
         """ GET API_PATH/[EVENT_ID] """
         # /event_id (ie /577733618968497)
         raw_data = self.connector.get(data['event_id'])
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['place_name', 'place_description', 'place_category', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height', 'duration_starts_time', 'duration_ends_time', 'description', 'picture', 'title'])
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'place_name', 'place_description', 'place_category', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height', 'duration_starts_time', 'duration_ends_time', 'description', 'picture', 'title']
+        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time', 'location', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name']
 
-        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.first_name', 'owner.last_name', 'owner.middle_name', 'owner.birthday', 'location', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name']
-
-        alternatives = ['', 'event', 'openi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'event', 'openi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
                     'meta':
                         {
                          'total_count': 1,
-                         'next': None
+                         'previous': defJsonRes,
+                         'next': defJsonRes
                         },
                     'data': [self.format_event_response(data)]
                     }
-        return { 'response': response }
+        return response
 
     def get_all_events_for_account(self, data):
         """ GET API_PATH/[ACCOUNT_ID]/events """
         raw_datas = self.connector.get('/' + data['user_id'] + '/events')
-        
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_name', 'from_surname', 'from_middlename', 'from_birthdate', 'place_name', 'place_description', 'place_category', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height', 'duration_starts_time', 'duration_ends_time', 'description', 'picture', 'title']
 
-        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.first_name', 'owner.last_name', 'owner.middle_name', 'owner.birthday', 'location', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name']
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['place_name', 'place_description', 'place_category', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height', 'duration_starts_time', 'duration_ends_time', 'description', 'picture', 'title'])
 
-        alternatives = ['', 'event', 'openi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time', 'location', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name']
+
+        alternatives = ['', 'event', 'openi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
                     'meta':
@@ -56,7 +59,7 @@ class fbActivity(bcActivity):
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['data'].append(self.format_event_response(data))
-        return { 'response': response }
+        return response
     
     #   region Connections
 

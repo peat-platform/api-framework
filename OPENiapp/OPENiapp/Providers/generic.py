@@ -58,9 +58,5 @@ class execution:
         for app in self.apps:
             provider = self.make_connection(app['cbs'], app['app_name'])
             result = self.do_method(provider)
-            json_result.append({
-                                'cbs': app['cbs'],
-                                'app_name': app['app_name'],
-                                'result': result
-                               })
+            json_result.append(result)
         return json_result

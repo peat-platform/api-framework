@@ -9,15 +9,6 @@ class bcLocation:
 
     def format_event_response(self, data):
         response = {
-                        "id": data[0],
-                        "objectType": data[1],
-                        "service": data[2],
-                        "url": data[3],
-                        "from":{
-                               "id": data[4],
-                               "username": data[5],
-                               "url": data[6]
-                               },
                         "place":{
                             "text": data[7],
                             "address":{
@@ -37,6 +28,7 @@ class bcLocation:
                         "description": data[15],
                         "picture": data[16]
                    }
+        response.update(format_generic(data))
         return response
     
     def get_an_event(self, data):
