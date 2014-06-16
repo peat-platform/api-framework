@@ -9,21 +9,12 @@ class bcProductsServices:
 
     def format_application_response(self, data):
         response = {
-                        "id": data['id'],
-                        "objectType": data['object_type'],
-                        "service": data['service'],
-                        "url": data['url'],
-                        "application":{
-                               "title": data['application_title'],
-                               "description": data['application_description'],
-                               "version": data['application_version'],
-                               "icon": data['application_icon'],
-                               "developer": data['application_developer']
-                               },
+                        "application": format_application(data),
                         "adtype": data['adtype'],
                         "adservices" : data['adservices'],
                         "adnetworks" : data['adnetworks']
                    }
+        response.update(format_generic(data))
         return response
     
     def get_an_application(self, data):
@@ -108,22 +99,10 @@ class bcProductsServices:
 
     def format_score_response(self, data):
         response = {
-                        "id": data['id'],
-                        "objectType": data['object_type'],
-                        "service": data['service'],
-                        "url": data['url'],
-                        "from": format_person(data['from_id'],
-                                              data['from_name'],
-                                              data['from_surname'],
-                                              data['from_middlename'],
-                                              data['from_birthdate'],
-                                              data['from_organizations']),
-                        "time": format_time(data['time_created_time'],
-                                            data['time_edited_time'],
-                                            data['time_deleted_time']),
                         "value": data['value'],
                         "target_id": data['target_id'],
                    }
+        response.update(format_generic(data))
         return response
 
     def get_scores_from_account(self, data):

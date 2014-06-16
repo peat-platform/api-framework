@@ -9,31 +9,13 @@ class bcMedia:
 
     def format_photo_response(self, data):
         response = {
-                        "id": data['id'],
-                        "objectType": data['object_type'],
-                        "service": data['service'],
-                        "url": data['url'],
-                        "file": format_file(data['file_title'],
-                                            data['file_description'],
-                                            data['file_format'],
-                                            data['file_size'],
-                                            data['file_icon']),
-                        "from": format_person(data['from_id'],
-                                              data['from_name'],
-                                              data['from_surname'],
-                                              data['from_middlename'],
-                                              data['from_birthdate'],
-                                              data['from_organizations']),
-                        "location": format_location(data['location_latitude'],
-                                                    data['location_longtitude'],
-                                                    data['location_height']),
+                        "file": format_file(data),
+                        "location": format_location(data),
                         "tags": data['tags'],
-                        "time": format_time(data['created_time'],
-                                            data['edited_time'],
-                                            data['deleted_time']),
                         "height": data['height'],
                         "width": data['width']
                    }
+        response.update(format_generic(data))
         return response
     
     def get_a_photo(self, data):
@@ -121,26 +103,10 @@ class bcMedia:
     
     def format_folder_response(self, data):
         response = {
-                        "id": data['id'],
-                        "objectType": data['object_type'],
-                        "service": data['service'],
-                        "url": data['url'],
-                        "file": format_file(data['file_title'],
-                                            data['file_description'],
-                                            data['file_format'],
-                                            data['file_size'],
-                                            data['file_icon']),
-                        "from": format_person(data['from_id'],
-                                              data['from_name'],
-                                              data['from_surname'],
-                                              data['from_middlename'],
-                                              data['from_birthdate'],
-                                              data['from_organizations']),
-                        "time": format_time(data['created_time'],
-                                            data['edited_time'],
-                                            data['deleted_time']),
+                        "file": format_file(data),
                         "data": data['data']
                    }
+        response.update(format_generic(data))
         return response
 
     def get_a_folder(self, data):
