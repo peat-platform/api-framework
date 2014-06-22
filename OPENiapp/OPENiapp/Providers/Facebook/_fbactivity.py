@@ -22,7 +22,7 @@ class fbActivity(bcActivity):
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time', 'location', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name']
 
-        alternatives = ['', 'event', 'openi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'event', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
@@ -38,6 +38,7 @@ class fbActivity(bcActivity):
 
     def get_all_events_for_account(self, data):
         """ GET API_PATH/[ACCOUNT_ID]/events """
+        # /account_id/events (ie /675350314/events)
         raw_datas = self.connector.get('/' + data['user_id'] + '/events')
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -45,7 +46,7 @@ class fbActivity(bcActivity):
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time', 'location', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name']
 
-        alternatives = ['', 'event', 'openi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'event', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
                     'meta':
@@ -67,5 +68,61 @@ class fbActivity(bcActivity):
     #   endregion Connections
 
     #   endregion Event Object
+
+    
+    #   region Secondary Objects
+
+    #   region Comment Object
+
+    def delete_a_comment(self, data):
+        """ DELETE API_PATH/[COMMENT_ID] """
+        # /comment_id
+        response = self.connector.delete(
+            '/' + params['comment_id']
+            )
+        return response
+
+    #   Checkins
+    def get_comments_for_checkin(self, data):
+        """ GET API_PATH/[POST_ID]/comments """
+        # /post_id/comments (ie /675350314_10154201196440315/comments)
+        raw_datas = self.connector.get('/' + data['post_id'] + '/comments')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['title', 'text', 'target_id'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['title', 'text', 'target_id'])
+
+        alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', '', ''])
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': len(raw_datas['data']),
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_comment_response(data))
+        return response
+
+    def post_comment_to_checkin(self, data):
+        """ POST API_PATH/[CHECKIN_ID]/comments """
+        # /post_id/comments (ie /675350314_10154201196440315/comments)
+        return defaultMethodResponse
+
+    def delete_a_comment_from_checkin(self, data):
+        """ DELETE API_PATH/[CHECKIN_ID]/comments """
+        # /post_id/comments (ie /675350314_10154201196440315/comments)
+        return defaultMethodResponse
+
+    #   endregion Comment Object
+
+    #   endregion Secondary Objects
 
     #   endregion Location API
