@@ -226,6 +226,7 @@ LOGGING = {
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':
          {'SCOPE': ['email', 'publish_stream', 'user_photos', 'create_event'],
+          #'SCOPE': ['public_profile', 'user_friends', 'email', 'user_about_me', 'user_activities', 'user_birthday', 'user_education_history', 'user_events', 'user_groups', 'user_hometown', 'user_interests', 'user_likes', 'user_location', 'user_photos', 'user_relationships', 'user_relationship_details', 'user_religion_politics', 'user_status', 'user_tagged_places', 'user_videos', 'user_website', 'user_work_history', 'read_friendlists', 'read_insights', 'read_mailbox', 'read_stream', 'create_event', 'manage_notifications', 'publish_actions', 'rsvp_event', 'publish_actions', 'user_actions.books', 'user_actions.fitness', 'user_actions.music', 'user_actions.news', 'user_actions.video', 'manage_pages', 'read_page_mailboxes'],
           'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
           'METHOD': 'oauth2'
          },
