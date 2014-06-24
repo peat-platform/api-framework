@@ -272,6 +272,30 @@ class bcActivity:
 
     #   endregion Like Object
 
+    #   region RSVP Object
+
+    def format_rsvp_response(self, params):
+        response = {
+                        "rsvp": params['rsvp'],
+                        "target_id": params['target_id']
+                   }
+        response.update(format_generic(params))
+        return response
+
+    def get_rsvp_from_event(self, params):
+        """ GET API_PATH/[EVENT_ID]/rsvp """
+        return defaultMethodResponse
+
+    def get_rsvp_for_account(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/events """
+        return defaultMethodResponse
+
+    def post_rsvp_to_event(self, params):
+        """ POST API_PATH/[EVENT_ID]/rsvp """
+        return defaultMethodResponse
+
+    #   endregion RSVP Object
+
     #   endregion Secondary Objects
 
     #   endregion Activity API

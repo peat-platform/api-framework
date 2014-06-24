@@ -266,7 +266,7 @@ class fbActivity(bcActivity):
 
     def delete_a_comment(self, params):
         """ DELETE API_PATH/[COMMENT_ID] """
-        # /comment_id
+        # /comment_id (ie /10154016839520315_49048872)
         response = self.connector.delete(
             '/' + params['comment_id']
             )
@@ -303,6 +303,53 @@ class fbActivity(bcActivity):
         return response
 
     #   endregion Comment Object
+
+    #   region rsvp Object
+
+    def format_rsvp_response(self, params):
+        response = {
+                        "rsvp": params['rsvp'],
+                        "target_id": params['target_id']
+                   }
+        response.update(format_generic(params))
+        return response
+
+    def get_rsvp_from_event(self, params):
+        """ GET API_PATH/[EVENT_ID]/attending """
+        # /event_id/attending (ie /577733618968497/attending)
+        raw_datas = self.connector.get('/' + params['event_id'] + '/attending')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['rsvp', 'target_id'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['rsvp_status', 'id'])
+
+        alternatives = ['', 'rsvp', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', ''])
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': len(raw_datas['data']),
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_rsvp_response(data))
+        return response
+
+    def post_rsvp_to_event(self, params):
+        """ POST API_PATH/[EVENT_ID]/attending """
+        # /event_id/attending (ie /577733618968497/attending)
+        if (check_if_exists(params, 'event_id') != defJsonRes):
+            return self.connector.post('/' + params['event_id'] + '/attending')
+        return "Insufficient Parameters"
+
+    #   endregion rsvp Object
 
     #   endregion Secondary Objects
 
