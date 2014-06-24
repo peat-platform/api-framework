@@ -97,6 +97,82 @@ class bcMedia:
 
     #   endregion Photo Object
     
+    #   region Video Object
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/video/
+
+    def format_video_response(self, params):
+        response = {
+                        "file": format_file(params),
+                        "location": format_location(params),
+                        "tags": params['tags'],
+                        "duration": params['duration']
+                   }
+        response.update(format_generic(params))
+        return response
+    
+    def get_a_video(self, params):
+        """ GET API_PATH/[VIDEO_ID] """
+        return defaultMethodResponse
+
+    def get_all_videos_for_account(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/videos """
+        return defaultMethodResponse
+
+    def post_video_to_account(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/videos """
+        return defaultMethodResponse
+        
+    def post_video_to_aggregation(self, params):
+        """ POST API_PATH/[AGGREGATION_ID]/videos """
+        return defaultMethodResponse
+
+    def edit_a_video(self, params):
+        """ PUT API_PATH/[VIDEO_ID] """
+        return defaultMethodResponse
+
+    def delete_a_video(self, params):
+        """ DELETE API_PATH/[VIDEO_ID] """
+        return defaultMethodResponse
+    
+    #   region Connections
+
+    def get_comments_for_video(self, params):
+        """ GET API_PATH/[VIDEO_ID]/comments """
+        return defaultMethodResponse
+
+    def post_comment_to_video(self, params):
+        """ POST API_PATH/[VIDEO_ID]/comments """
+        return defaultMethodResponse
+
+    def like_video(self, params):
+        """ POST API_PATH/[VIDEO_ID]/likes """
+        return defaultMethodResponse
+
+    def get_likes_for_video(self, params):
+        """ GET API_PATH/[VIDEO_ID]/likes """
+        return defaultMethodResponse
+
+    def unlike_video(self, params):
+        """ DELETE API_PATH/[VIDEO_ID]/likes """
+        return defaultMethodResponse
+
+    def dislike_video(self, params):
+        """ POST API_PATH/[VIDEO_ID]/dislikes """
+        return defaultMethodResponse
+
+    def get_dislikes_for_video(self, params):
+        """ GET API_PATH/[VIDEO_ID]/dislikes """
+        return defaultMethodResponse
+
+    def delete_dislikes_of_video(self, params):
+        """ DELETE API_PATH/[VIDEO_ID]/dislikes """
+        return defaultMethodResponse
+
+
+    #   endregion Connections
+
+    #   endregion Photo Object
+    
     
     #   region Folder Aggregation 
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Folder%20Mapping
