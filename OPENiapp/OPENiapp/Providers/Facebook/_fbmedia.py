@@ -95,9 +95,9 @@ class fbMedia(bcMedia):
         # /account_id/photos (ie /675350314/photos)
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = self.params.user_id+'/photos', source = open(self.params.path_string, 'rb'))
+                return self.connector.post(path = params['user_id'] +'/photos', source = open(self.params.path_string, 'rb'))
             elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = self.params.user_id+'/photos', url = open(self.params.url, 'rb'))
+                return self.connector.post(path = params['user_id'] +'/photos', url = open(self.params.url, 'rb'))
         return "Insufficient Parameters"
     
     def get_all_photos_for_album(self, params):
@@ -144,16 +144,16 @@ class fbMedia(bcMedia):
         # /album_id/photos (ie /10150259489830315/photos)
         if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = self.params.album_id+'/photos', source = open(self.params.path_string, 'rb'))
+                return self.connector.post(path = params['album_id'] +'/photos', source = open(params['source'], 'rb'))
             elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = self.params.album_id+'/photos', url = open(self.params.url, 'rb'))
+                return self.connector.post(path = params['album_id'] +'/photos', url = open(params['url'], 'rb'))
         return "Insufficient Parameters"
 
     def delete_a_photo(self, params):
         """ DELETE API_PATH/[PHOTO_ID] """
         # /photo_id (ie /10153665526210315)
         if (check_if_exists(params, 'photo_id') != defJsonRes):
-            return self.connector.delete(self.params.photo_id)
+            return self.connector.delete(params['photo_id'])
         return "Insufficient Parameters"
     
 
