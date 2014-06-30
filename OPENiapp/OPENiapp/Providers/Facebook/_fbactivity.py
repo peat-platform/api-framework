@@ -120,7 +120,7 @@ class fbActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_event_response(data)]
+                    'data': [self.format_status_response(data)]
                     }
         return response
 

@@ -9,9 +9,6 @@ from _fbprofiles import fbProfiles
 class provider(basicProvider, fbActivity, fbMedia, fbProductsServices, fbProfiles):
     """ This class is used to:
         1. Make the connection to the Facebook Graph API
-        2. Get user's Photos
-        3. Get OPENi album Photos
-        4. Post Photos to OPENi album
     """
     def __init__(self, application, access_token):#, data):
         """ Initiate the graph and find the OPENi album """

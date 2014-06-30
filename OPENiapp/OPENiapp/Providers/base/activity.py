@@ -296,6 +296,33 @@ class bcActivity:
 
     #   endregion RSVP Object
 
+    #   region Favorite Object
+
+    def format_favorite_response(self, params):
+        response = {
+                        "target_id": params['target_id']
+                   }
+        response.update(format_generic(params))
+        return response
+
+    def get_favorites_for_user(self, params):
+        """ GET API_PATH/[USER_ID]/favorites """
+        return defaultMethodResponse
+
+    def get_favorites_from_status(self, params):
+        """ GET API_PATH/[STATUS_ID]/favorites """
+        return defaultMethodResponse
+
+    def post_favorite_to_status(self, params):
+        """ POST API_PATH/[STATUS_ID]/favorites """
+        return defaultMethodResponse
+
+    def delete_favorite_from_status(self, params):
+        """ DELETE API_PATH/[USER_ID]/favorites """
+        return defaultMethodResponse
+
+    #   endregion Favorite Object
+
     #   endregion Secondary Objects
 
     #   endregion Activity API
