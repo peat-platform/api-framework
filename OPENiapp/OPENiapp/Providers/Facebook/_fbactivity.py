@@ -5,12 +5,31 @@ class fbActivity(bcActivity):
     """ This class is used to:
         1. Get a Facebook Event
         2. Get all Events for a Facebook Account
+
+        3. Get a Status
+        4. Get all Statuses for an Account
+        5. Post Status to Account
+        6. Post Status to Aggregation
+        7. Delete a Status
+
+        8. Get all Comments for a Status
+        9. Post a Comment to a Status
+        10. Get all Likes for a Status
+        11. Post a Like to a Status
+        12. Post an Unlike to a Status
+
+        13. Delete a Comment
+
+        14. Get all Comments for a Checkin
+
+        15. Get all RSVP for an Event
+        16. Post an RSVP to an Event
     """
-    #   region Location API
-    #   As described here: http://redmine.openi-ict.eu/projects/openi/wiki/Location_API
+    #   region Activity API
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Activity_API
     
     #   region Event Object
-    #   As described here: http://redmine.openi-ict.eu/projects/openi/wiki/Event_Mapping
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Event_Mapping
     
     def get_an_event(self, params):
         """ GET API_PATH/[EVENT_ID] """
@@ -101,7 +120,7 @@ class fbActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_event_response(data)]
+                    'data': [self.format_status_response(data)]
                     }
         return response
 
@@ -174,7 +193,7 @@ class fbActivity(bcActivity):
         fields.extend(['title', 'text', 'target_id'])
 
         alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', '', ''])
+        alternatives.extend(['', '', params['status_id']])
 
         response = {
                     'meta':
@@ -189,28 +208,19 @@ class fbActivity(bcActivity):
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['data'].append(self.format_comment_response(data))
         return response
-        return defaultMethodResponse
-
-    def __post_status_comment(self, params):
-        return self.connector.post(path = params['status_id'] +'/comments',
-                                    message = params['message'],
-                                    attachment_id = params['attachment_id'],
-                                    attachment_url = params['attachment_url'],
-                                    source = open(params['source'], 'rb'))
-
 
     def post_status_comment(self, params):
         """ POST API_PATH/[STATUS_ID]/comments """
         # /status_id/comments (ie /10154016839520315/comments)
         if (check_if_exists(params, 'status_id') != defJsonRes):
             if (check_if_exists(params, 'message') != defJsonRes):
-                return __post_status_comment(params)
+                return self.connector.post(path = params['status_id'] +'/comments', message = params['message'])
             elif (check_if_exists(params, 'attachment_id') != defJsonRes):
-                return __post_status_comment(params)
+                return self.connector.post(path = params['status_id'] +'/comments', attachment_id = params['attachment_id'])
             elif (check_if_exists(params, 'attachment_url') != defJsonRes):
-                return __post_status_comment(params)
+                return self.connector.post(path = params['status_id'] +'/comments', attachment_url = params['attachment_url'])
             elif (check_if_exists(params, 'source') != defJsonRes):
-                return __post_status_comment(params)
+                return self.connector.post(path = params['status_id'] +'/comments', source = params['source'])
         return "Insufficient Parameters"
 
     def like_a_status(self, params):
@@ -232,7 +242,7 @@ class fbActivity(bcActivity):
         fields.extend(['target_id'])
 
         alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend([''])
+        alternatives.extend([params['status_id']])
 
         response = {
                     'meta':
@@ -266,7 +276,7 @@ class fbActivity(bcActivity):
 
     def delete_a_comment(self, params):
         """ DELETE API_PATH/[COMMENT_ID] """
-        # /comment_id
+        # /comment_id (ie /10154016839520315_49048872)
         response = self.connector.delete(
             '/' + params['comment_id']
             )
@@ -304,6 +314,45 @@ class fbActivity(bcActivity):
 
     #   endregion Comment Object
 
+    #   region rsvp Object
+
+    def get_rsvp_from_event(self, params):
+        """ GET API_PATH/[EVENT_ID]/attending """
+        # /event_id/attending (ie /577733618968497/attending)
+        raw_datas = self.connector.get('/' + params['event_id'] + '/attending')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['rsvp', 'target_id'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['rsvp_status', 'id'])
+
+        alternatives = ['', 'rsvp', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', ''])
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': len(raw_datas['data']),
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_rsvp_response(data))
+        return response
+
+    def post_rsvp_to_event(self, params):
+        """ POST API_PATH/[EVENT_ID]/attending """
+        # /event_id/attending (ie /577733618968497/attending)
+        if (check_if_exists(params, 'event_id') != defJsonRes):
+            return self.connector.post('/' + params['event_id'] + '/attending')
+        return "Insufficient Parameters"
+
+    #   endregion rsvp Object
+
     #   endregion Secondary Objects
 
-    #   endregion Location API
+    #   endregion Activity API

@@ -21,9 +21,11 @@ class fbProductsServices(bcProductsServices):
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks'])
 
-        fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.object_type', 'from.url', 'from.name', 'time.created_time', 'time.edited_time', 'time.deleted_time', 'name', 'description', 'version', 'icon_url', 'company', 'adtype', 'adservices', 'adnetwork']
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.object_type', 'from.url', 'from.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['name', 'description', 'version', 'icon_url', 'company', 'adtype', 'adservices', 'adnetwork'])
 
-        alternatives = ['', 'application', 'facebook', '', 'Facebook User', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'application', 'facebook', '', 'Facebook User', '', '', '', '', '', '']
+        alternatives.extend(['', '', '', '', '', '', '', ''])
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
@@ -46,10 +48,12 @@ class fbProductsServices(bcProductsServices):
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks'])
+        
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.object_type', 'from.url', 'from.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['name', 'description', 'version', 'icon_url', 'company', 'adtype', 'adservices', 'adnetwork'])
 
-        fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.object_type', 'from.url', 'from.name', 'time.created_time', 'time.edited_time', 'time.deleted_time', 'name', 'description', 'version', 'icon_url', 'company', 'adtype', 'adservices', 'adnetwork']
-
-        alternatives = ['', 'application', 'facebook', params['user_id'], 'Facebook User', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'application', 'facebook', '', 'Facebook User', '', '', '', '', '', '']
+        alternatives.extend(['', '', '', '', '', '', '', ''])
 
         response = {
                     'meta':
@@ -124,9 +128,11 @@ class fbProductsServices(bcProductsServices):
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['value', 'target_id'])
 
-        fields = ['id', 'object_type', 'service', 'link', 'user.id', '', '', 'user.name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'score', 'target_id']
+        fields = ['id', 'object_type', 'service', 'link', 'user.id', '', '', 'user.name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        fields.extend(['score', 'target_id'])
 
-        alternatives = ['', 'score', 'facebook', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'score', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', ''])
 
         response = {
                     'meta':
@@ -151,9 +157,11 @@ class fbProductsServices(bcProductsServices):
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['value', 'target_id'])
 
-        fields = ['id', 'object_type', 'service', 'link', 'user.id', '', '', 'user.name', 'time_created_time', 'time_edited_time', 'time_deleted_time', 'score', 'target_id']
+        fields = ['id', 'object_type', 'service', 'link', 'user.id', '', '', 'user.name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        fields.extend(['score', 'target_id'])
 
-        alternatives = ['', 'score', 'facebook', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'score', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', ''])
 
         response = {
                     'meta':
