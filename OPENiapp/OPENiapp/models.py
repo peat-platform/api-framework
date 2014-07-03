@@ -57,5 +57,12 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         profile, created = Person.objects.get_or_create(user=instance)
 
+class Cloudlet(models.Model):
+    user = models.OneToOneField(User)
+    locationIP = models.TextField()
+
+User.cloudlet = property(lambda d: Cloudlet.objects.filter(user=d))
+
+
 
 post_save.connect(create_user_profile, sender=User)

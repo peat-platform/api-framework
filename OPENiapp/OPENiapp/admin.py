@@ -9,3 +9,9 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Person, PersonAdmin)
+
+class CloudletAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Cloudlet, CloudletAdmin)
