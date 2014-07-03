@@ -6,6 +6,7 @@ from Foursquare.connector import provider as FOprovider
 from Google.connector import GOPprovider
 from Citygrid.connector import provider as CGprovider
 from Flickr.connector import provider as FLprovider
+from Dropbox.connector import provider as DBprovider
 
 class execution:
     def __init__(self, user, apps, method, data):
@@ -42,6 +43,9 @@ class execution:
             provider = CGprovider()
         elif (cbs == "flickr"):
             provider = FLprovider()
+        elif (cbs == "dropbox"):
+            #application = SocialApp.objects.filter(name=app_name, provider=cbs)
+            provider = DBprovider('', access_token)
 
         return provider
 
