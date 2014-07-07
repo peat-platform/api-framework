@@ -10,7 +10,7 @@ class provider(basicProvider):
         3. Get OPENi album Photos
         4. Post Photos to OPENi album
     '''
-    def __init__(self, application, access_token):
+    def __init__(self, access_token):
         ''' Initiate the connector '''
         self.connector = InstagramAPI(access_token=access_token)
     

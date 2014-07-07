@@ -22,21 +22,21 @@ class execution:
         self.method = method
         self.data = data
 
-    def make_connection(self, cbs, app_name):
+    def make_connection(self, cbs):
         """ Call each time we want to make a new connection with one cbs """
         # Every cbs needs its access_token
         # account_provider should be called exactly as the cbs we want, ie facebook for facebook!
         access_token = SocialToken.objects.filter(account__user=self.user, account__provider=cbs)
         # Check which cbs we now have and make the connection by returning the provider from the connector
         if (cbs == "facebook"):
-            provider = FBprovider("", access_token)
+            provider = FBprovider(access_token)
         elif (cbs == "twitter"):
-            application = SocialApp.objects.filter(name=app_name, provider=cbs)
-            provider = TWprovider(application, access_token)
+            #application = SocialApp.objects.filter(name=app_name, provider=cbs)
+            provider = TWprovider(access_token[0])
         elif (cbs == "instagram"):
-            provider = INprovider("", access_token[0])
+            provider = INprovider(access_token[0])
         elif (cbs == "foursquare"):
-            provider = FOprovider("", access_token[0])
+            provider = FOprovider(access_token[0])
         elif (cbs == "google_places"):
             provider = GOPprovider()
         elif (cbs == "citygrid"):
@@ -44,8 +44,7 @@ class execution:
         elif (cbs == "flickr"):
             provider = FLprovider()
         elif (cbs == "dropbox"):
-            #application = SocialApp.objects.filter(name=app_name, provider=cbs)
-            provider = DBprovider('', access_token)
+            provider = DBprovider(access_token[0])
 
         return provider
 
@@ -60,7 +59,7 @@ class execution:
     def make_all_connections(self):
         json_result = []
         for app in self.apps:
-            provider = self.make_connection(app['cbs'], app['app_name'])
+            provider = self.make_connection(app['cbs'])
             result = self.do_method(provider)
             json_result.append(result)
         return json_result

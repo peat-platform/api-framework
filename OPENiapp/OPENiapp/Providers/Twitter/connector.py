@@ -9,10 +9,10 @@ class provider(basicProvider, twActivity):
     """ This class is used to:
         1. Make the connection to the Twitter API
     """
-    def __init__(self, application, access_token):
+    def __init__(self, access_token):
         """ Initiate the connector """
-        self.connector = Twython(application[0].client_id, application[0].secret, access_token[0].token,
-                                 access_token[0].token_secret)
+        self.connector = Twython(access_token.app.client_id, access_token.app.secret, access_token.token,
+                                 access_token.token_secret)
 
     #def home_timeline(self):
     #    """ Return the home timeline in json """

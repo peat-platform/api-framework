@@ -10,7 +10,7 @@ class provider(basicProvider, fbActivity, fbMedia, fbProductsServices, fbProfile
     """ This class is used to:
         1. Make the connection to the Facebook Graph API
     """
-    def __init__(self, application, access_token):#, data):
+    def __init__(self, access_token):#, data):
         """ Initiate the graph and find the OPENi album """
         self.connector = GraphAPI(access_token)
 
