@@ -132,7 +132,7 @@ def format_from(data, prepend = ''):
 def format_location(data, prepend = ''):
     return {
                 "latitude": data[prepend + 'location_latitude'],
-                "longtitude": data[prepend + 'location_longtitude'],
+                "longtitude": data[prepend + 'location_longitude'],
                 "height": data[prepend + 'location_height']
             }
 

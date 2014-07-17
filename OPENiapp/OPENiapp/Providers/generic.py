@@ -37,7 +37,7 @@ class execution:
             provider = INprovider(access_token[0])
         elif (cbs == "foursquare"):
             provider = FOprovider(access_token[0])
-        elif (cbs == "google_places"):
+        elif (cbs == "google"):
             provider = GOPprovider()
         elif (cbs == "citygrid"):
             provider = CGprovider()
