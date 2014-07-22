@@ -6,6 +6,16 @@ from OPENiapp.models import Person
 
 def profileJson(person):
 
+    """
+
+    @param person:
+    @return:
+
+    >>> from OPENiapp.Profile import *
+    >>> profileJson(2,3)
+
+    """
+
     response = {}
 
     if type(person) == int:

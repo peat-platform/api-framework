@@ -45,7 +45,7 @@ def signin(request):
 
                 person = models.Person.objects.filter(user=user)[0]
 
-                response = profileJson(person, person)
+                response = profileJson(person)
                 response["authentication"] = {}
                 response["authentication"]["key"] = consumer.key
                 response["authentication"]["secret"] = consumer.secret
@@ -109,19 +109,20 @@ def signup(request):
 
             person = Person.objects.get(user=user)
 
-            from mailsnake import MailSnake
-
-            mandrill = MailSnake('MshPu_5BxMs40_usJijM9Q', api='mandrill')
-
-            message = {
-                'subject': 'Welcome to openi',
-                'to': [{'email': request.POST.get('mail')}],
-                'from_name': 'openi',
-                'from_email': 'contact@openi.com',
-            }
-
-            content = [{'name': 'content1', 'content': '<p>email body</p>'}]
-            mandrill.messages.send_template(template_name='signup', message=message, template_content=content)
+            # User information for signing up
+            # from mailsnake import MailSnake
+            #
+            # mandrill = MailSnake('MshPu_5BxMs40_usJijM9Q', api='mandrill')
+            #
+            # message = {
+            #     'subject': 'Welcome to openi',
+            #     'to': [{'email': request.POST.get('mail')}],
+            #     'from_name': 'openi',
+            #     'from_email': 'contact@openi.com',
+            # }
+            #
+            # content = [{'name': 'content1', 'content': '<p>email body</p>'}]
+            # mandrill.messages.send_template(template_name='signup', message=message, template_content=content)
 
             raise ImmediateHttpResponse( {'username': request.POST.get('username'), 'user_id': current_id}, HttpCreated)
         else:
