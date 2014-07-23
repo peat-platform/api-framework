@@ -8,7 +8,7 @@ class provider(basicProvider, dropboxMedia):
     """ This class is used to:
         1. Make the connection to the dropbox
     """
-    def __init__(self, application, access_token):#, data):
+    def __init__(self, access_token):#, data):
         """ Initiate the graph and find the OPENi album """
         # Get a DropboxClient object using an existing OAuth 1 access token.
         sess = dropbox.session.DropboxSession(access_token.app.client_id, access_token.app.secret)
