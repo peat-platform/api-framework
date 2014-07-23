@@ -3,6 +3,52 @@ from common import *
 class bcMedia:
     #   region Media API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Media%20API/
+
+    #   region File Object
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/file/
+
+    def format_file_response(self, params):
+        response = {
+                        "file": format_file(params)
+                   }
+        response.update(format_generic(params))
+        return response
+    
+    def get_a_file(self, params):
+        """ GET API_PATH/[FILE_ID] """
+        return defaultMethodResponse
+
+    def get_all_files_for_account(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/files """
+        return defaultMethodResponse
+
+    def post_file_to_account(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/photos """
+        return defaultMethodResponse
+
+    def get_all_files_for_album(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/files """
+        return defaultMethodResponse
+        
+    def post_file_to_album(self, params):
+        """ POST API_PATH/[ALBUM_ID]/files """
+        return defaultMethodResponse
+
+    def share_a_file(self, params):
+        """ Share a file """
+        return defaultMethodResponse
+
+    def edit_a_file(self, params):
+        """ PUT API_PATH/[FILE_ID] """
+        return defaultMethodResponse
+
+    def delete_a_photo(self, params):
+        """ DELETE API_PATH/[FILE_ID] """
+        return defaultMethodResponse
+    
+    #   region Connections
+
+
     
     #   region Photo Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/photo/

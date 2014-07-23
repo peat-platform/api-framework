@@ -36,6 +36,88 @@ class dropboxMedia(bcMedia):
     """
     #   region Media API
     
+    #   region File Object
+
+    def get_a_file(self, data):
+        """ Get a file by its id """
+        # /file_id (ie /cat.txt --> has to be the full filename, no ID) 
+        f, metadata = self.connector.get_file_and_metadata('/' + data['file_id'])
+                       
+        raw_data = metadata
+        print raw_data['mime_type']
+        if ('text' in raw_data['mime_type']):
+            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+     
+            fields = ['rev', 'mime_type', 'service', 'path', '', '', '', '', 'created_time', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
+     
+            alternatives = ['', 'file', 'dropbox', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+     
+            
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response = {
+                        'meta':
+                            {
+                             'total_count': 1,
+                             'next': None
+                            },
+                        'data': self.format_photo_response(data)
+                        }
+                     
+            return { 'response': response }
+        return "Not a File"
+    
+    def get_all_files_for_account(self, data):
+        """ Get all photos for an account """
+        return {'result': 'Not applicable'}
+
+    def post_file_to_account(self, params):
+        """ Post a photo to a simple account """
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            if (check_if_exists(params, 'source') != defJsonRes):
+                print "upload via source"
+                f= open(self.params.path_string, 'rb')
+                return self.connector.put_file(params['user_id'] +'/files', f)
+            elif (check_if_exists(params, 'url') != defJsonRes):
+                print "upload via url"
+                f= open(self.params.url, 'rb')
+                return self.connector.put_file(params['user_id'] +'/files', f)
+        return "Insufficient Parameters"
+    
+    
+    def get_all_files_for_album(self, data):
+        """ Get all photos for an account """
+        return {'result': 'Not applicable'}
+
+    def post_file_to_album(self, params):
+        """ Post a photo to a simple account """
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            if (check_if_exists(params, 'source') != defJsonRes):
+                print "upload via source"
+                f= open(self.params.path_string, 'rb')
+                return self.connector.put_file(params['album_id'] +'/files', f)
+            elif (check_if_exists(params, 'url') != defJsonRes):
+                print "upload via url"
+                f= open(self.params.url, 'rb')
+                return self.connector.put_file(params['album_id'] +'/files', f)
+        return "Insufficient Parameters"
+
+
+    def edit_a_file(self, data):
+        """ Edit a photo object """
+        return {'result': 'Not applicable'}
+
+    def delete_a_file(self, params):
+        """ Delete a photo object """
+        if (check_if_exists(params, 'file_id') != defJsonRes):
+            return self.connector.file_delete(params['file_id'])
+        return "Insufficient Parameters"
+
+
+    #   endregion Connections
+
+    #   endregion File Object
+    
     #   region Photo Object
 
     def get_a_photo(self, data):
@@ -109,8 +191,8 @@ class dropboxMedia(bcMedia):
 
     def delete_a_photo(self, params):
         """ Delete a photo object """
-        if (check_if_exists(params, 'video_id') != defJsonRes):
-            return self.connector.file_delete(params['video_id'])
+        if (check_if_exists(params, 'photo_id') != defJsonRes):
+            return self.connector.file_delete(params['photo_id'])
         return "Insufficient Parameters"
 
 
