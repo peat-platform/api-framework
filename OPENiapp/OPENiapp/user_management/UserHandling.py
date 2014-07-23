@@ -6,7 +6,7 @@ import hashlib
 from random import choice
 
 from django.contrib.auth import authenticate, login
-from tastypie.exceptions import ImmediateHttpResponse
+from tastypie.exceptions import ImmediateHttpResponse, HttpResponse
 from tastypie.http import HttpForbidden, HttpCreated, HttpConflict
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
@@ -17,7 +17,7 @@ from OPENiapp.api.Responses import *
 from OPENiapp.models import *
 from OPENiapp.api.v2 import *
 from OPENiapp import models
-from ..Person.Profile import profileJson
+from JsonSerializations import profileJson
 
 
 @csrf_exempt
@@ -45,7 +45,7 @@ def signin(request):
 
                 person = models.Person.objects.filter(user=user)[0]
 
-                response = profileJson(person, person)
+                response = profileJson(person)
                 response["authentication"] = {}
                 response["authentication"]["key"] = consumer.key
                 response["authentication"]["secret"] = consumer.secret
@@ -109,24 +109,23 @@ def signup(request):
 
             person = Person.objects.get(user=user)
 
-            from mailsnake import MailSnake
+            # User information for signing up
+            # from mailsnake import MailSnake
+            #
+            # mandrill = MailSnake('MshPu_5BxMs40_usJijM9Q', api='mandrill')
+            #
+            # message = {
+            #     'subject': 'Welcome to openi',
+            #     'to': [{'email': request.POST.get('mail')}],
+            #     'from_name': 'openi',
+            #     'from_email': 'contact@openi.com',
+            # }
+            #
+            # content = [{'name': 'content1', 'content': '<p>email body</p>'}]
+            # mandrill.messages.send_template(template_name='signup', message=message, template_content=content)
 
-            mandrill = MailSnake('MshPu_5BxMs40_usJijM9Q', api='mandrill')
-
-            message = {
-                'subject': 'Welcome to openi',
-                'to': [{'email': request.POST.get('mail')}],
-                'from_name': 'openi',
-                'from_email': 'contact@openi.com',
-            }
-
-            content = [{'name': 'content1', 'content': '<p>email body</p>'}]
-            mandrill.messages.send_template(template_name='signup', message=message, template_content=content)
-
-            raise ImmediateHttpResponse(
-                openiResponse({'username': request.POST.get('username'), 'user_id': current_id}, HttpCreated))
+            raise ImmediateHttpResponse( {'username': request.POST.get('username'), 'user_id': current_id}, HttpCreated)
         else:
-            raise ImmediateHttpResponse(
-                openiResponse({'error': 'The specified key could not be verified.'}, HttpForbidden))
+            raise ImmediateHttpResponse({'error': 'The specified key could not be verified.'}, HttpForbidden)
     except IntegrityError:
-        raise ImmediateHttpResponse(openiResponse({'error': 'Username or Email is already in-use'}, HttpConflict))
+        raise ImmediateHttpResponse({'error': 'Username or Email is already in-use'}, HttpConflict)

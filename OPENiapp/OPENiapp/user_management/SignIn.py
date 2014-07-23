@@ -16,7 +16,7 @@ from OPENiapp.Providers import Login
 from django.contrib.auth.models import User
 # from OPENiapp.api.Responses import *
 from OPENiapp.models import *
-from LoggedUserResponse import profileJson
+from JsonSerializations import profileJson
 
 from OPENiapp.Providers.Facebook.SignIn import fb_complete_login2
 
