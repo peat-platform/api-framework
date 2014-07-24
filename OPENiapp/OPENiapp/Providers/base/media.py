@@ -42,12 +42,13 @@ class bcMedia:
         """ PUT API_PATH/[FILE_ID] """
         return defaultMethodResponse
 
-    def delete_a_photo(self, params):
+    def delete_a_file(self, params):
         """ DELETE API_PATH/[FILE_ID] """
         return defaultMethodResponse
     
     #   region Connections
 
+    #   endregion File Object
 
     
     #   region Photo Object
@@ -150,8 +151,8 @@ class bcMedia:
         response = {
                         "file": format_file(params),
                         "location": format_location(params),
-                        "tags": params['tags'],
-                        "duration": params['duration']
+                        "duration": format_duration(params),
+                        "tags": params['tags']
                    }
         response.update(format_generic(params))
         return response
@@ -250,47 +251,3 @@ class bcMedia:
     #   endregion Folder Aggregation
 
     #   endregion Media API
-    
-    
-    #   region Video Object
-    #   As described here: https://opensourceprojects.eu/p/openi/wiki/photo/
-
-    def format_video_response(self, data):
-        response = {
-                        "id": data['id'],
-                        "objectType": data['object_type'],
-                        "service": data['service'],
-                        "url": data['url'],
-                        "from": format_person(data['from_id'],
-                                              data['from_username'],
-                                              data['from_url']),
-                        "duration": data['duration'],
-                        "file": format_file(data['file_title'],
-                                            data['file_icon'],
-                                            data['file_format']),
-                        "time": format_time(data['created_time'],
-                                            data['edited_time'],
-                                            data['deleted_time']),
-                        "tags": data['tags']
-                    }
-        return response
-    
-    def get_a_video(self, data):
-        """ GET API_PATH/[VIDEO_ID] """
-        return defaultMethodResponse
-
-    def post_video_to_account(self, data):
-        """ POST API_PATH/[ACCOUNT_ID] """
-        return defaultMethodResponse
-
-    def edit_a_video(self, data):
-        """ PUT API_PATH/[VIDEO_ID] """
-        return defaultMethodResponse
-
-    def delete_a_video(self, data):
-        """ DELETE API_PATH/[VIDEO_ID] """
-        return defaultMethodResponse
-    
-    #   endregion Connections
-
-    #   endregion Video Object

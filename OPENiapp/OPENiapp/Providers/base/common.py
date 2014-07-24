@@ -160,3 +160,20 @@ def format_time(data, prepend = ''):
             }
 
 #   endregion Set of Properties
+
+
+def format_comment_response(params):
+    response = {
+                    "title": params['title'],
+                    "text": params['text'],
+                    "target_id": params['target_id']
+                }
+    response.update(format_generic(params))
+    return response
+
+def format_likes_response(self, id, obj_type, service, url, from_id, from_username, from_url, time_created, time_edited, target_id):
+    response = {
+                    "target_id": params['target_id']
+                }
+    response.update(format_generic(params))
+    return response

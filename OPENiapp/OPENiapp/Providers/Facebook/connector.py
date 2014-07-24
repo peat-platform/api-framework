@@ -13,6 +13,3 @@ class provider(basicProvider, fbActivity, fbMedia, fbProductsServices, fbProfile
     def __init__(self, access_token):#, data):
         """ Initiate the graph and find the OPENi album """
         self.connector = GraphAPI(access_token)
-
-    
-

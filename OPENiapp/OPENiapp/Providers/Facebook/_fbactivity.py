@@ -127,7 +127,7 @@ class fbActivity(bcActivity):
     def get_all_statuses_for_account(self, params):
         """ GET API_PATH/[ACCOUNT_ID]/STATUSES """
         # /account_id/statuses (ie /675350314/statuses)
-        raw_datas = self.connector.get('/' + params['user_id'] + '/statuses')
+        raw_datas = self.connector.get('/' + params['account_id'] + '/statuses')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text'])

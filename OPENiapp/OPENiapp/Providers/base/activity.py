@@ -257,19 +257,6 @@ class bcActivity:
         """ DELETE API_PATH/[STATUS_ID]/comments """
         return defaultMethodResponse
 
-    #   Videos
-    def get_likes_for_video(self, params):
-        """ GET API_PATH/[WORKOUT_ID]/comments """
-        return defaultMethodResponse
-
-    def post_like_to_video(self, params):
-        """ POST API_PATH/[WORKOUT_ID]/comments """
-        return defaultMethodResponse
-
-    def delete_a_like_from_video(self, params):
-        """ DELETE API_PATH/[WORKOUT_ID]/comments """
-        return defaultMethodResponse
-
     #   endregion Like Object
 
     #   region RSVP Object

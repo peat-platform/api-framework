@@ -115,9 +115,9 @@ class fbMedia(bcMedia):
         # /account_id/photos (ie /675350314/photos)
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['user_id'] +'/photos', source = open(self.params.path_string, 'rb'))
+                return self.connector.post(path = params['user_id'] +'/photos', source = open(params['path_string'], 'rb'))
             elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = params['user_id'] +'/photos', url = open(self.params.url, 'rb'))
+                return self.connector.post(path = params['user_id'] +'/photos', url = params['url'])
         return "Insufficient Parameters"
     
     def get_all_photos_for_album(self, params):
@@ -279,17 +279,20 @@ class fbMedia(bcMedia):
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
-        names.extend(['tags', 'duration'])
+        names.extend(['duration_starts_time', 'duration_ends_time'])
+        names.extend(['tags'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time']
         fields.extend(['name', 'description', 'file_format', 'size', 'picture'])
         fields.extend(['place.location.latitude', 'place.location.longitude', 'place.location.height'])
-        fields.extend(['tags.data', 'duration'])
+        fields.extend(['duration_starts_time', 'duration_ends_time'])
+        fields.extend(['tags.data'])
 
         alternatives = ['', 'video', 'facebook', '', '', '', '', '', '', '', '']
         alternatives.extend(['', '', '', '', ''])
         alternatives.extend(['', '', ''])
         alternatives.extend(['', ''])
+        alternatives.extend([''])
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
@@ -299,7 +302,7 @@ class fbMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_photo_response(data)]
+                    'data': [self.format_video_response(data)]
                     }
 
         # Curate tag array from Facebook
@@ -323,19 +326,22 @@ class fbMedia(bcMedia):
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
-        names.extend(['tags', 'duration'])
+        names.extend(['duration_starts_time', 'duration_ends_time'])
+        names.extend(['tags'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time']
         fields.extend(['name', 'description', 'file_format', 'size', 'picture'])
         fields.extend(['place.location.latitude', 'place.location.longitude', 'place.location.height'])
-        fields.extend(['tags.data', 'duration'])
+        fields.extend(['duration_starts_time', 'duration_ends_time'])
+        fields.extend(['tags.data'])
 
         alternatives = ['', 'video', 'facebook', '', '', '', '', '', '', '', '']
         alternatives.extend(['', '', '', '', ''])
         alternatives.extend(['', '', ''])
         alternatives.extend(['', ''])
+        alternatives.extend([''])
 
-        data = self.get_fields(raw_data, names, fields, alternatives)
+        data = self.get_fields(raw_datas, names, fields, alternatives)
         response = {
                     'meta':
                         {
@@ -453,7 +459,7 @@ class fbMedia(bcMedia):
         fields.extend(['target_id'])
 
         alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend([params['photo_id']])
+        alternatives.extend([params['video_id']])
 
         response = {
                     'meta':
