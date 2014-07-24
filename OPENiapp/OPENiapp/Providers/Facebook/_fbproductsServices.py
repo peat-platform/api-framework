@@ -120,7 +120,7 @@ class fbProductsServices(bcProductsServices):
 
     #   region Score Object
 
-    def get_scores_from_account(self, data):
+    def get_scores_from_account(self, params):
         """ GET API_PATH/{ACCOUNT_ID}/scores """
         # /account_id/scores (ie /675350314/scores)
         raw_datas = self.connector.get('/' + params['account_id'] + '/scores')
@@ -149,7 +149,7 @@ class fbProductsServices(bcProductsServices):
                 
         return response
     
-    def get_scores_from_game(self, data):
+    def get_scores_from_game(self, params):
         """ GET API_PATH/{GAME_ID}/scores """
         # /app_id/scores (ie /722334637784491/score)
         raw_datas = self.connector.get('/' + params['app_id'] + '/score')

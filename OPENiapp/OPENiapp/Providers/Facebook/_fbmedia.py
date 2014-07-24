@@ -239,7 +239,7 @@ class fbMedia(bcMedia):
         fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
         fields.extend(['target_id'])
 
-        alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
         alternatives.extend([params['photo_id']])
 
         response = {
@@ -458,7 +458,7 @@ class fbMedia(bcMedia):
         fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
         fields.extend(['target_id'])
 
-        alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
         alternatives.extend([params['video_id']])
 
         response = {

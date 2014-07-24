@@ -241,7 +241,7 @@ class fbActivity(bcActivity):
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
         fields.extend(['target_id'])
 
-        alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
         alternatives.extend([params['status_id']])
 
         response = {
