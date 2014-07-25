@@ -4,6 +4,53 @@ class bcMedia:
     #   region Media API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Media%20API/
 
+    #   region Audio Object
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/file/
+
+    def format_audio_response(self, params):
+        response = {
+                        "file": format_file(params)
+                   }
+        response.update(format_generic(params))
+        return response
+    
+    def get_an_audio(self, params):
+        """ GET API_PATH/[AUDIO_ID] """
+        return defaultMethodResponse
+
+    def get_all_audios_for_account(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/audios """
+        return defaultMethodResponse
+
+    def post_audio_to_account(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/audio """
+        return defaultMethodResponse
+
+    def get_all_audios_for_album(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/audios """
+        return defaultMethodResponse
+        
+    def post_audio_to_album(self, params):
+        """ POST API_PATH/[ALBUM_ID]/audios """
+        return defaultMethodResponse
+
+    def share_an_audio(self, params):
+        """ Share a file """
+        return defaultMethodResponse
+
+    def edit_a_audio(self, params):
+        """ PUT API_PATH/[AUDIO_ID] """
+        return defaultMethodResponse
+
+    def delete_a_audio(self, params):
+        """ DELETE API_PATH/[AUDIO_ID] """
+        return defaultMethodResponse
+    
+    #   region Connections
+
+    #   endregion AUDIO Object
+
+
     #   region File Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/file/
 
