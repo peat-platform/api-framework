@@ -87,13 +87,11 @@ class dropboxMedia(bcMedia):
         """ Post a audio to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
-                f= open(self.params.path_string, 'rb')
-                return self.connector.put_file(params['user_id'] +'/audios', f)
+                f= open(params['source'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                print "upload via url"
-                f= open(self.params.url, 'rb')
-                return self.connector.put_file(params['user_id'] +'/audios', f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
     
     
@@ -132,15 +130,13 @@ class dropboxMedia(bcMedia):
 
     def post_audio_to_album(self, params):
         """ Post a audio to a simple account """
-        if (check_if_exists(params, 'user_id') != defJsonRes):
+        if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
-                f= open(self.params.path_string, 'rb')
-                return self.connector.put_file(params['album_id'] +'/audios', f)
+                f= open(params['source'], 'rb')
+                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                print "upload via url"
-                f= open(self.params.url, 'rb')
-                return self.connector.put_file(params['album_id'] +'/audios', f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
@@ -200,13 +196,11 @@ class dropboxMedia(bcMedia):
         """ Post a file to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
-                f= open(self.params.path_string, 'rb')
-                return self.connector.put_file(params['user_id'] +'/files', f)
+                f= open(params['source'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                print "upload via url"
-                f= open(self.params.url, 'rb')
-                return self.connector.put_file(params['user_id'] +'/files', f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
     
     
@@ -245,15 +239,13 @@ class dropboxMedia(bcMedia):
 
     def post_file_to_album(self, params):
         """ Post a file to a simple account """
-        if (check_if_exists(params, 'user_id') != defJsonRes):
+        if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
-                f= open(self.params.path_string, 'rb')
-                return self.connector.put_file(params['album_id'] +'/files', f)
+                f= open(params['source'], 'rb')
+                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                print "upload via url"
-                f= open(self.params.url, 'rb')
-                return self.connector.put_file(params['album_id'] +'/files', f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
@@ -280,7 +272,7 @@ class dropboxMedia(bcMedia):
         f, metadata = self.connector.get_file_and_metadata('/' + data['photo_id'])
         account = self.connector.account_info()
         media = self.connector.media('/' + data['photo_id'])
-                       
+               
         raw_data = metadata
         if ('image' in raw_data['mime_type']):
             names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -340,14 +332,13 @@ class dropboxMedia(bcMedia):
         """ Post a photo to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
-                f= open(self.params.path_string, 'rb')
-                return self.connector.put_file('/', f)
+                f= open(params['source'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                print "upload via url"
-                f= open(self.params.url, 'rb')
-                return self.connector.put_file('/', f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
+
     
     
     def get_all_photos_for_album(self, params):
@@ -387,12 +378,11 @@ class dropboxMedia(bcMedia):
         """ Post a photo to a simple account """
         if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
                 f= open(params['source'], 'rb')
-                return self.connector.put_file(params['album_id'], f)
+                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                f= open(params['url'], 'rb')
-                return self.connector.put_file(params['album_id'], f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
@@ -483,19 +473,24 @@ class dropboxMedia(bcMedia):
         """ Post a video to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
-                print "upload via source"
-                f= open(self.params.path_string, 'rb')
-                return self.connector.put_file(params['user_id'] +'/videos', f)
+                f= open(params['source'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['source']), f)
             elif (check_if_exists(params, 'url') != defJsonRes):
-                print "upload via url"
-                f= open(self.params.url, 'rb')
-                return self.connector.put_file(params['user_id'] +'/videos', f)
+                file = open(params['url'], 'rb')
+                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
     
     
     def post_video_to_aggregation(self, data):
         """ Get all videos for an account """
-        return {'result': 'Not applicable'}
+        if (check_if_exists(params, 'aggregation_id') != defJsonRes):
+            if (check_if_exists(params, 'source') != defJsonRes):
+                f= open(params['source'], 'rb')
+                return self.connector.put_file(params['aggregation_id'] +"/" + os.path.basename(params['source']), f)
+            elif (check_if_exists(params, 'url') != defJsonRes):
+                file = open(params['url'], 'rb')
+                return self.connector.put_file(params['aggregation_id'] +"/" + os.path.basename(params['url']), f)
+        return "Insufficient Parameters"
 
 
     def edit_a_video(self, data):
