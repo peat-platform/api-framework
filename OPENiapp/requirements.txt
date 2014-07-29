@@ -16,7 +16,8 @@ python-instagram
 google-api-python-client
 foursquare
 mimeparse
-django-tastypie-swagger==0.1.2
+#django-tastypie-swagger==0.1.2
+git+git://github.com/concentricsky/django-tastypie-swagger.git@master
 south
 python-google-places
 flickr_api

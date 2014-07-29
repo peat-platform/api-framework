@@ -1,0 +1,12 @@
+http://193.1.188.34/api/doc/schema/cbsconnector/
+
+http://openi.herokuapp.com/api/doc/schema/cbsconnector/?api_key=special-key
+
+http://openisampletest.herokuapp.com/api/doc/schema/cbsconnector/?api_key=special-key
+
+http://localhost:8000/api/doc/schema/cbsconnector/?api_key=special-key
+
+
+TOOL to CHECK DIFFERENCE
+
+http://www.diffnow.com/
