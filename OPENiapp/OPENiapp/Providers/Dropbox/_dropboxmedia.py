@@ -79,9 +79,47 @@ class dropboxMedia(bcMedia):
             return { 'response': response }
         return "Not a Audio"
     
-    def get_all_audios_for_account(self, data):
+    def get_all_audios_for_account(self, params):
         """ Get all audios for an account """
-        return {'result': 'Not applicable'}
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            metadata = self.connector.metadata('/')
+            account = self.connector.account_info()
+                           
+            raw_datas = metadata
+            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+       
+            fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
+             
+            alternatives = ['', 'audio', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+             
+            response = {
+                'meta':
+                    {
+                     'total_count': [],
+                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                     'next': self.check_if_exists(raw_datas, 'paging.next')
+                    },
+                'data': []
+                }
+              
+            i = 0
+            for raw_data in raw_datas['contents']:
+                if not raw_data['is_dir']:
+                    if 'audio' in raw_data['mime_type']:
+                        data = self.get_fields(raw_data, names, fields, alternatives)
+                        response['data'].append(self.format_photo_response(data)) 
+                        i +=1
+                else:
+                    dir_datas = self.connector.metadata(raw_data['path'])
+                    for dir_data in dir_datas['contents']:
+                        if 'audio' in dir_data['mime_type']:
+                            data = self.get_fields(dir_data, names, fields, alternatives)
+                            response['data'].append(self.format_photo_response(data))   
+                            i +=1
+                            
+            response['meta']['total_count'] = i                        
+            return response
 
     def post_audio_to_account(self, params):
         """ Post a audio to a simple account """
@@ -89,9 +127,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file("/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
     
     
@@ -107,25 +142,28 @@ class dropboxMedia(bcMedia):
    
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
          
-        alternatives = ['', 'file', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        alternatives = ['', 'audio', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
          
         response = {
             'meta':
                 {
-                 'total_count': len(raw_datas['contents']),
+                 'total_count': [],
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
             'data': []
             }
-          
+         
+        i = 0 
         for raw_data in raw_datas['contents']:
             print raw_data
             if not raw_data['is_dir']:
                 if 'audio' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
                     response['data'].append(self.format_photo_response(data))
-                              
+                    i += 1
+        
+        response['meta']['total_count'] = i                      
         return response
 
     def post_audio_to_album(self, params):
@@ -134,9 +172,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
@@ -188,9 +223,47 @@ class dropboxMedia(bcMedia):
             return { 'response': response }
         return "Not a File"
     
-    def get_all_files_for_account(self, data):
+    def get_all_files_for_account(self, params):
         """ Get all files for an account """
-        return {'result': 'Not applicable'}
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            metadata = self.connector.metadata('/')
+            account = self.connector.account_info()
+                           
+            raw_datas = metadata
+            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+       
+            fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
+             
+            alternatives = ['', 'files', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+             
+            response = {
+                'meta':
+                    {
+                     'total_count': [],
+                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                     'next': self.check_if_exists(raw_datas, 'paging.next')
+                    },
+                'data': []
+                }
+              
+            i = 0
+            for raw_data in raw_datas['contents']:
+                if not raw_data['is_dir']:
+                    if 'text' in raw_data['mime_type']:
+                        data = self.get_fields(raw_data, names, fields, alternatives)
+                        response['data'].append(self.format_photo_response(data)) 
+                        i +=1
+                else:
+                    dir_datas = self.connector.metadata(raw_data['path'])
+                    for dir_data in dir_datas['contents']:
+                        if 'text' in dir_data['mime_type']:
+                            data = self.get_fields(dir_data, names, fields, alternatives)
+                            response['data'].append(self.format_photo_response(data))   
+                            i +=1
+                            
+            response['meta']['total_count'] = i                         
+            return response
 
     def post_file_to_account(self, params):
         """ Post a file to a simple account """
@@ -198,13 +271,10 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file("/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
     
     
-    def get_all_files_for_album(self, data):
+    def get_all_files_for_album(self, params):
         """ Get all files for an album """
         metadata = self.connector.metadata('/' + params['album_id'])
         account = self.connector.account_info()
@@ -221,20 +291,23 @@ class dropboxMedia(bcMedia):
         response = {
             'meta':
                 {
-                 'total_count': len(raw_datas['contents']),
+                 'total_count': [],
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
             'data': []
             }
-          
+         
+        i = 0 
         for raw_data in raw_datas['contents']:
             print raw_data
             if not raw_data['is_dir']:
                 if 'text' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
                     response['data'].append(self.format_photo_response(data))
-                              
+                    i += 1
+        
+        response['meta']['total_count'] = i                     
         return response
 
     def post_file_to_album(self, params):
@@ -243,9 +316,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
@@ -298,35 +368,45 @@ class dropboxMedia(bcMedia):
     
     def get_all_photos_for_account(self, params):
         """ Get all photos for an account """
-        metadata = self.connector.metadata('/')
-        account = self.connector.account_info()
-                       
-        raw_datas = metadata
-        
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
-        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
-   
-        fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
-         
-        alternatives = ['', 'photo', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-         
-        response = {
-            'meta':
-                {
-                 'total_count': len(raw_datas['contents']),
-                 'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                 'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
-            'data': []
-            }
-          
-        for raw_data in raw_datas['contents']:
-            if not raw_data['is_dir']:
-                if 'image' in raw_data['mime_type']:
-                    data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data))
-                              
-        return response
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            metadata = self.connector.metadata('/')
+            account = self.connector.account_info()
+                           
+            raw_datas = metadata
+            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+       
+            fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
+             
+            alternatives = ['', 'photo', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+             
+            response = {
+                'meta':
+                    {
+                     'total_count': [],
+                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                     'next': self.check_if_exists(raw_datas, 'paging.next')
+                    },
+                'data': []
+                }
+              
+            i = 0
+            for raw_data in raw_datas['contents']:
+                if not raw_data['is_dir']:
+                    if 'image' in raw_data['mime_type']:
+                        data = self.get_fields(raw_data, names, fields, alternatives)
+                        response['data'].append(self.format_photo_response(data)) 
+                        i +=1
+                else:
+                    dir_datas = self.connector.metadata(raw_data['path'])
+                    for dir_data in dir_datas['contents']:
+                        if 'image' in dir_data['mime_type']:
+                            data = self.get_fields(dir_data, names, fields, alternatives)
+                            response['data'].append(self.format_photo_response(data))   
+                            i +=1
+                            
+            response['meta']['total_count'] = i                          
+            return response
 
     def post_photo_to_account(self, params):
         """ Post a photo to a simple account """
@@ -334,9 +414,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file("/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
     
@@ -358,19 +435,23 @@ class dropboxMedia(bcMedia):
         response = {
             'meta':
                 {
-                 'total_count': len(raw_datas['contents']),
+                 'total_count': [],
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
             'data': []
             }
-          
+         
+        i = 0 
         for raw_data in raw_datas['contents']:
+            print raw_data
             if not raw_data['is_dir']:
                 if 'image' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
                     response['data'].append(self.format_photo_response(data))
-                              
+                    i += 1
+        
+        response['meta']['total_count'] = i                       
         return response
 
 
@@ -380,9 +461,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file(params['album_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
@@ -433,9 +511,47 @@ class dropboxMedia(bcMedia):
             return { 'response': response }
         return "Not a Video"
     
-    def get_all_videos_for_account(self, data):
+    def get_all_videos_for_account(self, params):
         """ Get all videos for an account """
-        return {'result': 'Not applicable'}
+        if (check_if_exists(params, 'user_id') != defJsonRes):
+            metadata = self.connector.metadata('/')
+            account = self.connector.account_info()
+                           
+            raw_datas = metadata
+            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+       
+            fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
+             
+            alternatives = ['', 'video', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+             
+            response = {
+                'meta':
+                    {
+                     'total_count': [],
+                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                     'next': self.check_if_exists(raw_datas, 'paging.next')
+                    },
+                'data': []
+                }
+              
+            i = 0
+            for raw_data in raw_datas['contents']:
+                if not raw_data['is_dir']:
+                    if 'video' in raw_data['mime_type']:
+                        data = self.get_fields(raw_data, names, fields, alternatives)
+                        response['data'].append(self.format_photo_response(data)) 
+                        i +=1
+                else:
+                    dir_datas = self.connector.metadata(raw_data['path'])
+                    for dir_data in dir_datas['contents']:
+                        if 'video' in dir_data['mime_type']:
+                            data = self.get_fields(dir_data, names, fields, alternatives)
+                            response['data'].append(self.format_photo_response(data))   
+                            i +=1
+                            
+            response['meta']['total_count'] = i                          
+            return response
     
     def get_all_videos_for_album(self, params):
         """ Get all videos for an album """
@@ -454,19 +570,23 @@ class dropboxMedia(bcMedia):
         response = {
             'meta':
                 {
-                 'total_count': len(raw_datas['contents']),
+                 'total_count': [],
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
             'data': []
             }
-          
+         
+        i = 0 
         for raw_data in raw_datas['contents']:
+            print raw_data
             if not raw_data['is_dir']:
                 if 'video' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
                     response['data'].append(self.format_photo_response(data))
-                              
+                    i += 1
+        
+        response['meta']['total_count'] = i                      
         return response
 
     def post_video_to_account(self, params):
@@ -475,9 +595,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file("/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file("/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
     
     
@@ -487,9 +604,6 @@ class dropboxMedia(bcMedia):
             if (check_if_exists(params, 'source') != defJsonRes):
                 f= open(params['source'], 'rb')
                 return self.connector.put_file(params['aggregation_id'] +"/" + os.path.basename(params['source']), f)
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                file = open(params['url'], 'rb')
-                return self.connector.put_file(params['aggregation_id'] +"/" + os.path.basename(params['url']), f)
         return "Insufficient Parameters"
 
 
