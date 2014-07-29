@@ -37,7 +37,11 @@ urlpatterns = patterns('',
 
                        url(r'^accounts/profile/$', TemplateView.as_view(template_name='profile.html'), name='profile'),
 
-                       url(r'api/doc/', include('tastypie_swagger.urls', namespace='tastypie_swagger'))
+                       # url(r'api/doc/', include('tastypie_swagger.urls', namespace='tastypie_swagger'))
+                       url(r'api/doc/',
+                        include('tastypie_swagger.urls', namespace='myapi_tastypie_swagger'),
+                        kwargs={"tastypie_api_module":"OPENiapp.APIS.urls.api", "namespace":"myapi_tastypie_swagger"}
+    ),
 )
 
 # urlpatterns = urlpatterns + Media_Urls + Location_Urls
