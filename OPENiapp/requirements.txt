@@ -1,7 +1,8 @@
 Django==1.6
 wsgiref==0.1.2
 gunicorn==0.17.2
-django-allauth
+#django-allauth
+git+https://github.com/pennersr/django-allauth.git
 #psycopg2==2.4.6
 dj-database-url==0.2.1
 python-openid>=2.2.5
@@ -21,3 +22,6 @@ git+git://github.com/concentricsky/django-tastypie-swagger.git@master
 south
 python-google-places
 flickr_api
+#git+https://github.com/vimeo/vimeo.py.git
+#tornado
+#python-onedrive[standalone]

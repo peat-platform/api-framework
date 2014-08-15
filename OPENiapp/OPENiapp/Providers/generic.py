@@ -7,6 +7,10 @@ from Google.connector import GOPprovider
 from Citygrid.connector import provider as CGprovider
 from Flickr.connector import provider as FLprovider
 from Dropbox.connector import provider as DBprovider
+from Onedrive.connector import provider as ODprovider
+from Vimeo.connector import provider as VMprovider
+from Youtube.connector import provider as YTprovider
+
 
 class execution:
     def __init__(self, user, apps, method, data):
@@ -27,6 +31,7 @@ class execution:
         # Every cbs needs its access_token
         # account_provider should be called exactly as the cbs we want, ie facebook for facebook!
         access_token = SocialToken.objects.filter(account__user=self.user, account__provider=cbs)
+        print cbs
         # Check which cbs we now have and make the connection by returning the provider from the connector
         if (cbs == "facebook"):
             provider = FBprovider(access_token)
@@ -45,6 +50,12 @@ class execution:
             provider = FLprovider()
         elif (cbs == "dropbox"):
             provider = DBprovider(access_token[0])
+        elif (cbs == "youtube"):
+             provider = YTprovider()
+        elif (cbs == "vimeo"):
+             provider = VMprovider(access_token[0])
+#         elif (cbs == "onedrive"):
+#             provider = ODprovider(access_token[0])
 
         return provider
 

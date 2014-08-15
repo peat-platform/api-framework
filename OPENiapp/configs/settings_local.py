@@ -160,9 +160,10 @@ INSTALLED_APPS = (
     # 'allauth.socialaccount.providers.tumblr',
     # 'allauth.socialaccount.providers.twitch',
     'allauth.socialaccount.providers.twitter',
-    # 'allauth.socialaccount.providers.vimeo',
+    'allauth.socialaccount.providers.vimeo',
     # 'allauth.socialaccount.providers.vk',
     # 'allauth.socialaccount.providers.weibo',
+    'allauth.socialaccount.providers.windowslive',
     # 'allauth.socialaccount.providers.xing',
 
     'OPENiapp',
