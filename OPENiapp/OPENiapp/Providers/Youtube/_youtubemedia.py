@@ -1,6 +1,7 @@
 from OPENiapp.Providers.base.media import bcMedia
 from OPENiapp.Providers.base.common import *
 import os
+from apiclient.http import MediaFileUpload
 
 class youtubeMedia(bcMedia):
     """ This class is used to: 
@@ -61,12 +62,12 @@ class youtubeMedia(bcMedia):
                     }
 
         # Curate tag array from Youtube
+        #Only text-tags in youtube, no location, no time
         tag_array = []
         if (check_if_exists(raw_data, 'snippet.tags') != defJsonRes):
-            for tag in raw_data['snippet']['tags']:
-                    print tag
+            for tag in metadata.get("items", []):
                     tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
-                    tag_fields = ['', 'tag' , '', '', '', '', '']
+                    tag_fields = ['', 'snippet.tags' , '', '', '', '', '']
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
@@ -80,11 +81,58 @@ class youtubeMedia(bcMedia):
 
     def post_video_to_account(self, params):
         """ POST API_PATH/[ACCOUNT_ID]/videos """
-        return defaultMethodResponse
-        
+        if (check_if_exists(params, 'source') != defJsonRes):
+            tags = None
+            if params['keywords']:
+                tags = params['keywords'].split(",")
+            
+            body=dict(
+                snippet=dict(
+                  title= params['title'],
+                  description= params['description'],
+                  tags=tags
+                ),
+                status=dict(
+                  privacyStatus= params['privacyStatus']
+                )
+              )
+            
+            # Call the API's videos.insert method to create and upload the video.
+            return self.connector.videos().insert(
+                part=",".join(body.keys()),
+                body=body,
+                media_body=MediaFileUpload(params['source'], chunksize=-1, resumable=True)
+              ).execute()
+            
+        return "Insufficient Parameters"
+            
     def post_video_to_aggregation(self, params):
         """ POST API_PATH/[AGGREGATION_ID]/videos """
-        return defaultMethodResponse
+        #account == users channel
+        if (check_if_exists(params, 'source') != defJsonRes):
+            tags = None
+            if params['keywords']:
+                tags = params['keywords'].split(",")
+            
+            body=dict(
+                snippet=dict(
+                  title= params['title'],
+                  description= params['description'],
+                  tags=tags
+                ),
+                status=dict(
+                  privacyStatus= params['privacyStatus']
+                )
+              )
+            
+            # Call the API's videos.insert method to create and upload the video.
+            return self.connector.videos().insert(
+                part=",".join(body.keys()),
+                body=body,
+                media_body=MediaFileUpload(params['source'], chunksize=-1, resumable=True)
+              ).execute()
+            
+        return "Insufficient Parameters"
 
     def edit_a_video(self, params):
         """ PUT API_PATH/[VIDEO_ID] """
@@ -98,12 +146,14 @@ class youtubeMedia(bcMedia):
     
     #   region Connections
 
-    def get_comments_for_video(self, params):
+    def get_comments_for_video(self, data):
         """ GET API_PATH/[VIDEO_ID]/comments """
+        #not longer in youtube api v3
         return defaultMethodResponse
 
-    def post_comment_to_video(self, params):
+    def post_comment_to_video(self, data):
         """ POST API_PATH/[VIDEO_ID]/comments """
+         #not longer in youtube api v3
         return defaultMethodResponse
 
     def like_video(self, data):
