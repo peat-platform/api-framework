@@ -25,10 +25,54 @@ class youtubeMedia(bcMedia):
     
     #   region Video Object
 
-    def get_a_video(self, params):
+    def get_a_video(self, data):
         """ GET API_PATH/[VIDEO_ID] """
-        print "get video"
-        return defaultMethodResponse
+        metadata = self.connector.videos().list(id =data['video_id'], part = "id, snippet, recordingDetails, fileDetails").execute()
+        raw_data = metadata['items'][0]
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
+        names.extend(['location_latitude', 'location_longitude', 'location_height'])
+        names.extend(['duration_starts_time', 'duration_ends_time'])
+        names.extend(['tags'])
+
+        fields = ['id', 'object_type', 'service', '', '', '', '', '', 'recordingDetails.recordingDate', '', '']
+        fields.extend(['snippet.title', 'snippet.description', 'fileDetails.fileType', 'fileDetails.fileSize', 'thumbnails.default.url'])
+        fields.extend(['recordingDetails.location.latitude', 'recordingDetails.location.longitude', 'recordingDetails.location.altitude'])
+        fields.extend(['', 'contentDetails.duration'])
+        fields.extend(['snippet.tags'])
+
+        alternatives = ['', 'video', 'youtube', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', '', '', '', ''])
+        alternatives.extend(['', '', ''])
+        alternatives.extend(['', ''])
+        alternatives.extend([''])
+
+        data = self.get_fields(raw_data, names, fields, alternatives)
+        
+        response = {
+                    'meta':
+                        {
+                         'total_count': 1,
+                         'previous': defJsonRes,
+                         'next': defJsonRes
+                        },
+                    'data': [self.format_video_response(data)]
+                    }
+
+        # Curate tag array from Youtube
+        tag_array = []
+        if (check_if_exists(raw_data, 'snippet.tags') != defJsonRes):
+            for tag in raw_data['snippet']['tags']:
+                    print tag
+                    tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
+                    tag_fields = ['', 'tag' , '', '', '', '', '']
+                    tag_alternatives = ['', '', '', '', '', '', '']
+                    tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
+                    tag_array.append(format_tags(tag_data))
+        response['data'][0]['tags'] = tag_array
+        
+        return response
 
     def get_all_videos_for_account(self, params):
         """ GET API_PATH/[ACCOUNT_ID]/videos """
@@ -70,7 +114,21 @@ class youtubeMedia(bcMedia):
 
     def get_likes_for_video(self, data):
         """ GET API_PATH/[VIDEO_ID]/likes """
-        return defaultMethodResponse
+        metadata = self.connector.videos().list(id =data['video_id'], part = "statistics").execute()
+        raw_datas = metadata['items'][0]
+        print raw_datas
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': raw_datas['statistics']['likeCount'],
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        
+        return response
 
     def unlike_video(self, data):
         """ DELETE API_PATH/[VIDEO_ID]/likes """
@@ -84,9 +142,23 @@ class youtubeMedia(bcMedia):
             return self.connector.videos().rate(id=data['video_id'], rating="dislike").execute()
         return "Insufficient Parameters"
 
-    def get_dislikes_for_video(self, params):
+    def get_dislikes_for_video(self, data):
         """ GET API_PATH/[VIDEO_ID]/dislikes """
-        return defaultMethodResponse
+        metadata = self.connector.videos().list(id =data['video_id'], part = "statistics").execute()
+        raw_datas = metadata['items'][0]
+        print raw_datas
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': raw_datas['statistics']['dislikeCount'],
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        
+        return response
 
     def delete_dislikes_of_video(self, params):
         """ DELETE API_PATH/[VIDEO_ID]/dislikes """

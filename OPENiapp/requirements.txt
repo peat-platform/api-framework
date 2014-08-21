@@ -24,4 +24,4 @@ python-google-places
 flickr_api
 #git+https://github.com/vimeo/vimeo.py.git
 #tornado
-#python-onedrive[standalone]
+python-onedrive[standalone]

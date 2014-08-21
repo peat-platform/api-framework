@@ -20,7 +20,7 @@ class provider(basicProvider, youtubeMedia):
     def __init__(self):#, data):
         """ Initiate the graph and find the OPENi album """
         #Link to client_secrets.json --> Created at https://console.developers.google.com/project/apps~{YOUR-APP}/apiui/credential --> Client ID for native application
-        CLIENT_SECRETS_FILE = "/Users/mzw/Documents/OPENi/OPENi_project/youtube/client_secrets.json"
+        CLIENT_SECRETS_FILE = "client_secrets.json"
         
         # Helpful message to display if the CLIENT_SECRETS_FILE is missing.
         MISSING_CLIENT_SECRETS_MESSAGE = """
