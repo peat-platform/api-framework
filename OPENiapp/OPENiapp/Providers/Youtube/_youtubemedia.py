@@ -178,30 +178,32 @@ class youtubeMedia(bcMedia):
     def post_video_to_aggregation(self, params):
         """ POST API_PATH/[AGGREGATION_ID]/videos """        
         #youtube playlist -> aggregation
-#         if (check_if_exists(params, 'source') != defJsonRes):
-#             tags = None
-#             if params['keywords']:
-#                 tags = params['keywords'].split(",")
-#             
-#             body=dict(
-#                 snippet=dict(
-#                   title= params['title'],
-#                   description= params['description'],
-#                   tags=tags
-#                 ),
-#                 status=dict(
-#                   privacyStatus= params['privacyStatus']
-#                 )
-#               )
-#             
-#             # Call the API's videos.insert method to create and upload the video.
-#             return self.connector.playlistsItem().insert(
-#                 part=",".join(body.keys()),
-#                 body=body,
-#                 media_body=MediaFileUpload(params['source'], chunksize=-1, resumable=True)
-#               ).execute()
-#             
-#         return "Insufficient Parameters"
+        if (check_if_exists(params, 'source') != defJsonRes):
+            tags = None
+            if params['keywords']:
+                tags = params['keywords'].split(",")
+             
+            body=dict(
+                snippet=dict(
+                  title= params['title'],
+                  description= params['description'],
+                  tags=tags
+                ),
+                status=dict(
+                  privacyStatus= params['privacyStatus']
+                )
+              )
+             
+            # Call the API's videos.insert method to create and upload the video.
+            uploaded_video = self.connector.videos().insert(
+                part=",".join(body.keys()),
+                body=body,
+                media_body=MediaFileUpload(params['source'], chunksize=-1, resumable=True)
+              ).execute()
+             
+            return self.connector.playlistItems().insert(part="snippet", body={'snippet': {'playlistId': params['playlistID'],'resourceId': {'kind': 'youtube#video','videoId': uploaded_video['id']}}}
+            ).execute()
+        return "Insufficient Parameters"
 
     def edit_a_video(self, params):
         """ PUT API_PATH/[VIDEO_ID] """
