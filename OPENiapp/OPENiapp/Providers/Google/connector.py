@@ -4,8 +4,9 @@ from googleplaces import GooglePlaces, types, lang
 from OPENiapp.Providers.baseConnector import basicProvider
 import json
 from _golocation import goLocation
+from _goactivity import goActivity
 
-class GOPprovider(basicProvider, goLocation):
+class GOPprovider(basicProvider, goLocation, goActivity):
     ''' This class is used to:
         1. Make the connection to the Google Places API
         2. Get user's Photos
