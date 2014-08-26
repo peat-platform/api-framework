@@ -3,10 +3,16 @@ from OPENiapp.Providers.base.profiles import bcProfiles
 from OPENiapp.Providers.base.common import *
 
 class goProfiles(bcProfiles):
+    """ This class is used to:
+        1. Get an Account
+    """
+    #   region Profiles API
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Profiles%20API/
 
     def get_an_account(self, params):
         """ GET API_PATH/[EVENT_ID] """
-        raw_data = SocialAccount.objects.filter(uid='115477833160801605894')[0].extra_data
+        raw_data = SocialAccount.objects.filter(user='user')[0].extra_data
+        #user = SocialAccount.objects.filter(provider="google")[0].user
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['person_name', 'person_surname', 'person_middlename', 'person_birthdate'])
@@ -38,3 +44,5 @@ class goProfiles(bcProfiles):
                     }
         
         return response
+    
+    #   endregion Profiles API
