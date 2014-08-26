@@ -177,3 +177,13 @@ def format_likes_response(self, id, obj_type, service, url, from_id, from_userna
                 }
     response.update(format_generic(params))
     return response
+
+
+def format_wallet(data, prepend = ''):
+    response = {
+                    "cards": data[prepend + 'wallet_cards'],
+                    "name": data[prepend + 'wallet_name'],
+                    "description": data[prepend + 'wallet_description']
+                }
+    response.update(format_generic(data, prepend + 'wallet_'))
+    return response
