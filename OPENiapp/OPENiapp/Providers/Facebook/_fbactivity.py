@@ -3,6 +3,8 @@ from OPENiapp.Providers.base.common import *
 
 class fbActivity(bcActivity):
     """ This class is used to:
+        0.5 Get a Facebook Checkin
+
         1. Get a Facebook Event
         2. Get all Events for a Facebook Account
 
@@ -27,6 +29,55 @@ class fbActivity(bcActivity):
     """
     #   region Activity API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Activity_API
+    
+    #   region Checkin Object
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Event_Mapping
+    
+    def get_a_checkin(self, params):
+        """ GET API_PATH/[CHECKIN_ID] """
+        # /checkin_id (ie /577733618968497)
+        # It must be a post_id and from there we get the place if it exists
+        raw_data = self.connector.get(params['checkin_id'])
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
+        names.extend(['text'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.category', 'from.url', 'from.name', 'created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['place.name', '', '', '', '', '', '', 'place.location.city', '', 'place.location.country', '', 'place.location.latitude', 'place.location.longitude', ''])
+        fields.extend(['name'])
+
+        alternatives = ['', 'checkin', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', '', '', '', '', '', '', '', '', '', '', '', '', ''])
+        alternatives.extend([''])
+
+        data = self.get_fields(raw_data, names, fields, alternatives)
+        response = {
+                    'meta':
+                        {
+                         'total_count': 1,
+                         'previous': defJsonRes,
+                         'next': defJsonRes
+                        },
+                    'data': [self.format_checkin_response(data)]
+                    }
+
+        place_id = self.check_if_exists(raw_data, 'place.id')
+        if (place_id != defJsonRes):
+            raw_data2 = self.connector.get(place_id)
+            response['data'][0]['place']['category'] = self.check_if_exists(raw_data2, 'category')
+            response['data'][0]['place']['description'] = self.check_if_exists(raw_data2, 'description')
+            response['data'][0]['place']['address']['street'] = self.check_if_exists(raw_data2, 'location.street')
+            response['data'][0]['place']['address']['zip'] = self.check_if_exists(raw_data2, 'location.zip')
+
+        return response
+    
+    #   region Connections
+
+
+    #   endregion Connections
+
+    #   endregion Checkin Object
     
     #   region Event Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Event_Mapping

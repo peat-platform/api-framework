@@ -4,6 +4,43 @@ class bcActivity:
     #   region Activity API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Activity%20API/
     
+    #   region Checkin Object
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Checkin%20mapping/
+
+    def format_checkin_response(self, params):
+        response = {
+                        "text": params['text']
+                   }
+        response.update(format_place(params))
+        response.update(format_generic(params))
+        return response
+    
+    def get_a_checkin(self, params):
+        """ GET API_PATH/[CHECKIN_ID] """
+        return defaultMethodResponse
+
+    def get_all_checkins_for_account(self, params):
+        """ GET API_PATH/[ACCOUNT_ID]/checkins """
+        return defaultMethodResponse
+
+    def post_checkin_to_account(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/checkins """
+        return defaultMethodResponse
+        
+    def post_checkin_to_aggregation(self, params):
+        """ POST API_PATH/[AGGREGATION_ID]/checkins """
+        return defaultMethodResponse
+
+    def edit_a_checkin(self, params):
+        """ PUT API_PATH/[CHECKIN_ID] """
+        return defaultMethodResponse
+
+    def delete_a_checkin(self, params):
+        """ DELETE API_PATH/[CHECKIN_ID] """
+        return defaultMethodResponse
+
+    #   endregion Checkin Object
+    
     #   region Event Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Event%20Mapping/
 
