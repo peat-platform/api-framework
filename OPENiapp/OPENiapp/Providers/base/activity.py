@@ -48,10 +48,10 @@ class bcActivity:
         response = {
                         "description": params['description'],
                         "picture": params['picture'],
-                        "title": params['title']
+                        "title": params['title'],
+                        "place": format_place(params),
+                        "duration": format_duration(params)
                    }
-        response.update(format_duration(params))
-        response.update(format_place(params))
         response.update(format_generic(params))
         return response
     

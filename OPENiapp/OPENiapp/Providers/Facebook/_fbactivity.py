@@ -93,10 +93,14 @@ class fbActivity(bcActivity):
         names.extend(['description', 'picture', 'title'])
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
-        fields.extend(['location', '', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', '', 'start_time', 'end_time', 'description', 'picture', 'name'])
+        fields.extend(['location', '', '', '', '', '', '', '', '', '', '', 'venue.latitude', 'venue.longitude', ''])
+        fields.extend(['start_time', 'end_time'])
+        fields.extend(['description', 'picture', 'name'])
 
         alternatives = ['', 'event', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''])
+        alternatives.extend(['', '', '', '', '', '', '', '', '', '', '', '', '', ''])
+        alternatives.extend(['', ''])
+        alternatives.extend(['', '', ''])
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {

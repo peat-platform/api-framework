@@ -63,6 +63,7 @@ class execution:
             method_to_call = getattr(provider, self.method)
         except AttributeError:
             return {'attributeError': 'Such method does not exist in this service'}
+
         return method_to_call(self.data)
 
 

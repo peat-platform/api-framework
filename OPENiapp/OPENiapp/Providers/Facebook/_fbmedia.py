@@ -41,11 +41,20 @@ class fbMedia(bcMedia):
         raw_data = self.connector.get('/' + params['photo_id'])
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
-        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
+        names.extend(['location_latitude', 'location_longitude', 'location_height'])
+        names.extend(['tags', 'height', 'width'])
 
-        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longitude', 'place.location.height', 'tags.data', 'height', 'width']
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time']
+        fields.extend(['name', 'description', 'format', 'size', 'icon'])
 
-        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        fields.extend(['place.location.latitude', 'place.location.longitude', 'place.location.height'])
+        fields.extend(['tags.data', 'height', 'width'])
+
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', '', '', '', ''])
+        alternatives.extend(['', '', ''])
+        alternatives.extend(['', '', ''])
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
