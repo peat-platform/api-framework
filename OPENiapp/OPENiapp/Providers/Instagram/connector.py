@@ -2,8 +2,10 @@ from instagram.client import InstagramAPI
 import httplib2
 import simplejson
 from OPENiapp.Providers.baseConnector import basicProvider
+from _inextra import inExtra
+from _inmedia import inMedia
 
-class provider(basicProvider):
+class provider(basicProvider, inExtra, inMedia):
     ''' This class is used to:
         1. Make the connection to the Instagram API
         2. Get user's Photos
@@ -13,45 +15,6 @@ class provider(basicProvider):
     def __init__(self, access_token):
         ''' Initiate the connector '''
         self.connector = InstagramAPI(access_token=access_token)
-    
-    #   region Media API
-    #   As described here: http://redmine.openi-ict.eu/projects/openi/wiki/Media_API
-    
-    #   region Photo Object
-    #   As described here: http://redmine.openi-ict.eu/projects/openi/wiki/Photo_Mapping
-    
-    def get_a_photo(self, data):
-        ''' GET API_PATH/[PHOTO_ID] '''
-        # /media/media-id (ie media/628147512937366504_917877895)
-        print data['media_id']
-        raw_data = self.connector.media(data['media_id'])
-        print raw_data
-        response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'next': None
-                        },
-                    'data': [self.format_photo_response(
-                                        raw_data.id,
-                                        self.check_if_exists(raw_data, 'type', 'image'),
-                                        'openi',
-                                        raw_data.link,
-                                        raw_data.user.id,
-                                        raw_data.user.username,
-                                        raw_data.user.website,
-                                        raw_data.caption.text,
-                                        raw_data.link,
-                                        self.defJsonRes,
-                                        self.check_if_exists(raw_data, 'location'),
-                                        raw_data.created_time,
-                                        self.defJsonRes,
-                                        self.check_if_exists(raw_data, 'tags'),
-                                        self.defJsonRes,
-                                        self.defJsonRes
-                                        )]
-                    }
-        return response
 
     def get_all_photos_for_account(self, data):
         ''' GET API_PATH/[ACCOUNT_ID]/photos '''
