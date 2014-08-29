@@ -15,3 +15,5 @@ OPENiapp/obj/*
 
 
 .idea/*
+
+*.db

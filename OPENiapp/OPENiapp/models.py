@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from OPENiapp.APIS.Context.models import OpeniContext
 from OPENiapp.APIS.Media.Article.models import OpeniArticle
+from tastypie.models import create_api_key
+
 
 
 class Person(models.Model):
@@ -63,6 +65,11 @@ class Cloudlet(models.Model):
 
 User.cloudlet = property(lambda d: Cloudlet.objects.filter(user=d))
 
+class RegisteredApplication(models.Model):
+    user = models.ManyToManyField(User)
+    name = models.TextField()
+
 
 
 post_save.connect(create_user_profile, sender=User)
+models.signals.post_save.connect(create_api_key, sender=User)
