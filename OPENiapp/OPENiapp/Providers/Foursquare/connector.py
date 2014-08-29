@@ -4,8 +4,9 @@ from OPENiapp.Providers.baseConnector import basicProvider
 from _fomedia import foMedia
 from _foactivity import foActivity
 from _foprofiles import foProfiles
+from _foextra import foExtra
 
-class provider(basicProvider, foMedia, foActivity, foProfiles):
+class provider(basicProvider, foMedia, foActivity, foProfiles, foExtra):
     ''' This class is used to:
         1. Make the connection to the Foursquare API
         2. Get user's Photos
