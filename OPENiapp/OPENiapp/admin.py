@@ -7,11 +7,13 @@ from models import *
 class PersonAdmin(admin.ModelAdmin):
     pass
 
-
-admin.site.register(Person, PersonAdmin)
-
 class CloudletAdmin(admin.ModelAdmin):
     pass
 
+class RegirestedApp(admin.ModelAdmin):
+    pass
 
+admin.site.register(Person, PersonAdmin)
 admin.site.register(Cloudlet, CloudletAdmin)
+admin.site.register(RegisteredApplication, RegirestedApp)
+

@@ -86,7 +86,9 @@ api.register(UserResource())
 
 # Builder
 from .Builder.Application.Resources import CBSResource
+from .Builder.RegisteredDeveloperApplication.Resources import RegisteredApplicationResource
 
+api.register(RegisteredApplicationResource())
 api.register(CBSResource())
 
 from .Context.Resources import ContextResource
