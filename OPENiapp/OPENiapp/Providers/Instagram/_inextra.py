@@ -11,11 +11,11 @@ class inExtra():
         names.extend(['tags', 'height', 'width'])
 
         fields = ['id', 'object_type', 'service', 'link', 'user.id', 'user.object_type', 'user.website', 'user.username', 'created_time', 'updated_time', 'deleted_time']
-        fields.extend(['caption', 'description', 'format', 'size', 'suffix'])
+        fields.extend(['caption', 'description', 'format', 'size', 'images.standard_resolution.url'])
         fields.extend(['location.point.latitude', 'location.point.longitude', 'location.point.height'])
         fields.extend(['tags', 'images.standard_resolution.height', 'images.standard_resolution.width'])
         
-        alternatives = ['', 'photo', 'foursquare', '', '', 'account', '', '', '', '', '']
+        alternatives = ['', 'photo', 'instagram', '', '', 'account', '', '', '', '', '']
         alternatives.extend(['', '', '', '', ''])
         alternatives.extend(['', '', ''])
         alternatives.extend(['', '', ''])
