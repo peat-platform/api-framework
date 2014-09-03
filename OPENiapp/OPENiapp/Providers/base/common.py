@@ -171,7 +171,7 @@ def format_comment_response(params):
     response.update(format_generic(params))
     return response
 
-def format_likes_response(self, id, obj_type, service, url, from_id, from_username, from_url, time_created, time_edited, target_id):
+def format_likes_response(params):
     response = {
                     "target_id": params['target_id']
                 }

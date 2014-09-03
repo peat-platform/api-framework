@@ -155,7 +155,7 @@ class inMedia(bcMedia):
                     }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_like_response(data))
+            response['data'].append(format_likes_response(data))
         return response
 
     def unlike_photo(self, params):
