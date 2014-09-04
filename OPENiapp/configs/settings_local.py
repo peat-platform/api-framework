@@ -6,6 +6,8 @@ import os
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
+CLOUDLET_SERVER = "http://193.1.188.34:80/api/v1/cloudlets"
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
