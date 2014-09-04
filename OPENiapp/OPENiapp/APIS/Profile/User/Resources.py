@@ -2,7 +2,9 @@ __author__ = 'mpetyx'
 
 
 from tastypie.authorization import DjangoAuthorization
-from .models import OpeniUser
+# from .models import OpeniUser
+from django.contrib.auth.models import User as OpeniUser
+
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
 from OPENiapp.APIS.OPENiAuthorization import Authorization
