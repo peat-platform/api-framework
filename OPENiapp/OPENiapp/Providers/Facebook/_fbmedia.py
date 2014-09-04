@@ -265,7 +265,7 @@ class fbMedia(bcMedia):
             response['data'].append(format_likes_response(data))
         return response
     
-    def unlike_photo(self, data):
+    def unlike_photo(self, params):
         """ DELETE API_PATH/[PHOTO_ID]/likes """
         # /photo_id/likes (ie /10153665526210315/likes)
         if (check_if_exists(params, 'photo_id') != defJsonRes):
