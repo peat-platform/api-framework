@@ -21,7 +21,4 @@ class provider(basicProvider, flActivity, flMedia):
         a = flickr_api.auth.AuthHandler() #creates the AuthHandler object
         perms = "read, write" # set the required permissions
         url = a.get_authorization_url(perms)
-        username = 'rtsouroplis'
-        #user = flickr_api.Person.findByUserName(username)
-        #print user
         self.connector = flickr_api
