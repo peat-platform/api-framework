@@ -40,3 +40,7 @@ class foExtra():
                 return raw
 
         return "Insufficient Parameters"
+
+    def get_checkins(self, params):
+        """ GET API_PATH/[ACCOUNT_ID] """
+        return self.connector.users.checkins()
