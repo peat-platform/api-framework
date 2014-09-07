@@ -51,6 +51,6 @@ class CloudletClient:
 
 
 client = CloudletClient("http://193.1.188.34:80/api/v1/cloudlets", "mpetyx", "yo")
-print client.create(alias="jor el", username="kent")['body']
+# print client.create(alias="jor el", username="kent")['body']
 # client.delete("c_0669d9dec1d9b80db1f0455746c25a0e")
-# print client.details("c_16c21af80178b0ee20b874b515d16cba")
+print client.details("c_347a74767c96c6a9dec2601da0f9e7e2")

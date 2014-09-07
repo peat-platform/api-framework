@@ -14,7 +14,7 @@ def cloudlet_creation_for_user(user):
     response = client.CloudletClient(server=settings.CLOUDLET_SERVER).create(alias=user.id,
                                                                                               username=user.username)
 
-    location = response['body']['id']
+    location = response['json response']['id']
 
     user_cloudlet = Cloudlet(user=user, locationIP=location)
     user_cloudlet.save()
