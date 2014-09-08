@@ -55,6 +55,7 @@ api.register(QuestionResource())
 api.register(SleepResource())
 api.register(StatusResource())
 api.register(WorkoutResource())
+api.register(ActivityEventResource)
 
 
 # Product and Services
@@ -62,13 +63,16 @@ from .Products_and_Services.Card.Resources import CardResource
 from .Products_and_Services.Product.Resources import ProductResource
 from .Products_and_Services.Service.Resources import ServiceResource
 from .Products_and_Services.Shop.Resources import ShopResource
+from .Products_and_Services.Order.Resources import OrderResource
+
+
 
 
 api.register(CardResource())
 api.register(ProductResource())
 api.register(ServiceResource())
 api.register(ShopResource())
-
+api.register(OrderResource())
 
 # Profile
 from .Profile.Account.Resources import AccountResource

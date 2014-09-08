@@ -175,9 +175,45 @@ INSTALLED_APPS = (
     'OPENiapp.APIS.Media.Photo',
     'OPENiapp.APIS.Media.Audio',
     'OPENiapp.APIS.Media.Video',
+    'OPENiapp.APIS.Media.Article',
+    'OPENiapp.APIS.Media.File',
+
+    # Location API implementation
     'OPENiapp.APIS.Location.Event',
     'OPENiapp.APIS.Location.Place',
+    'OPENiapp.APIS.Location.Route',
+
+
+    # Context API
     'OPENiapp.APIS.Context',
+
+    # Profile API
+    'OPENiapp.APIS.Profile.Account',
+    'OPENiapp.APIS.Profile.Application',
+    'OPENiapp.APIS.Profile.Contact',
+    'OPENiapp.APIS.Profile.Device',
+    'OPENiapp.APIS.Profile.User',
+
+    # Product and Services API
+    'OPENiapp.APIS.Products_and_Services.Card',
+    'OPENiapp.APIS.Products_and_Services.Order',
+    'OPENiapp.APIS.Products_and_Services.Product',
+    'OPENiapp.APIS.Products_and_Services.Service',
+    'OPENiapp.APIS.Products_and_Services.Shop',
+
+    # Activity API
+    'OPENiapp.APIS.Activity.Badge',
+    'OPENiapp.APIS.Activity.Checkin',
+    'OPENiapp.APIS.Activity.Event',
+    'OPENiapp.APIS.Activity.Game',
+    'OPENiapp.APIS.Activity.Measurement',
+    'OPENiapp.APIS.Activity.Note',
+    'OPENiapp.APIS.Activity.Nutrition',
+    'OPENiapp.APIS.Activity.Question',
+    'OPENiapp.APIS.Activity.Sleep',
+    'OPENiapp.APIS.Activity.Status',
+    'OPENiapp.APIS.Activity.Workout',
+
 
     'tastypie',
     'tastypie_swagger',
