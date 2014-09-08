@@ -12,8 +12,3 @@ class OpeniContact(OpeniContextAwareModel):
     object_type = models.TextField()
     service = models.TextField()
     From = models.TextField()
-    place = models.TextField()
-    duration = models.TextField()
-    title = models.TextField()
-    description = models.TextField()
-    picture = models.TextField()
