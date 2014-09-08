@@ -12,8 +12,7 @@ class OpeniApplication(OpeniContextAwareModel):
     object_type = models.TextField()
     service = models.TextField()
     From = models.TextField()
-    place = models.TextField()
-    duration = models.TextField()
-    title = models.TextField()
-    description = models.TextField()
-    picture = models.TextField()
+    adtype = models.TextField()
+    adservices = models.TextField()
+    adnetworks = models.TextField()
+
