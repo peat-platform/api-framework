@@ -12,10 +12,8 @@ class OpeniBadge(OpeniContextAwareModel):
     object_type = models.TextField()
     service = models.TextField()
     From = models.TextField()
-    place = models.TextField()
-    duration = models.TextField()
+    time = models.TextField()
     title = models.TextField()
     description = models.TextField()
     picture = models.TextField()
-    class Meta:
-        app_label = "OPENIapp"
+
