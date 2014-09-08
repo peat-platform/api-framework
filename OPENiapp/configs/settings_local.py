@@ -4,6 +4,8 @@ __author__ = 'mpetyx'
 # Django settings for OPENiapp project.
 import os
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 CLOUDLET_SERVER = "http://193.1.188.34:80/api/v1/cloudlets"
