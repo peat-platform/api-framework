@@ -30,7 +30,7 @@ class GenericResource(ContextAwareResource):
 
         return bundle.request.method()
 
-    def dehydrate(self, bundle):
+    # def dehydrate(self, bundle):
     #    """
     #    A hook to allow a final manipulation of data once all fields/methods
     #    have built out the dehydrated data.
@@ -100,9 +100,9 @@ class GenericResource(ContextAwareResource):
     #            bundle.data[connector] = res
 
     #        bundle.data["koukli"] = {"lol": 1}
+    #
+    #     return bundle
 
-        return bundle
-    
     def get_list(self, request, **kwargs):
         """
         Returns a serialized list of resources.
