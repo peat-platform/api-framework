@@ -176,6 +176,8 @@ INSTALLED_APPS = (
 
     'OPENiapp',
 
+    'OPENiapp.APIS.Context',
+
     # Media API implementation
     'OPENiapp.APIS.Media',
     'OPENiapp.APIS.Media.Photo',

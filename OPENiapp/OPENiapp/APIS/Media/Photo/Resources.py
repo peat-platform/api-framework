@@ -10,15 +10,21 @@ from OPENiapp.APIS.OpeniGenericResource import GenericResource
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 
+from tastypie.serializers import Serializer
+from tastypie import fields
+from OPENiapp.APIS.Context.Resources import ContextResource
+
 class PhotoResource(GenericResource):
+    # context = fields.ForeignKey(ContextResource, 'context')
     class Meta:
-        queryset = OpeniPhoto.objects.select_related("context").all()
+        queryset = OpeniPhoto.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'photo'
         authentication = Authentication()
         authorization = Authorization()
-        # serializer = Serializer(formats=['json'])
+        serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
+
         # filtering = {
         #     'slug': ALL,
         #     'user': ALL_WITH_RELATIONS,
