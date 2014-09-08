@@ -55,7 +55,7 @@ api.register(QuestionResource())
 api.register(SleepResource())
 api.register(StatusResource())
 api.register(WorkoutResource())
-api.register(ActivityEventResource)
+# api.register(ActivityEventResource)
 
 
 # Product and Services
