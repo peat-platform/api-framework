@@ -4,11 +4,11 @@ __author__ = 'mpetyx'
 # Django settings for OPENiapp project.
 import os
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-os.environ['HTTPS'] = "on"
-APPEND_SLASH = False
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# os.environ['HTTPS'] = "on"
+# APPEND_SLASH = False
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
