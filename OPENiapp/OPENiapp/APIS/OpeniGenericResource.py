@@ -5,6 +5,7 @@ from OPENiapp.APIS.Context.BaseResource import ContextAwareResource
 from django.http import HttpResponse
 from django.shortcuts import render
 import ast
+import logging
 
 from allauth.socialaccount.models import SocialToken
 
@@ -17,7 +18,11 @@ from tastypie.utils import trailing_slash
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 
+from tastypie import fields
+from OPENiapp.APIS.Context.Resources import ContextResource
+
 class GenericResource(ContextAwareResource):
+    context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True)
     def applications_asked(self, bundle):
 
         return 1
@@ -120,7 +125,7 @@ class GenericResource(ContextAwareResource):
             method = request.GET.get("method")
             data = ast.literal_eval(request.GET.get("data"))
         except:
-            return 1
+            logging.info("no cbs is being asked")
 
         if (user and apps and method and data):
             #executable = execution(u, [{"cbs": "instagram", "app_name": "OPENi"}], "get_a_photo", {"media_id": "628147512937366504_917877895"})

@@ -15,7 +15,8 @@ from tastypie import fields
 from OPENiapp.APIS.Context.Resources import ContextResource
 
 class PhotoResource(GenericResource):
-    # context = fields.ForeignKey(ContextResource, 'context')
+
+    # journey = fields.ForeignKey(WorkJourneyResource, 'work_journey', null=True, blank=True)
     class Meta:
         queryset = OpeniPhoto.objects.all()
         list_allowed_methods = ['get', 'post']
