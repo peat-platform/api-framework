@@ -13,10 +13,11 @@ class OpeniArticle(OpeniContextAwareModel):
     object_type = models.TextField()
     service = models.TextField()
     From = models.TextField()
-    place = models.TextField()
+    File = models.TextField()
     duration = models.TextField()
-    title = models.TextField()
-    description = models.TextField()
-    picture = models.TextField()
+    Time = models.TextField()
+    tags = models.TextField()
+    text = models.TextField()
+
     class Meta:
         app_label = "OPENiapp"

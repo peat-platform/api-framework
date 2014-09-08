@@ -13,7 +13,5 @@ class OpeniEvent(OpeniContextAwareModel):
     service = models.TextField()
     From = models.TextField()
     place = models.TextField()
-    duration = models.TextField()
-    title = models.TextField()
-    description = models.TextField()
-    picture = models.TextField()
+    text = models.TextField()
+
