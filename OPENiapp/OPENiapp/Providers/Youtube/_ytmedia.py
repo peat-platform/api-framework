@@ -3,7 +3,7 @@ from OPENiapp.Providers.base.common import *
 import os
 from apiclient.http import MediaFileUpload
 
-class youtubeMedia(bcMedia):
+class ytMedia(bcMedia):
     """ This class is used to: 
         VIDEO MAPPING
         1.  Get a Youtube video

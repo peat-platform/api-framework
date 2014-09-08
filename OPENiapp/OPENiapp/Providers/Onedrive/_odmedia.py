@@ -2,7 +2,7 @@ from OPENiapp.Providers.base.media import bcMedia
 from OPENiapp.Providers.base.common import *
 import os
 
-class onedriveMedia(bcMedia):
+class odMedia(bcMedia):
     """ This class is used to:
         AUDIO MAPPING
         1.  Get a Dropbox audio

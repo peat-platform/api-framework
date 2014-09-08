@@ -1,5 +1,4 @@
 from OPENiapp.Providers.baseConnector import basicProvider
-from _youtubemedia import youtubeMedia
 
 import httplib2
 import os
