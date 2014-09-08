@@ -1,11 +1,13 @@
 from twython import Twython
 from OPENiapp.Providers.baseConnector import basicProvider
-from _twactivity import twActivity
-#from _twmedia import twMedia
-#from _twproductsServices import twProductsServices
-#from _twprofiles import twProfiles
 
-class provider(basicProvider, twActivity):
+from _twactivity import twActivity
+from _twlocation import twLocation
+from _twmedia import twMedia
+from _twproductsServices import twProductsServices
+from _twprofiles import twProfiles
+
+class provider(basicProvider, twActivity, twLocation, twMedia, twProductsServices, twProfiles):
     """ This class is used to:
         1. Make the connection to the Twitter API
     """

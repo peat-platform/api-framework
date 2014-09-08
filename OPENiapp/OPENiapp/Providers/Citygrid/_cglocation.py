@@ -5,7 +5,7 @@ import json
 
 class cgLocation(bcLocation):
     """ This class is used to:
-        1. Get a Google Place
+        1. Get a CityGrid Place
     """
 
     #   region Location API

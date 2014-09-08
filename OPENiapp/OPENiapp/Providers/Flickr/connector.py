@@ -6,9 +6,12 @@ API_KEY =  '64f368d7efc5406c1dbae3a0983cc607'
 API_SECRET = 'a424445857273ee4'
 
 from _flactivity import flActivity
+from _fllocation import flLocation
 from _flmedia import flMedia
+from _flproductsServices import flProductsServices
+from _flprofiles import flProfiles
 
-class provider(basicProvider, flActivity, flMedia):
+class provider(basicProvider, flActivity, flLocation, flMedia, flProductsServices, flProfiles):
     ''' This class is used to:
         1. Make the connection to the Foursquare API
         2. Get user's Photos

@@ -12,8 +12,13 @@ from oauth2client import tools
 from oauth2client.tools import argparser
 from oauth2client.tools import run
 
+from _ytactivity import ytActivity
+from _ytlocation import ytLocation
+from _ytmedia import ytMedia
+from _ytproductsServices import ytProductsServices
+from _ytprofiles import ytProfiles
 
-class provider(basicProvider, youtubeMedia):
+class provider(basicProvider, ytActivity, ytLocation, ytMedia, ytProductsServices, ytProfiles):
     """ This class is used to:
         1. Make the connection to the youtube
     """

@@ -2,9 +2,14 @@
 import onedrive
 #from onedrive import client, rest, session
 from OPENiapp.Providers.baseConnector import basicProvider
-from _onedrivemedia import onedriveMedia
 
-class provider(basicProvider, onedriveMedia):
+from _odactivity import odActivity
+from _odlocation import odLocation
+from _odmedia import odMedia
+from _odproductsServices import odProductsServices
+from _odprofiles import odProfiles
+
+class provider(basicProvider, odActivity, odLocation, odMedia, odProductsServices, odProfiles):
     """ This class is used to:
         1. Make the connection to the onedrive
     """

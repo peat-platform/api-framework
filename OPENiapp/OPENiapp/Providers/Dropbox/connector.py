@@ -2,9 +2,14 @@
 import dropbox
 #from dropbox import client, rest, session
 from OPENiapp.Providers.baseConnector import basicProvider
-from _dropboxmedia import dropboxMedia
 
-class provider(basicProvider, dropboxMedia):
+from _dbactivity import dbActivity
+from _dblocation import dbLocation
+from _dbmedia import dbMedia
+from _dbproductsServices import dbProductsServices
+from _dbprofiles import dbProfiles
+
+class provider(basicProvider, dbActivity, dbLocation, dbMedia, dbProductsServices, dbProfiles):
     """ This class is used to:
         1. Make the connection to the dropbox
     """
