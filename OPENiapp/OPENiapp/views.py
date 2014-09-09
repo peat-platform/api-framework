@@ -1,7 +1,7 @@
 __author__ = 'mpetyx'
 
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 
 def home(request):
     """ Home Page """
-    return render_to_response('index.html')
+    return redirect('/api/doc/')
