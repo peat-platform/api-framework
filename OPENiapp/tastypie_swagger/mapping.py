@@ -213,6 +213,7 @@ class ResourceSwaggerMapping(object):
                         dataType = schema_field['type']
                         if dataType == 'related':
                             dataType = self.get_related_field_type(name)
+                            dataType = 'Context'
                             description = 'ID of related resource'
 
                         for query in field:
