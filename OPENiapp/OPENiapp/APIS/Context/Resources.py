@@ -208,7 +208,7 @@ class GroupResource(Resource):
 
 class ContextResource(ModelResource):
 
-    class Meta(GenericMeta):
+    class Meta:
         queryset = OpeniContext.objects.all().prefetch_related("group_set","locationvisit_set")
         location = fields.DictField()
         list_allowed_methods = ['get']
