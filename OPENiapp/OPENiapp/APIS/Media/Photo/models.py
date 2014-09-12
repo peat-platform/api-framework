@@ -17,6 +17,3 @@ class OpeniPhoto(OpeniContextAwareModel):
     tags = models.TextField()
     width = models.TextField()
     height = models.TextField()
- 
-    class Meta(GenericMeta):
-        app_label = "OPENiapp"
