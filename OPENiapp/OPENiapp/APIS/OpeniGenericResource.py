@@ -22,7 +22,7 @@ from tastypie import fields
 from OPENiapp.APIS.Context.Resources import ContextResource
 
 class GenericResource(ContextAwareResource):
-    context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True)
+    context = fields.ForeignKey(ContextResource, 'Context',related_name='Context', null=True, blank=True)
     def applications_asked(self, bundle):
 
         return 1
