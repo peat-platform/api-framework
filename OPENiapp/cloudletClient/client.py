@@ -58,9 +58,8 @@ class CloudletClient:
 
         if not self.__cloudlet_id:
             self.retrieve_cloudlet_id()
-        payload = {'object': object}
 
-        r = requests.post(url=self.__server + "/objects/" + str(self.__cloudlet_id), data=payload, verify=False)
+        r = requests.post(url=self.__server + "/objects/" + str(self.__cloudlet_id), data=json.dumps(object), verify=False)
 
         return {"status code": r.status_code, "body": r.text}#, "json response":r.json()}
 
