@@ -14,7 +14,7 @@ class GameResource(GenericResource):
         queryset = OpeniGame.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'game'
+        resource_name = 'Game'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

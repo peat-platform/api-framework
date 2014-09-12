@@ -13,7 +13,7 @@ class NutritionResource(GenericResource):
         queryset = OpeniNutrition.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'nutrition'
+        resource_name = 'Nutrition'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

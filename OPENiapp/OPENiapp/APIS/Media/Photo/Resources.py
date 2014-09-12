@@ -21,7 +21,7 @@ class PhotoResource(GenericResource):
         queryset = OpeniPhoto.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'photo'
+        resource_name = 'Photo'
         authentication = Authentication()
         authorization = Authorization()
         serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])

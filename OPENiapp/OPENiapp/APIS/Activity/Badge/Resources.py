@@ -13,7 +13,7 @@ class BadgeResource(GenericResource):
         queryset = OpeniBadge.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'badge'
+        resource_name = 'Badge'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

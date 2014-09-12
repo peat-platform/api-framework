@@ -13,7 +13,7 @@ class ArticleResource(GenericResource):
         queryset = OpeniArticle.objects.select_related("context").all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'article'
+        resource_name = 'Article'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

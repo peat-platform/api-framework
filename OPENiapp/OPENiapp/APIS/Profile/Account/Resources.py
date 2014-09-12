@@ -13,7 +13,7 @@ class AccountResource(GenericResource):
         queryset = OpeniAccount.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'account'
+        resource_name = 'Account'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

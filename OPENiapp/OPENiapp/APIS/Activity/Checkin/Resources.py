@@ -13,7 +13,7 @@ class CheckinResource(GenericResource):
         queryset = OpeniCheckin.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'checkin'
+        resource_name = 'Checkin'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

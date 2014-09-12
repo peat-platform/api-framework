@@ -13,7 +13,7 @@ class CBSResource(ModelResource):
         queryset = SocialApp.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'socialapp'
+        resource_name = 'Socialapp'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

@@ -14,7 +14,7 @@ class ActivityEventResource(GenericResource):
         queryset = OpeniActivityEvent.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'activityevent'
+        resource_name = 'Activityevent'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

@@ -13,7 +13,7 @@ class RegisteredApplicationResource(GenericResource):
         queryset = RegisteredApplication.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'registeredapplication'
+        resource_name = 'Registeredapplication'
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
         # filtering = {

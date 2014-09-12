@@ -13,7 +13,7 @@ class CardResource(GenericResource):
         queryset = OpeniCard.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'card'
+        resource_name = 'Card'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

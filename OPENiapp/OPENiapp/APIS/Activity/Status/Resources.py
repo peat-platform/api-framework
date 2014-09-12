@@ -13,7 +13,7 @@ class StatusResource(GenericResource):
         queryset = OpeniStatus.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'status'
+        resource_name = 'Status'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

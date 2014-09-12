@@ -8,4 +8,4 @@ from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 class EventResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniEvent.objects.all()
-        resource_name = 'event'
+        resource_name = 'Event'

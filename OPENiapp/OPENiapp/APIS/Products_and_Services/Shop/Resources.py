@@ -13,7 +13,7 @@ class ShopResource(GenericResource):
         queryset = OpeniShop.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'shop'
+        resource_name = 'Shop'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

@@ -13,7 +13,7 @@ class DeviceResource(GenericResource):
         queryset = OpeniDevice.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'device'
+        resource_name = 'Device'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

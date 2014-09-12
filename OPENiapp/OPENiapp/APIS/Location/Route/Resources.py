@@ -13,7 +13,7 @@ class RouteResource(GenericResource):
         queryset = OpeniEvent.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'route'
+        resource_name = 'Route'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

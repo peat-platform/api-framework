@@ -12,7 +12,7 @@ class AudioResource(GenericResource):
         queryset = OpeniAudio.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'audio'
+        resource_name = 'Audio'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

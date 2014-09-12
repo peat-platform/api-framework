@@ -13,7 +13,7 @@ class ServiceResource(GenericResource):
         queryset = OpeniService.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'service'
+        resource_name = 'Service'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

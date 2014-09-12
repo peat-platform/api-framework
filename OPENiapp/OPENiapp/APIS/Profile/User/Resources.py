@@ -15,7 +15,7 @@ class UserResource(GenericResource):
         queryset = OpeniUser.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'user'
+        resource_name = 'User'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

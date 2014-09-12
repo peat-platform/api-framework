@@ -13,7 +13,7 @@ class SleepResource(GenericResource):
         queryset = OpeniSleep.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'sleep'
+        resource_name = 'Sleep'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

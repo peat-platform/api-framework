@@ -12,7 +12,7 @@ class FileResource(GenericResource):
         queryset = OpeniFile.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'file'
+        resource_name = 'File'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

@@ -13,7 +13,7 @@ class WorkoutResource(GenericResource):
         queryset = OpeniWorkout.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'workout'
+        resource_name = 'Workout'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

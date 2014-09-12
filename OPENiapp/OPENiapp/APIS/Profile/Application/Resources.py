@@ -13,7 +13,7 @@ class ApplicationResource(GenericResource):
         queryset = OpeniApplication.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'application'
+        resource_name = 'Application'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

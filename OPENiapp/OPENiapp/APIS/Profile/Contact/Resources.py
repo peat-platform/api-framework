@@ -13,7 +13,7 @@ class ContactResource(GenericResource):
         queryset = OpeniContact.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'contact'
+        resource_name = 'Contact'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

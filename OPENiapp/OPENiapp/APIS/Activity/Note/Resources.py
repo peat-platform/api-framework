@@ -14,7 +14,7 @@ class NoteResource(GenericResource):
         queryset = OpeniNote.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'note'
+        resource_name = 'Note'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

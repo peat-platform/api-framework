@@ -13,7 +13,7 @@ class PlaceResource(GenericResource):
         queryset = OpeniEvent.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'place'
+        resource_name = 'Place'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

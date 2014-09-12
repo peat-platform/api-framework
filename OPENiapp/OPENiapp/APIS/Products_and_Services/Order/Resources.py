@@ -13,7 +13,7 @@ class OrderResource(GenericResource):
         queryset = OpeniOrder.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'order'
+        resource_name = 'Order'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

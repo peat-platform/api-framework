@@ -13,7 +13,7 @@ class ProductResource(GenericResource):
         queryset = OpeniProduct.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'product'
+        resource_name = 'Product'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {

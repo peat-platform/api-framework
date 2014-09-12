@@ -14,7 +14,7 @@ class MeasurementResource(GenericResource):
         queryset = OpeniMeasurement.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'measurement'
+        resource_name = 'Measurement'
         authentication = Authentication()
         authorization = Authorization()
         # filtering = {
