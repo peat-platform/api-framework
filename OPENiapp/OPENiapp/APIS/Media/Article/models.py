@@ -19,5 +19,5 @@ class OpeniArticle(OpeniContextAwareModel):
     tags = models.TextField()
     text = models.TextField()
 
-    class Meta:
+    class Meta(GenericMeta):
         app_label = "OPENiapp"

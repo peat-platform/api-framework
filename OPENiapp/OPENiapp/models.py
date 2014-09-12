@@ -48,7 +48,7 @@ class OAuthConsumer(models.Model):
     secret = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
 
-    class Meta:
+    class Meta(GenericMeta):
         db_table = "api_oauth_consumer"
 
     def __unicode__(self):

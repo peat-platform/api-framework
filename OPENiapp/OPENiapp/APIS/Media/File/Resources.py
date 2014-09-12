@@ -3,12 +3,12 @@ __author__ = 'mpetyx'
 from tastypie.authorization import DjangoAuthorization
 from .models import OpeniFile
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource
+from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 
 class FileResource(GenericResource):
-    class Meta:
+    class Meta(GenericMeta):
         queryset = OpeniFile.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']

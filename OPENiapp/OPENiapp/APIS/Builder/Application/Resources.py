@@ -1,7 +1,7 @@
 __author__ = 'mpetyx'
 
 from tastypie.resources import ModelResource
-from OPENiapp.APIS.OpeniGenericResource import GenericResource
+from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 
@@ -9,7 +9,7 @@ from allauth.socialaccount.models import SocialApp, SocialAccount, SocialToken
 
 
 class CBSResource(ModelResource):
-    class Meta:
+    class Meta(GenericMeta):
         queryset = SocialApp.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
@@ -23,7 +23,7 @@ class CBSResource(ModelResource):
         # }
 
 class SocialAccountResource(ModelResource):
-    class Meta:
+    class Meta(GenericMeta):
         queryset = SocialAccount.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
@@ -37,7 +37,7 @@ class SocialAccountResource(ModelResource):
         # }
 
 class SocialTokenResource(ModelResource):
-    class Meta:
+    class Meta(GenericMeta):
         queryset = SocialToken.objects.all()
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']

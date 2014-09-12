@@ -110,7 +110,7 @@ class OpeniContext(models.Model):
     personalization_customer_tag = models.TextField(null=True)
 #     #Greek,English iso code
     personalization_users_language = models.TextField(null=True)
-    class Meta:
+    class Meta(GenericMeta):
         app_label = "OPENiapp"
 
 
@@ -119,7 +119,7 @@ class Group(models.Model):
     group_name = models.TextField(null=True)
     group_type = models.TextField(null=True)
     context = models.ForeignKey(OpeniContext)
-    class Meta:
+    class Meta(GenericMeta):
         app_label = "OPENiapp"
 
 
@@ -132,7 +132,7 @@ class GroupFriend(models.Model):
     person_time_person_added = models.TextField(null=True)
     person_target_id = models.TextField(null=True)
     group = models.ForeignKey(Group)
-    class Meta:
+    class Meta(GenericMeta):
         app_label = "OPENiapp"
 
 class LocationVisit(models.Model):
@@ -142,12 +142,12 @@ class LocationVisit(models.Model):
     location_visits_visit = models.TextField(null=True)
     location_visits_comment = models.TextField(null=True)
     context = models.ForeignKey(OpeniContext)
-    class Meta:
+    class Meta(GenericMeta):
         app_label = "OPENiapp"
 
 class OpeniContextAwareModel(models.Model):
     context = models.ForeignKey(OpeniContext,null=True, on_delete=models.DO_NOTHING)
-    class Meta:
+    class Meta(GenericMeta):
         abstract = True
         app_label = "OPENiapp"
     def delete(self):
