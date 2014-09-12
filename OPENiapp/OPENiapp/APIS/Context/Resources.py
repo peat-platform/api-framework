@@ -212,6 +212,7 @@ class ContextResource(ModelResource):
         queryset = OpeniContext.objects.all().prefetch_related("group_set","locationvisit_set")
         location = fields.DictField()
         list_allowed_methods = ['get']
+        resource_name = "Context"
 
         extra_actions = [
             {
