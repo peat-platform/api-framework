@@ -128,52 +128,66 @@ class GenericMeta:
                     "description": "Method needed"
                 },
                 "data": {
-                    "type": "string",
+                    "type": "String",
                     "required": True,
-                    "description": "The required data"
+                    "description": "The required data",
+            #         'allowableValues': {
+            #     'valueType' : "LIST",
+            #     'values': ["yo"]
+            #
+            # }
+          #           'allowableValues': {
+          #       'valueType' : "LIST",
+          #       'values': [
+          #   "placed",
+          #   " approved",
+          #   " delivered"
+          # ]
+          #
+          #   },
                 },
             }
         },
 
-        {
-            "name": "comments",
-            "http_method": "GET",
-            "resource_type": "list",
-            "description": "comments from CBS",
-            "fields": {
-                "cbs": {
-                    "type": "string",
-                    "required": True,
-                    "description": "list of selected CBS"
-                }
-            }
-        },
-
-        {
-            "name": "likes",
-            "http_method": "GET",
-            "resource_type": "list",
-            "description": "likes from CBS",
-            "fields": {
-                "cbs": {
-                    "type": "string",
-                    "required": True,
-                    "description": "list of selected CBS"
-                }
-            }
-        },
-
-        {
-            "name": "dislikes",
-            "http_method": "GET",
-            "resource_type": "list",
-            "description": "dislikes from CBS",
-            "fields": {
-                "cbs": {
-                    "type": "string",
-                    "required": True,
-                    "description": "list of selected CBS"
-                }
-            }
-        }
+        # {
+        #     "name": "comments",
+        #     "http_method": "GET",
+        #     "resource_type": "list",
+        #     "description": "comments from CBS",
+        #     "fields": {
+        #         "cbs": {
+        #             "type": "string",
+        #             "required": True,
+        #             "description": "list of selected CBS"
+        #         }
+        #     }
+        # },
+        #
+        # {
+        #     "name": "likes",
+        #     "http_method": "GET",
+        #     "resource_type": "list",
+        #     "description": "likes from CBS",
+        #     "fields": {
+        #         "cbs": {
+        #             "type": "string",
+        #             "required": True,
+        #             "description": "list of selected CBS"
+        #         }
+        #     }
+        # },
+        #
+        # {
+        #     "name": "dislikes",
+        #     "http_method": "GET",
+        #     "resource_type": "list",
+        #     "description": "dislikes from CBS",
+        #     "fields": {
+        #         "cbs": {
+        #             "type": "string",
+        #             "required": True,
+        #             "description": "list of selected CBS"
+        #         }
+        #     }
+        # }
     ]
