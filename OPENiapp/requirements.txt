@@ -23,5 +23,6 @@ south
 python-google-places
 flickr_api
 #git+https://github.com/vimeo/vimeo.py.git
+git+https://github.com/vimeo/vimeo.py.git@b26d67a49e7971dc88bc3c9340a6b4c3b5673616
 tornado
 python-onedrive[standalone]
