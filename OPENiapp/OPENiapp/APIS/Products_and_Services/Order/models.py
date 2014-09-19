@@ -1,3 +1,4 @@
+
 from OPENiapp.APIS.Context.models import OpeniContextAwareModel
 from OPENiapp.APIS.Products_and_Services.Product.models import OpeniProduct
 from OPENiapp.APIS.Products_and_Services.Shop.models import OpeniShop
@@ -16,7 +17,7 @@ class OpeniOrder(OpeniContextAwareModel):
     service = models.TextField()
     From = models.TextField()
     list = models.ManyToManyField(OpeniProduct)
-    target_id = models.OneToManyField(OpeniShop)
+    target_id = models.TextField()
     total_amount = models.TextField()
     currency = models.TextField()
     vat = models.TextField()
