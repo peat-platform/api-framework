@@ -17,3 +17,7 @@ OPENiapp/obj/*
 .idea/*
 
 *.db
+
+.idea/misc.xml
+
+.idea/modules.xml
