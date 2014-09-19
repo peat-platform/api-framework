@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 IGNORED_FIELDS = ['id', ]
 
 
-
 # Enable all basic ORM filters but do not allow filtering across relationships.
 ALL = 1
 # Enable all ORM filters, including across relationships
 ALL_WITH_RELATIONS = 2
+
 
 class ResourceSwaggerMapping(object):
     """
@@ -68,11 +68,19 @@ class ResourceSwaggerMapping(object):
                 return self._get_native_field_type(field)
 
     def get_resource_verbose_name(self, plural=False):
+        """Retrieve the verbose name for the resource from the queryset model.
+
+        If the resource is not a ModelResource, use either
+        ``resource_name`` or ``resource_name_plural``.
+        """
         qs = self.resource._meta.queryset
         if qs is not None and hasattr(qs, 'model'):
             meta = qs.model._meta
-            verbose_name = plural and meta.verbose_name_plural or meta.verbose_name
+            verbose_name = meta.verbose_name_plural if plural else meta.verbose_name
             return verbose_name.lower()
+
+        if plural and getattr(self.resource._meta, 'resource_name_plural', ""):
+            return self.resource._meta.resource_name_plural
         return self.resource_name
 
     def get_operation_summary(self, detail=True, method='get'):
@@ -110,7 +118,8 @@ class ResourceSwaggerMapping(object):
             'description': description,
         }
 
-        # TODO make use of this to Implement the allowable_values of swagger (https://github.com/wordnik/swagger-core/wiki/Datatypes) at the field level.
+        # TODO make use of this to Implement the allowable_values of swagger
+        # (https://github.com/wordnik/swagger-core/wiki/Datatypes) at the field level.
         # This could be added to the meta value of the resource to specify enum-like or range data on a field.
 #        if allowed_values:
 #            parameter.update({'allowableValues': allowed_values})
@@ -145,7 +154,9 @@ class ResourceSwaggerMapping(object):
             'name': "order_by",
             'dataType': "String",
             'required': False,
-            'description': unicode("Orders the result set based on the selection. Ascending order by default, prepending the '-' sign change the sorting order to descending"),
+            'description': unicode("Orders the result set based on the selection. "
+                                   "Ascending order by default, prepending the '-' "
+                                   "sign change the sorting order to descending"),
             'allowableValues': {
                 'valueType' : "LIST",
                 'values': values
@@ -160,8 +171,8 @@ class ResourceSwaggerMapping(object):
         # Always add the limits & offset params on the root ( aka not prefixed ) object.
         if not prefix and method.upper() == 'GET':
             navigation_filters = [
-                ('limit','int','Specify the number of element to display per page.'),
-                ('offset','int','Specify the offset to start displaying element on a page.'),
+                ('limit', 'int', 'Specify the number of element to display per page.'),
+                ('offset', 'int', 'Specify the offset to start displaying element on a page.'),
             ]
             for name, type, desc in navigation_filters:
                 parameters.append(self.build_parameter(
@@ -177,7 +188,16 @@ class ResourceSwaggerMapping(object):
                 if not prefix.find('{0}__'.format(name)) >= 0:
                     # Integer value means this points to a related model
                     if field in [ALL, ALL_WITH_RELATIONS]:
+                        # For fields marked as ALL_WITH_RELATIONS, we must fetch information on their related resources as well.
+                        # However, tastypie allows us to mark fields that do not have related resources as ALL_WITH_RELATIONS.
+                        # This functions like a white list.
+                        # Therefore, we need to check whether a field actually has a related resource.
                         if field == ALL:
+                            has_related_resource = False
+                        else:
+                            has_related_resource = hasattr(self.resource.fields[name], 'get_related_resource')
+
+                        if not has_related_resource:
                             #This code has been mostly sucked from the tastypie lib
                             if getattr(self.resource._meta, 'queryset', None) is not None:
                                 # Get the possible query terms from the current QuerySet.
@@ -195,10 +215,10 @@ class ResourceSwaggerMapping(object):
                                     # Django 1.5+.
                                     field = QUERY_TERMS
 
-                        elif field == ALL_WITH_RELATIONS: # Show all params from related model
+                        else: # Show all params from related model
                             # Add a subset of filter only foreign-key compatible on the relation itself.
                             # We assume foreign keys are only int based.
-                            field = ['gt','in','gte', 'lt', 'lte','exact'] # TODO This could be extended by checking the actual type of the relational field, but afaik it's also an issue on tastypie.
+                            field = ['gt', 'in', 'gte', 'lt', 'lte', 'exact'] # TODO This could be extended by checking the actual type of the relational field, but afaik it's also an issue on tastypie.
                             related_resource = self.resource.fields[name].get_related_resource(None)
                             related_mapping = ResourceSwaggerMapping(related_resource)
 
@@ -213,7 +233,6 @@ class ResourceSwaggerMapping(object):
                         dataType = schema_field['type']
                         if dataType == 'related':
                             dataType = self.get_related_field_type(name)
-                            dataType = 'Context'
                             description = 'ID of related resource'
 
                         for query in field:
@@ -225,7 +244,7 @@ class ResourceSwaggerMapping(object):
                                     paramType="query",
                                     name="%s%s" % (prefix, name),
                                     dataType=dataType,
-                                    required= False,
+                                    required = False,
                                     description=description,
                                 ))
                             else:
@@ -233,7 +252,7 @@ class ResourceSwaggerMapping(object):
                                     paramType="query",
                                     name="%s%s__%s" % (prefix, name, query),
                                     dataType=dataType,
-                                    required= False,
+                                    required = False,
                                     description=force_unicode(schema_field['help_text']),
                                 ))
 
@@ -243,7 +262,7 @@ class ResourceSwaggerMapping(object):
         return self.build_parameter(
             name=self.resource_name,
             dataType="%s_%s" % (self.resource_name, method) if not method == "get" else self.resource_name,
-            required= True
+            required = True
         )
 
     def _detail_uri_name(self):
@@ -256,12 +275,12 @@ class ResourceSwaggerMapping(object):
         parameters = []
         if resource_type == "view":
             parameters.append(self.build_parameter(paramType='path',
-                name=self._detail_uri_name(),
-                dataType=self.resource_pk_type,
-                description='Primary key of resource'))
+                              name=self._detail_uri_name(),
+                              dataType=self.resource_pk_type,
+                              description='Primary key of resource'))
         for name, field in fields.items():
             parameters.append(self.build_parameter(
-                paramType="query",
+                paramType=field.get("param_type", "query"),
                 name=name,
                 dataType=field.get("type", "string"),
                 required=field.get("required", True),
@@ -275,12 +294,12 @@ class ResourceSwaggerMapping(object):
         if hasattr(self.resource.Meta, 'custom_filtering'):
             for name, field in self.resource.Meta.custom_filtering.items():
                 parameters.append(self.build_parameter(
-                        paramType = 'query',
-                        name = name,
-                        dataType = field['dataType'],
-                        required = field['required'],
-                        description = unicode(field['description'])
-                        ))
+                                  paramType='query',
+                                  name=name,
+                                  dataType=field['dataType'],
+                                  required=field['required'],
+                                  description=unicode(field['description'])
+                                  ))
 
 
         return parameters
@@ -298,7 +317,7 @@ class ResourceSwaggerMapping(object):
                 ),
             ],
             'responseClass': self.resource_name,
-            'nickname': str('%s' % self.resource_name).title(),
+            'nickname': '%s_detail' % self.resource_name,
             'notes': self.resource.__doc__,
         }
         return operation
@@ -309,7 +328,7 @@ class ResourceSwaggerMapping(object):
             'httpMethod': method.upper(),
             'parameters': self.build_parameters_for_list(method=method),
             'responseClass': 'ListView' if method.upper() == 'GET' else self.resource_name,
-            'nickname': str('%s' % self.resource_name).title(),
+            'nickname': '%s_list' % self.resource_name,
             'notes': self.resource.__doc__,
         }
 
@@ -326,7 +345,8 @@ class ResourceSwaggerMapping(object):
                 fields=extra_action.get('fields', {}),
                 resource_type=extra_action.get("resource_type", "view")),
             'responseClass': 'Object', #TODO this should be extended to allow the creation of a custom object.
-            'nickname': str(extra_action['name']).title(),
+            'nickname': extra_action['name'],
+            'notes': extra_action.get('notes', ''),
         }
 
     def build_detail_api(self):
@@ -402,8 +422,10 @@ class ResourceSwaggerMapping(object):
 
     def build_properties_from_fields(self, method='get'):
         properties = {}
-
+        excludes = getattr(self.resource._meta, 'excludes', [])
         for name, field in self.schema['fields'].items():
+            if name in excludes:
+                continue
             # Exclude fields from custom put / post object definition
             if method in ['post','put']:
                 if name in self.WRITE_ACTION_IGNORED_FIELDS:
@@ -441,19 +463,19 @@ class ResourceSwaggerMapping(object):
         # Build properties added by list view in the meta section by tastypie
         meta_properties = {}
         meta_properties.update(
-            self.build_property('limit','int', 'Specify the number of element to display per page.')
+            self.build_property('limit', 'int', 'Specify the number of element to display per page.')
         )
         meta_properties.update(
-            self.build_property('next','string', 'Uri of the next page relative to the current page settings.')
+            self.build_property('next', 'string', 'Uri of the next page relative to the current page settings.')
         )
         meta_properties.update(
-            self.build_property('offset','int', 'Specify the offset to start displaying element on a page.')
+            self.build_property('offset', 'int', 'Specify the offset to start displaying element on a page.')
         )
         meta_properties.update(
-            self.build_property('previous','string', 'Uri of the previous page relative to the current page settings.')
+            self.build_property('previous', 'string', 'Uri of the previous page relative to the current page settings.')
         )
         meta_properties.update(
-            self.build_property('total_count','int', 'Total items count for the all collection')
+            self.build_property('total_count', 'int', 'Total items count for the all collection')
         )
 
         models.update(
