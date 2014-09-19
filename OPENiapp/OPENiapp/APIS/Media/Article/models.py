@@ -1,5 +1,5 @@
-from OPENiapp.OPENiapp.APIS.Context.models import OpeniContextAwareModel
-from OPENiapp.OPENiapp.APIS.Context.models import OpeniContext
+from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.Context.models import OpeniContext
 
 __author__ = 'mpetyx'
 

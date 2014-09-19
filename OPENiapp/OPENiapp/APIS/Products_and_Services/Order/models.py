@@ -1,7 +1,6 @@
-from OPENiapp.OPENiapp.APIS.Context.models import OpeniContextAwareModel
-from OPENiapp.OPENiapp.APIS.Products_and_Services.Product.models import OpeniProduct
-from OPENiapp.OPENiapp.APIS.Products_and_Services.Shop.models import OpeniShop
-from OPENiapp.OPENiapp.APIS.Products_and_Services.Shop.models import OpeniShop
+from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.Products_and_Services.Product.models import OpeniProduct
+from OPENiapp.APIS.Products_and_Services.Shop.models import OpeniShop
 
 
 __author__ = 'mpetyx'
