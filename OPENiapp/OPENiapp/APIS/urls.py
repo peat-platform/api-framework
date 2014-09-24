@@ -46,7 +46,6 @@ from .Activity.Workout.Resources import WorkoutResource
 
 api.register(BadgeResource())
 api.register(CheckinResource())
-api.register(EventResource())
 api.register(GameResource())
 api.register(MeasurementResource())
 api.register(NoteResource())
@@ -55,7 +54,7 @@ api.register(QuestionResource())
 api.register(SleepResource())
 api.register(StatusResource())
 api.register(WorkoutResource())
-# api.register(ActivityEventResource)
+api.register(ActivityEventResource())
 
 
 # Product and Services
