@@ -8,7 +8,7 @@ api = Api(api_name='v.04')
 # Activity
 from .Activity.Badge.Resources import BadgeResource
 from .Activity.Checkin.Resources import CheckinResource
-from .Activity.Event.Resources import ActivityEventResource
+from .Activity.Event.Resources import EventResource
 from .Activity.Measurement.Resources import MeasurementResource
 from .Activity.Note.Resources import NoteResource
 from .Activity.Nutrition.Resources import NutritionResource

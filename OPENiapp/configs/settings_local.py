@@ -108,9 +108,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'OPENiapp.urls'
 TASTYPIE_SWAGGER_API_MODULE = 'OPENiapp.APIS.urls.api'
 
-TWITTER_CONSUMER_KEY = 'Uifi6oR2hXaDaUGtTT61hw'
-TWITTER_CONSUMER_SECRET = 'UyCcdRcYO4Ls084dGZ5FaQVG1Il3FL1EnQI7doMs'
-
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'OPENiapp.wsgi.application'
 
@@ -176,50 +173,75 @@ INSTALLED_APPS = (
 
     'OPENiapp',
 
-
-    # Media API implementation
-    'OPENiapp.APIS.Media',
-    'OPENiapp.APIS.Media.Photo',
-    'OPENiapp.APIS.Media.Audio',
-    'OPENiapp.APIS.Media.Video',
-    'OPENiapp.APIS.Media.Article',
-    'OPENiapp.APIS.Media.File',
-
-    # Location API implementation
-    'OPENiapp.APIS.Location.Event',
-    'OPENiapp.APIS.Location.Place',
-    'OPENiapp.APIS.Location.Route',
-
-
-    # Context API
-    'OPENiapp.APIS.Context',
-
-    # Profile API
-    'OPENiapp.APIS.Profile.Account',
-    'OPENiapp.APIS.Profile.Application',
-    'OPENiapp.APIS.Profile.Contact',
-    'OPENiapp.APIS.Profile.Device',
-    'OPENiapp.APIS.Profile.User',
-
-    # Product and Services API
-    'OPENiapp.APIS.Products_and_Services.Card',
-    'OPENiapp.APIS.Products_and_Services.Order',
-    'OPENiapp.APIS.Products_and_Services.Product',
-    'OPENiapp.APIS.Products_and_Services.Service',
-    'OPENiapp.APIS.Products_and_Services.Shop',
-
     # Activity API
+    'OPENiapp.APIS.Activity',
     'OPENiapp.APIS.Activity.Badge',
     'OPENiapp.APIS.Activity.Checkin',
     'OPENiapp.APIS.Activity.Event',
-    'OPENiapp.APIS.Activity.Game',
     'OPENiapp.APIS.Activity.Measurement',
     'OPENiapp.APIS.Activity.Note',
+    'OPENiapp.APIS.Activity.Notebook',
     'OPENiapp.APIS.Activity.Nutrition',
     'OPENiapp.APIS.Activity.Question',
     'OPENiapp.APIS.Activity.Sleep',
     'OPENiapp.APIS.Activity.Status',
     'OPENiapp.APIS.Activity.Workout',
+
+    # Context API
+    'OPENiapp.APIS.Context',
+
+    # Location API implementation
+    'OPENiapp.APIS.Location',
+    'OPENiapp.APIS.Location.Place',
+    'OPENiapp.APIS.Location.Route',
+    'OPENiapp.APIS.Location.Travel',
+
+    # Media API implementation
+    'OPENiapp.APIS.Media',
+    'OPENiapp.APIS.Media.Article',
+    'OPENiapp.APIS.Media.Audio',
+    'OPENiapp.APIS.Media.File',
+    'OPENiapp.APIS.Media.Page',
+    'OPENiapp.APIS.Media.Photo',
+    'OPENiapp.APIS.Media.Playlist',
+    'OPENiapp.APIS.Media.Video',
+
+    # Product and Services API
+    'OPENiapp.APIS.Products_and_Services',
+    'OPENiapp.APIS.Products_and_Services.Card',
+    'OPENiapp.APIS.Products_and_Services.Cart',
+    'OPENiapp.APIS.Products_and_Services.Order',
+    'OPENiapp.APIS.Products_and_Services.Product',
+    'OPENiapp.APIS.Products_and_Services.Service',
+    'OPENiapp.APIS.Products_and_Services.Shop',
+    'OPENiapp.APIS.Products_and_Services.Wallet',
+
+    # Profile API
+    'OPENiapp.APIS.Profile',
+    'OPENiapp.APIS.Profile.Account',
+    'OPENiapp.APIS.Profile.Application',
+    'OPENiapp.APIS.Profile.Device',
+    'OPENiapp.APIS.Profile.Group',
+    'OPENiapp.APIS.Profile.User',
+
+    # Secondary API
+    'OPENiapp.APIS.Secondary',
+    'OPENiapp.APIS.Secondary.Comment',
+    'OPENiapp.APIS.Secondary.Delivery',
+    'OPENiapp.APIS.Secondary.Dislike',
+    'OPENiapp.APIS.Secondary.Favorite',
+    'OPENiapp.APIS.Secondary.Friendship',
+    'OPENiapp.APIS.Secondary.Invoice',
+    'OPENiapp.APIS.Secondary.Like',
+    'OPENiapp.APIS.Secondary.Offer',
+    'OPENiapp.APIS.Secondary.Payment',
+    'OPENiapp.APIS.Secondary.QuestionOption',
+    'OPENiapp.APIS.Secondary.Refund',
+    'OPENiapp.APIS.Secondary.Review',
+    'OPENiapp.APIS.Secondary.RSVP',
+    'OPENiapp.APIS.Secondary.Score',
+    'OPENiapp.APIS.Secondary.Shipping',
+    'OPENiapp.APIS.Secondary.Tag',
 
 
     'tastypie',
