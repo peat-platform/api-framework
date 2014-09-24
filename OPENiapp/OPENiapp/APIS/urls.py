@@ -20,11 +20,8 @@ from .Activity.Notebook.Resources import NotebookResource
 
 api.register(BadgeResource())
 api.register(CheckinResource())
-<<<<<<< HEAD
-api.register(GameResource())
-=======
+# api.register(GameResource())
 api.register(EventResource())
->>>>>>> FETCH_HEAD
 api.register(MeasurementResource())
 api.register(NoteResource())
 api.register(NutritionResource())
@@ -32,9 +29,7 @@ api.register(QuestionResource())
 api.register(SleepResource())
 api.register(StatusResource())
 api.register(WorkoutResource())
-<<<<<<< HEAD
-api.register(ActivityEventResource())
-=======
+# api.register(ActivityEventResource())
 api.register(NotebookResource())
 
 
@@ -71,7 +66,6 @@ api.register(FileResource())
 api.register(FolderResource())
 api.register(PageResource())
 api.register(PlaylistResource())
->>>>>>> FETCH_HEAD
 
 
 # Product and Services
