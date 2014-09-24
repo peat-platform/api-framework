@@ -47,22 +47,47 @@ class GenericResource(ContextAwareResource):
         try:
             user = request.GET.get("user")
             u = User.objects.filter(username=user)
+            cbs = ast.literal_eval(request.GET.get("cbs"))
+            params = ast.literal_eval(request.GET.get("params"))
 
-            apps = ast.literal_eval(request.GET.get("apps"))
-            method = request.GET.get("method")
-            data = ast.literal_eval(request.GET.get("data"))
+            #apps = ast.literal_eval(request.GET.get("apps"))
+            #method = request.GET.get("method")
+            #data = ast.literal_eval(request.GET.get("data"))
         except:
             logging.info("no cbs is being asked")
 
+        request_method = request.META['REQUEST_METHOD'].lower()
+        path = request.path
+
+        pathArray = path.split('/')
+        version = pathArray[1]
+        object = pathArray[2].lower()
+        id = ""
+        connection = ""
+
+        #append_to_method = "_"
+        #connections = []
+        #if (len(pathArray) > 3):
+        #    connections = pathArray[3:]
+        #for part in connections:
+        #    append_to_method += part
+
+        if (len(pathArray) > 3):
+            id = pathArray[3]
+        if (len(pathArray) > 4):
+            connection = pathArray[4]
+
+        method = request_method + '_' + object
+        if len(connection)>1:
+            method += "_" + connection
+
+        # If there is no cbs declared then return OPENi
+        if (not cbs):
+            cbs = ["OPENi"]
+
+        executable = execution(u, cbs, method, id, params)
+
         if (user and apps and method and data):
-            #executable = execution(u, [{"cbs": "instagram", "app_name": "OPENi"}], "get_a_photo", {"media_id": "628147512937366504_917877895"})
-            #executable = execution(u, [{"cbs": "instagram", "app_name": "OPENi"}], "get_all_photos_for_account", {"account_id": "917877895"})
-            #executable = execution(u, [{"cbs": "foursquare", "app_name": "OPENi"}], "get_user", {})
-            #executable = execution(u, [{"cbs": "facebook", "app_name": "OPENi"}], "get_an_event", {"event_id": "577733618968497"})
-            #executable = execution(u, [{"cbs": "facebook", "app_name": "OPENi"}], "get_all_events_for_account", {"account_id": "1266965453"})
-            #executable = execution(u, [{"cbs": "facebook", "app_name": "OPENi"}], "post_event_to_account", {"account_id": "me", 'name': 'kati', 'start_time': '2014-01-24T23:30:00+0200'})
-            #executable = execution(u, [{"cbs": "facebook", "app_name": "OPENi"}], "edit_an_event", {"event_id": "235785719933823", 'name': 'kati_allo', 'start_time': '2014-01-24T23:30:00+0200'})
-            #executable = execution(u, [{"cbs": "facebook", "app_name": "OPENi"}], "delete_an_event", {"event_id": "235785719933823"})
             executable = execution(u, apps, method, data)
             
             result = executable.make_all_connections()

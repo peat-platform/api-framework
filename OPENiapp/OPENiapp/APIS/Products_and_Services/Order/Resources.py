@@ -1,6 +1,3 @@
-__author__ = 'mpetyx'
-
-
 from tastypie.authorization import DjangoAuthorization
 from .models import OpeniOrder
 
@@ -16,9 +13,3 @@ class OrderResource(GenericResource):
         resource_name = 'Order'
         authentication = Authentication()
         authorization = Authorization()
-        # filtering = {
-        #     'slug': ALL,
-        #     'user': ALL_WITH_RELATIONS,
-        #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-        # }
-
