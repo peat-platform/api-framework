@@ -11,8 +11,7 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class CheckinResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
+        detail_allowed_methods = ['get', 'put', 'delete']
         resource_name = 'Checkin'
         authentication = Authentication()
         authorization = Authorization()
@@ -22,4 +21,55 @@ class CheckinResource(GenericResource):
         #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
         # }
 
-
+        extra_actions = [
+            {
+                "name": "likes",
+                "http_method": "GET",
+                "description": "Retrieve a list of Checkin Likes",
+                "fields": {}
+            },
+            {
+                "name": "likes",
+                "http_method": "POST",
+                "description": "Like a Checkin",
+                "fields": {}
+            },
+            {
+                "name": "comments",
+                "http_method": "GET",
+                "description": "Retrieve a list of Checkin Comments",
+                "fields": {}
+            },
+            {
+                "name": "comments",
+                "http_method": "POST",
+                "description": "Create a new Checkin Comment",
+                "fields": {
+                    "title": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Title of the Comment"
+                    },
+                    "text": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Text of the Comment, (Facebook: message, Twitter: status)"
+                    },
+                    "attachment_id": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook: Attachment ID"
+                    },
+                    "attachment_url": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook: Attachment url"
+                    },
+                    "source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook: Source"
+                    },
+                }
+            }
+        ]
