@@ -1,17 +1,12 @@
 __author__ = 'mpetyx'
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
 
-class OpeniFile(OpeniContextAwareModel):
+class OpeniFile(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    File = models.TextField()
-    duration = models.TextField()
-    Time = models.TextField()
-    tags = models.TextField()
+    File = models.ForeignKey(FileModel, blank=True, null=True)
+    Duration = models.ForeignKey(DurationModel, blank=True, null=True)
+    Tags = models.ForeignKey(TagsModel, blank=True, null=True)
     text = models.TextField()

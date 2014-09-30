@@ -1,7 +1,5 @@
 from OPENiapp.OPENiapp.APIS.Context.models import OpeniContextAwareModel
 
-from OPENiapp.OPENiapp.APIS.Profile.Account.models import OpeniAccount
-
 from django.db import models
 
 #   Set of Properties
