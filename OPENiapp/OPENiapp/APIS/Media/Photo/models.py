@@ -2,18 +2,13 @@
 __author__ = 'mpetyx'
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
 __all__ = ["OpeniPhoto",]
-class OpeniPhoto(OpeniContextAwareModel):
+class OpeniPhoto(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
     profile = models.TextField()
-    location = models.TextField()
-    time = models.TextField()
-    tags = models.TextField()
+    Location = models.ForeignKey(LocationModel)
+    Tags = models.ForeignKey(TagsModel, blank=True, null=True)
     width = models.TextField()
     height = models.TextField()

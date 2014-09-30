@@ -1,11 +1,8 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniTag(OpeniContextAwareModel):
+class OpeniTag(GenericModel):
     # id is missing because it is the default
-    pass
+    text = models.TextField()
+    tagged_id = models.TextField()
+    target_id = models.TextField()

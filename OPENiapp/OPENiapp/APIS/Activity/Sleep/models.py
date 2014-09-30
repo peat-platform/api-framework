@@ -1,18 +1,9 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniSleep(OpeniContextAwareModel):
+class OpeniSleep(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    duration = models.TextField()
+    Duration = models.ForeignKey(DurationModel)
     deep = models.TextField()
     rem = models.TextField()
     light = models.TextField()

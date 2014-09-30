@@ -2,9 +2,9 @@
 __author__ = 'mpetyx'
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniPage(OpeniContextAwareModel):
+class OpeniPage(GenericModel):
     # id is missing because it is the default
-    pass
+    File = models.ForeignKey(FileModel, blank=True, null=True)
+    data = models.TextField()

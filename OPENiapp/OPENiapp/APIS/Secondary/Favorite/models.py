@@ -1,11 +1,6 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniFavorite(OpeniContextAwareModel):
+class OpeniFavorite(GenericModel):
     # id is missing because it is the default
-    pass
+    target_id = models.TextField()
