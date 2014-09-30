@@ -1,6 +1,7 @@
 from django.db import models
 from OPENiapp.APIS.commonModels import *
 
+
 class OpeniAccount(GenericModel):
     Person = models.ForeignKey(PersonModel)
     Wallet = models.ForeignKey(OpeniWallet)

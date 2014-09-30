@@ -1,5 +1,6 @@
 from OPENiapp.APIS.Context.models import OpeniContextAwareModel
 from OPENiapp.APIS.Context.models import OpeniContext
+from OPENiapp.APIS.commonModels import *
 
 __author__ = 'mpetyx'
 
