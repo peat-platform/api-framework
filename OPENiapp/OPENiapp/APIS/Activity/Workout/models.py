@@ -1,19 +1,10 @@
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniWorkout(OpeniContextAwareModel):
+class OpeniWorkout(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    Location = models.TextField()
-    duration = models.TextField()
+    Location = models.ForeignKey(LocationModel)
+    Duration = models.ForeignKey(DurationModel)
     text = models.TextField()
     equipment = models.TextField()
     distance = models.TextField()

@@ -1,17 +1,7 @@
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniCheckin(OpeniContextAwareModel):
+class OpeniCheckin(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    time = models.TextField()
+    Place = models.ForeignKey(PlaceModel)
     text = models.TextField()
-

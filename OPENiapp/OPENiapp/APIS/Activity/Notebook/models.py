@@ -1,11 +1,10 @@
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
+from OPENiapp.APIS.Activity.Note.models import OpeniNote
 
-class OpeniNotebook(OpeniContextAwareModel):
+class OpeniNotebook(GenericModel):
     # id is missing because it is the default
-    pass
+    title = models.TextField()
+    description = models.TextField()
+    Notes = models.ForeignKey(OpeniNote)
