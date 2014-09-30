@@ -1,14 +1,8 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
+from OPENiapp.APIS.commonModels import *
 
+from OPENiapp.APIS.Profile.Account.models import OpeniAccount
 
-class OpeniUser(OpeniContextAwareModel):
+class OpeniUser(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    url_to_original_user = models.TextField()
+    account = models.ForeignKey(OpeniAccount)
