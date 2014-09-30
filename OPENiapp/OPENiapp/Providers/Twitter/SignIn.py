@@ -19,7 +19,7 @@ class App():
         self.name = "openi"
 
 
-app = App(client_id=settings.TWITTER_CONSUMER_KEY, secret=settings.TWITTER_CONSUMER_SECRET)
+#app = App(client_id=settings.TWITTER_CONSUMER_KEY, secret=settings.TWITTER_CONSUMER_SECRET)
 token = None
 
 request_factory = RequestFactory()

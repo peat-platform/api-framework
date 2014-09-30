@@ -13,7 +13,8 @@ from Youtube.connector import provider as YTprovider
 
 
 class execution:
-    def __init__(self, user, apps, method, data):
+    def __init__(self, user, cbs, method, id, params):
+    #def __init__(self, user, apps, method, data):
         """
             Initialize execution class.
             Assign the connected user to a variable
@@ -22,9 +23,12 @@ class execution:
             Assign
         """
         self.user = user
-        self.apps = apps
+        self.cbs = cbs
+        #self.apps = apps
         self.method = method
-        self.data = data
+        #self.data = data
+        self.id = id
+        self.params = params
 
     def make_connection(self, cbs):
         """ Call each time we want to make a new connection with one cbs """
@@ -63,14 +67,20 @@ class execution:
             method_to_call = getattr(provider, self.method)
         except AttributeError:
             return {'attributeError': 'Such method does not exist in this service'}
-
-        return method_to_call(self.data)
+        
+        if ((self.id != "") and (self.params != "")):
+            return method_to_call(self.id, self.params)
+        elif (self.id != ""):
+            return method_to_call(self.id)
+        else:
+            return method_to_call(self.params)
+        #return method_to_call(self.data)
 
 
     def make_all_connections(self):
         json_result = []
-        for app in self.apps:
-            provider = self.make_connection(app['cbs'])
+        for cbs in self.cbs:
+            provider = self.make_connection(cbs)
             result = self.do_method(provider)
             json_result.append(result)
         return json_result

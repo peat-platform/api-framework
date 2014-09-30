@@ -4,10 +4,6 @@ from OPENiapp.Providers.base.common import *
 class foActivity(bcActivity):
     """ This class is used to:
         1. Get a Foursquare Event
-        2. Get all Events for a Foursquare Account
-
-        15. Get all RSVP for an Event
-        16. Post an RSVP to an Event
     """
     #   region Activity API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Activity_API
@@ -15,10 +11,10 @@ class foActivity(bcActivity):
     #   region Event Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Event_Mapping
     
-    def get_an_event(self, params):
+    def get_event(self, id):
         """ GET API_PATH/[EVENT_ID] """
         # /event_id (ie /4e173d2cbd412187aabb3c04)
-        raw_data = self.connector.events(params['event_id'])
+        raw_data = self.connector.events(id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])

@@ -2,15 +2,7 @@ from common import *
 
 class bcLocation:
     #   region Location API
-    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Location%20API/
-    
-    #   region Event Object
-    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Event%20Mapping/
-
-    #   Event Object resides in Activity API
-
-    #   endregion Event Object
-    
+    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Location%20API/    
     
     #   region Place Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Place%20Mapping/
