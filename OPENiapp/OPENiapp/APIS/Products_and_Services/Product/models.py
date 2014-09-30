@@ -7,7 +7,7 @@ from OPENiapp.APIS.commonModels import GenericModel, ProductModel
 
 class OpeniProduct(GenericModel):
     # id is missing because it is the default
-    Profile = models.OneToOneRel(ProductModel)
+    Profile = models.OneToOneField(ProductModel)
     price = models.FloatField()
     currency = models.TextField()
     amount = models.PositiveIntegerField() #available products in a store, if available

@@ -1,11 +1,14 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+__author__ = 'alvertisjo'
 
-__author__ = 'mpetyx'
-
-
+from OPENiapp.APIS.commonModels import GenericModel
+from OPENiapp.APIS.Products_and_Services.Card.models import OpeniCard
 from django.db import models
 
 
-class OpeniRefund(OpeniContextAwareModel):
+class OpeniRefund(GenericModel):
     # id is missing because it is the default
-    pass
+    target_id = models.TextField()	#The id of the object where this payment applies	string
+    card_id = models.ForeignKey(OpeniCard)	#The id of the used payment method	string
+    amount = models.FloatField()	#The amount of money returned	string
+    currency = models.TextField()	#The used currency where the refund has been done	string
+    reason = models.TextField ()
