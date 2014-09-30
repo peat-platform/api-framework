@@ -44,10 +44,16 @@ class GenericResource(ContextAwareResource):
 
         Should return a HttpResponse (200 OK).
         """
+        cbs = ["OPENi"]
+        params = ""
+        id = ""
+        if 'id' in kwargs:
+            id = kwargs['id']
         try:
             user = request.GET.get("user")
             u = User.objects.filter(username=user)
             cbs = ast.literal_eval(request.GET.get("cbs"))
+            id = ast.literal_eval(request.GET.get("id"))
             params = ast.literal_eval(request.GET.get("params"))
 
             #apps = ast.literal_eval(request.GET.get("apps"))
@@ -62,7 +68,6 @@ class GenericResource(ContextAwareResource):
         pathArray = path.split('/')
         version = pathArray[1]
         object = pathArray[2].lower()
-        id = ""
         connection = ""
 
         #append_to_method = "_"
@@ -73,7 +78,8 @@ class GenericResource(ContextAwareResource):
         #    append_to_method += part
 
         if (len(pathArray) > 3):
-            id = pathArray[3]
+            if (pathArray[3] != ""):
+                id = pathArray[3]
         if (len(pathArray) > 4):
             connection = pathArray[4]
 
@@ -81,17 +87,15 @@ class GenericResource(ContextAwareResource):
         if len(connection)>1:
             method += "_" + connection
 
-        # If there is no cbs declared then return OPENi
-        if (not cbs):
-            cbs = ["OPENi"]
-
         executable = execution(u, cbs, method, id, params)
+        result = executable.make_all_connections()
+        return self.create_response(request, result)
 
-        if (user and apps and method and data):
-            executable = execution(u, apps, method, data)
+        #if (user and apps and method and data):
+        #    executable = execution(u, apps, method, data)
             
-            result = executable.make_all_connections()
-            return self.create_response(request, result)
+        #    result = executable.make_all_connections()
+        #    return self.create_response(request, result)
         
         # Default actions down here, for get_list (that is if there is no fb or other CBS request!
         base_bundle = self.build_bundle(request=request)
@@ -115,6 +119,7 @@ class GenericResource(ContextAwareResource):
     def prepend_urls(self):
         return [
             url(r"^(?P<resource_name>%s)/generic%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="generic"),
+            url(r"^(?P<resource_name>%s)/(?P<id>\d+)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="id")
         ]
 
 class GenericMeta:

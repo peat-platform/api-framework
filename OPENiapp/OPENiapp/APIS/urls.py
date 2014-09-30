@@ -20,7 +20,6 @@ from .Activity.Notebook.Resources import NotebookResource
 
 api.register(BadgeResource())
 api.register(CheckinResource())
-# api.register(GameResource())
 api.register(EventResource())
 api.register(MeasurementResource())
 api.register(NoteResource())
@@ -29,7 +28,6 @@ api.register(QuestionResource())
 api.register(SleepResource())
 api.register(StatusResource())
 api.register(WorkoutResource())
-# api.register(ActivityEventResource())
 api.register(NotebookResource())
 
 
