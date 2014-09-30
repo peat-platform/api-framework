@@ -1,9 +1,11 @@
 from OPENiapp.OPENiapp.APIS.Context.models import OpeniContextAwareModel
 
+from OPENiapp.OPENiapp.APIS.Profile.Account.models import OpeniAccount
+
 from django.db import models
 
 #   Set of Properties
-class AddressModel(models.Model):
+class AddressModel():
     street = models.TextField()
     number = models.TextField()
     apartment = models.TextField()
@@ -12,74 +14,67 @@ class AddressModel(models.Model):
     country = models.TextField()
     zip = models.TextField()
 
-class DurationModel(models.Model):
-    starts_time = models.TextField(models.Model)
+class DurationModel():
+    starts_time = models.TextField()
     ends_time = models.TextField()
 
-class FromModel(models.Model):
+class FromModel():
     from_id = models.TextField()
     object_type = models.TextField()
     url = models.TextField()
     name = models.TextField()
 
-class LocationModel(models.Model):
+class LocationModel():
     latitude = models.TextField()
     longitude = models.TextField()
     height = models.TextField()
 
-class SizeModel(models.Model):
+class SizeModel():
     depth = models.TextField()
     height = models.TextField()
     width = models.TextField()
 
-class TagsModel(models.Model):
+class TagsModel():
     tag_id = models.TextField()
     name = models.TextField()
     Time = models.ForeignKey(TimeModel)
     x_location = models.TextField()
     y_location = models.TextField()
 
-class TimeModel(models.Model):
+class TimeModel():
     created_time = models.TextField()
     edited_time = models.TextField()
     deleted_time = models.TextField()
 
 #   Profile
 
-class ApplicationModel(models.Model):
+class ApplicationModel():
     title = models.TextField()
     description = models.TextField()
     version = models.TextField()
     icon = models.TextField()
     developer = models.TextField()
 
-class DeviceModel(models.Model):
-    manufacturer = models.TextField()
-    model = models.TextField()
-    device_id = models.TextField()
-    os_type = models.TextField()
-    os_version = models.TextField()
-
-class FileModel(models.Model):
+class FileModel():
     title = models.TextField()
     description = models.TextField()
     format = models.TextField()
     size = models.TextField()
     icon = models.TextField()
 
-class OrganizationModel(models.Model):
+class OrganizationModel():
     name = models.TextField()
     description = models.TextField()
     founded = models.TextField()
     address = models.TextField()
 
-class PersonModel(models.Model):
+class PersonModel():
     name = models.TextField()
     surname = models.TextField()
     middlename = models.TextField()
     birthdate = models.TextField()
 
-class PlaceModel(models.Model):
+class PlaceModel():
     name = models.TextField()
     description = models.TextField()
     category = models.TextField()
@@ -87,7 +82,7 @@ class PlaceModel(models.Model):
     Address = models.ForeignKey(AddressModel)
     Location = models.ForeignKey(LocationModel)
 
-class ProductModel(models.Model):
+class ProductModel():
     name = models.TextField()
     description = models.TextField()
     category = models.TextField()
@@ -95,7 +90,7 @@ class ProductModel(models.Model):
     Company = models.ForeignKey(OrganizationModel)
     year = models.TextField()
 
-class ServiceModel(models.Model):
+class ServiceModel():
     name = models.TextField()
     description = models.TextField()
     category = models.TextField()

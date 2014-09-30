@@ -3,10 +3,9 @@ __author__ = 'mpetyx'
 
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import *
 
-
-class OpeniPlace(OpeniContextAwareModel):
+class OpeniPlace(GenericModel):
     # id is missing because it is the default
-    pass
-
+    text = models.TextField()
+    Place = models.ForeignKey(PlaceModel, blank=True, null=True)

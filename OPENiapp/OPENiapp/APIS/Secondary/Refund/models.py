@@ -3,7 +3,7 @@ __author__ = 'alvertisjo'
 from OPENiapp.APIS.commonModels import GenericModel
 from OPENiapp.APIS.Products_and_Services.Card.models import OpeniCard
 from django.db import models
-
+from OPENiapp.APIS.commonModels import *
 
 class OpeniRefund(GenericModel):
     # id is missing because it is the default

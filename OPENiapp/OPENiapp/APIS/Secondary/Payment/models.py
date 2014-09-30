@@ -11,3 +11,4 @@ class OpeniPayment(GenericModel):
     # id is missing because it is the default
     target_id = models.ForeignKey(OpeniInvoice)	#the id of the object where this payment applies; usually it is an [invoice]		string
     card_id= models.ForeignKey(OpeniCard)	#the id of the used payment method		string
+

@@ -1,4 +1,4 @@
-__author__ = 'mpetyx'
+__author__ = 'alvertisjo'
 
 from django.db import models
 from OPENiapp.APIS.commonModels import GenericModel
@@ -9,4 +9,3 @@ class OpeniDelivery(GenericModel):
     # id is missing because it is the default
     target_id = models.ForeignKey(OpeniShipping) #The id of the order or shipping where this delivery applies		string
     signature = models.TextField()	#The URL to the signature of the user that received the delivery
-

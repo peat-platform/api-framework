@@ -1,11 +1,13 @@
-__author__ = 'mpetyx'
+__author__ = 'alvertisjo'
 from OPENiapp.APIS.commonModels import GenericModel
 
 from django.db import models
+from OPENiapp.APIS.commonModels import *
 
 
 class OpeniOffer(GenericModel):
     # id is missing because it is the default
-    price = models.FloatField()	#the new price that applies to the product		string
-    currency = models.TextField()	#the currency for the price		string
-    target_id = models.TextField()	#The id of the object where this offer applies.		string
+    price = models.TextField()
+    Duration = models.ForeignKey(DurationModel, blank=True, null=True)
+    currency = models.TextField()
+    target_id = models.TextField()
