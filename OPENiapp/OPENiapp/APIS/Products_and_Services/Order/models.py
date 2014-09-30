@@ -1,17 +1,10 @@
-
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
-from OPENiapp.APIS.Products_and_Services.Product.models import OpeniProduct
-from OPENiapp.APIS.Products_and_Services.Shop.models import OpeniShop
-
-
-__author__ = 'mpetyx'
-
-
 from django.db import models
+from OPENiapp.APIS.Context.models import OpeniContextAwareModel
 
 
 class OpeniOrder(OpeniContextAwareModel):
     # id is missing because it is the default
+<<<<<<< HEAD
     url = models.TextField()
     object_type = models.TextField()
     service = models.TextField()
@@ -22,3 +15,6 @@ class OpeniOrder(OpeniContextAwareModel):
     vat = models.FloatField()
     total_amount = models.FloatField()
     currency = models.TextField()
+=======
+    pass
+>>>>>>> FETCH_HEAD

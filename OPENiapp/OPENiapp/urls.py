@@ -39,8 +39,8 @@ urlpatterns = patterns('',
 
                        # url(r'api/doc/', include('tastypie_swagger.urls', namespace='tastypie_swagger'))
                        url(r'api/doc/',
-                        include('tastypie_swagger.urls', namespace='myapi_tastypie_swagger'),
-                        kwargs={"tastypie_api_module":"OPENiapp.APIS.urls.api", "namespace":"myapi_tastypie_swagger"}
+                        include('tastypie_swagger.urls', namespace='openi_tastypie_swagger'),
+                        kwargs={"tastypie_api_module":"OPENiapp.APIS.urls.api", "namespace":"openi_tastypie_swagger"}
     ),
 )
 

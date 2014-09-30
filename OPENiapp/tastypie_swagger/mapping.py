@@ -317,7 +317,7 @@ class ResourceSwaggerMapping(object):
                 ),
             ],
             'responseClass': self.resource_name,
-            'nickname': '%s_detail' % self.resource_name,
+            'nickname': method + '_' + self.resource_name.lower(),
             'notes': self.resource.__doc__,
         }
         return operation
@@ -328,7 +328,7 @@ class ResourceSwaggerMapping(object):
             'httpMethod': method.upper(),
             'parameters': self.build_parameters_for_list(method=method),
             'responseClass': 'ListView' if method.upper() == 'GET' else self.resource_name,
-            'nickname': '%s_list' % self.resource_name,
+            'nickname': method + '_' + self.resource_name.lower() + '_list',
             'notes': self.resource.__doc__,
         }
 
@@ -345,7 +345,8 @@ class ResourceSwaggerMapping(object):
                 fields=extra_action.get('fields', {}),
                 resource_type=extra_action.get("resource_type", "view")),
             'responseClass': 'Object', #TODO this should be extended to allow the creation of a custom object.
-            'nickname': extra_action['name'],
+            'nickname': extra_action.get('http_method', "get").lower() + '_' + extra_action['name'].lower() +
+            '_' + self.resource_name.lower(),
             'notes': extra_action.get('notes', ''),
         }
 

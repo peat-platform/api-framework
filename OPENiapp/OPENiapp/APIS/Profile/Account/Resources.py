@@ -21,3 +21,19 @@ class AccountResource(GenericResource):
         #     'user': ALL_WITH_RELATIONS,
         #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
         # }
+
+        extra_actions = [
+            {
+                "name": "checkins",
+                "http_method": "GET",
+                "description": "Retrieve a list of Account Checkins",
+                "fields": {}
+            },
+            # Not yet implemented or used
+            #{
+            #    "name": "checkins",
+            #    "http_method": "POST",
+            #    "description": "Post a Checkin",
+            #    "fields": {}
+            #}
+        ]
