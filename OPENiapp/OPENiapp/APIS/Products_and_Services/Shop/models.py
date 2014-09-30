@@ -1,18 +1,12 @@
-
-__author__ = 'mpetyx'
+__author__ = 'alvertisjo'
 
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import GenericModel, PlaceModel
 
-
-class OpeniShop(OpeniContextAwareModel):
+class OpeniShop(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    place = models.TextField()
+    Place = models.ForeignKey(PlaceModel)
     region = models.TextField()
     currency = models.TextField()
     description = models.TextField()

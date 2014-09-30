@@ -1,18 +1,13 @@
-
 __author__ = 'mpetyx'
 
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import GenericModel,AddressModel
 
 
-class OpeniCard(OpeniContextAwareModel):
+class OpeniCard(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    billing_address = models.TextField()
+    billing_address = models.ForeignKey(AddressModel)
     number = models.TextField()
     card_owner_date_of_birth = models.TextField()
     card_type = models.TextField()

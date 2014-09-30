@@ -1,30 +1,14 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
-
-__author__ = 'mpetyx'
+__author__ = 'alvertisjo'
 
 
 from django.db import models
+from OPENiapp.APIS.commonModels import GenericModel, ProductModel
 
 
-
-
-class ProductProfile(models.Model):
-    name = models.TextField() #The name of the product		string
-    description = models.TextField()	#Any description for a product		string
-    category = models.TextField()	#The categories the product may belong		list of strings
-    picture = models.TextField()	#A picture of the product		string
-    #company	The company that produces the product		An [[Profile#Organization
-    year = models.IntegerField()	#The year the product became available for the first time		string
-
-
-class OpeniProduct(OpeniContextAwareModel):
+class OpeniProduct(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
+    Profile = models.OneToOneRel(ProductModel)
     price = models.FloatField()
     currency = models.TextField()
-    amount = models.TextField()
+    amount = models.PositiveIntegerField() #available products in a store, if available
     code = models.TextField()
-    profile = models.ForeignKey(ProductProfile)

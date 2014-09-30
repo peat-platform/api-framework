@@ -1,11 +1,8 @@
 from django.db import models
 from OPENiapp.APIS.commonModels import *
+from OPENiapp.APIS.Products_and_services.Wallet.models import OpeniWallet
+from OPENiapp.APIS.Profile.User.models import OpeniUser
 
-<<<<<<< HEAD
-=======
-from OPENiapp.APIS.Products_and_services.Wallet import OpeniWallet
-from OPENiapp.APIS.Profile.User import OpeniUser
->>>>>>> FETCH_HEAD
 
 class OpeniAccount(GenericModel):
     Person = models.ForeignKey(PersonModel)

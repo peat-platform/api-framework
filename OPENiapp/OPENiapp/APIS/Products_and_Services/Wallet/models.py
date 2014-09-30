@@ -1,7 +1,10 @@
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import GenericModel
+from OPENiapp.APIS.Products_and_Services.Card.models import OpeniCard
 
 
-class OpeniWallet(OpeniContextAwareModel):
-    # id is missing because it is the default
-    pass
+class OpeniWallet(GenericModel):
+    cards = models.ForeignKey(OpeniCard, null=True, blank=True)
+    name = models.TextField()
+    description = models.TextField()
+

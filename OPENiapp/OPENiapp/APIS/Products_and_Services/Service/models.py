@@ -1,18 +1,15 @@
 
-__author__ = 'mpetyx'
+__author__ = 'alvertisjo'
 
 
 from django.db import models
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
+from OPENiapp.APIS.commonModels import GenericModel, ServiceModel
 
 
-class OpeniService(OpeniContextAwareModel):
+class OpeniService(GenericModel):
     # id is missing because it is the default
-    url = models.TextField()
-    object_type = models.TextField()
-    service = models.TextField()
-    From = models.TextField()
-    time = models.TextField()
-    old_price = models.TextField()
-    price = models.TextField()
+    Profile = models.OneToOneRel(ServiceModel)
+    price = models.FloatField()
     currency = models.TextField()
+    amount = models.PositiveIntegerField() #available products in a store, if available
+    code = models.TextField()
