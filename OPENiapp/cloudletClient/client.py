@@ -28,12 +28,17 @@ class CloudletClient:
         return {"status code": r.status_code, "body": r.text, "json response": r.json()}
 
     def retrieve_cloudlet_id(self):
-        hdr = {
-        "auth_token": '{"token": { "user": "dmccarthy" }, "signature": "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw=="}'}
+        # hdr = {
+        # "auth_token": '{"token": { "user": "mpetyx" }, "signature": "eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJlM2Y1YzFkMi0yYzE0LTRiZDEtYmIyMC05NjBlMmVmYWIxOWIiLCJzdWIiOiIyOWQxMDFjNi01MDIzLTQxMWQtYTkzZS00OWI3MGYxMzgwYmMiLCJzY29wZSI6WyJvcGVuaWQiXSwiY2xpZW50X2lkIjoibXBldHl4IiwiY2lkIjoibXBldHl4IiwidXNlcl9pZCI6IjI5ZDEwMWM2LTUwMjMtNDExZC1hOTNlLTQ5YjcwZjEzODBiYyIsInVzZXJfbmFtZSI6Im1wZXR5eCIsImVtYWlsIjoiZW1haWxAZXhhbXBsZS5vcmciLCJpYXQiOjE0MTIxNTgyOTMsImV4cCI6MTQxMjIwMTQ5MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3VhYS9vYXV0aC90b2tlbiIsImF1ZCI6WyJvcGVuaWQiXX0.RNXaukUgIaEO3d1lDZAumOBgdp7c-8vLIzZ465ANE06MXB-caeEXdDGbi7W4Qse8p4iwl8g4A_wWuBbXQ9S-iw""}'}
 
+        hdr = { "Authorization":self.__password}
         r = requests.get(url=self.__server + "/cloudlets", headers=hdr, verify=False)
 
-        self.__cloudlet_id = r.json()['id']
+        print r
+        try:
+            self.__cloudlet_id = r.json()['id']
+        except:
+            self.__cloudlet_id = 1
 
         return {"status code": r.status_code, "body": r.text, "json_response": r.json(),
                 "cloudlet_id": self.__cloudlet_id}
@@ -85,12 +90,11 @@ class CloudletClient:
 if __name__ == '__main__':
 
 
-    client = CloudletClient("https://193.1.188.34:443/api/v1", "dmccarthy",
-                            "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==")
+    client = CloudletClient("https://demo2.openi-ict.eu:443/api/v1", "mpetyx","eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJlM2Y1YzFkMi0yYzE0LTRiZDEtYmIyMC05NjBlMmVmYWIxOWIiLCJzdWIiOiIyOWQxMDFjNi01MDIzLTQxMWQtYTkzZS00OWI3MGYxMzgwYmMiLCJzY29wZSI6WyJvcGVuaWQiXSwiY2xpZW50X2lkIjoibXBldHl4IiwiY2lkIjoibXBldHl4IiwidXNlcl9pZCI6IjI5ZDEwMWM2LTUwMjMtNDExZC1hOTNlLTQ5YjcwZjEzODBiYyIsInVzZXJfbmFtZSI6Im1wZXR5eCIsImVtYWlsIjoiZW1haWxAZXhhbXBsZS5vcmciLCJpYXQiOjE0MTIxNTgyOTMsImV4cCI6MTQxMjIwMTQ5MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3VhYS9vYXV0aC90b2tlbiIsImF1ZCI6WyJvcGVuaWQiXX0.RNXaukUgIaEO3d1lDZAumOBgdp7c-8vLIzZ465ANE06MXB-caeEXdDGbi7W4Qse8p4iwl8g4A_wWuBbXQ9S-iw")
     # print client.create(alias="jor el", username="kent")['body']
     # client.delete("c_0669d9dec1d9b80db1f0455746c25a0e")
-    # print client.retrieve_cloudlet_id()
-    # print client.get_object_list()
+    print client.retrieve_cloudlet_id()
+    print client.get_object_list()
 
     sample_object = {
         "@openi_type": "t_0e09a80a6411bb7203e1d4e3bd1fc85f-321",

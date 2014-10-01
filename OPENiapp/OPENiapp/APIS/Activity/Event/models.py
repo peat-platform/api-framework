@@ -1,5 +1,5 @@
-from OPENiapp.APIS.Context.models import OpeniContextAwareModel
 from django.db import models
+from OPENiapp.APIS.commonModels import *
 
 class OpeniEvent(GenericModel):
     # id is missing because it is the default

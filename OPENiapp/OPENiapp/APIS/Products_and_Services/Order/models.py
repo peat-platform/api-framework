@@ -4,6 +4,16 @@ from OPENiapp.APIS.Products_and_Services.Service.models import OpeniService
 from OPENiapp.APIS.Products_and_Services.Shop.models import OpeniShop
 from OPENiapp.APIS.commonModels import GenericModel
 
+class ProductList(models.Model):
+    object_id=models.ForeignKey(OpeniProduct, null=True, blank=True)
+    quantity=models.PositiveIntegerField()
+    cost= models.FloatField()
+
+class ServiceList(models.Model):
+    object_id=models.ForeignKey(OpeniService, null=True, blank=True)
+    quantity=models.PositiveIntegerField()
+    cost= models.FloatField()
+
 
 class OpeniOrder(GenericModel):
     # id is missing because it is the default
@@ -15,14 +25,5 @@ class OpeniOrder(GenericModel):
     total_amount = models.FloatField()
     currency = models.TextField()
 
-class ProductList(models):
-    object_id=models.ForeignKey(OpeniProduct, null=True, blank=True)
-    quantity=models.PositiveIntegerField()
-    cost= models.FloatField()
-
-class ServiceList(models):
-    object_id=models.ForeignKey(OpeniService, null=True, blank=True)
-    quantity=models.PositiveIntegerField()
-    cost= models.FloatField()
 
 

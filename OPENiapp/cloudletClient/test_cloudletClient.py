@@ -28,6 +28,8 @@ class TestCloudletClient(TestCase):
         self.client = CloudletClient("https://193.1.188.34:443/api/v1", "dmccarthy",
                         "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==")
 
+
+
     def test_get_id(self):
 
         self.log.debug( "About to retrieve the cloudlet it")
