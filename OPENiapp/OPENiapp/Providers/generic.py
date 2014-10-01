@@ -36,6 +36,7 @@ class execution:
         # account_provider should be called exactly as the cbs we want, ie facebook for facebook!
         access_token = SocialToken.objects.filter(account__user=self.user, account__provider=cbs)
         # Check which cbs we now have and make the connection by returning the provider from the connector
+        provider = None
         if (cbs == "facebook"):
             provider = FBprovider(access_token)
         elif (cbs == "twitter"):
