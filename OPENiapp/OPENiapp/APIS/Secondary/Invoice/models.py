@@ -3,7 +3,7 @@ __author__ = 'mpetyx'
 
 from django.db import models
 from OPENiapp.APIS.Products_and_Services.Order.models import OpeniOrder
-from OPENiapp.APIS.commonModels import GenericModel
+from OPENiapp.APIS.models import GenericModel
 from OPENiapp.APIS.Products_and_Services.Product.models import OpeniProduct
 from OPENiapp.APIS.Products_and_Services.Service.models import OpeniService
 

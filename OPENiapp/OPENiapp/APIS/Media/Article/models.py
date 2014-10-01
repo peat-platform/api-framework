@@ -1,10 +1,10 @@
-from OPENiapp.APIS.commonModels import *
+from OPENiapp.APIS.models import *
 
 __author__ = 'mpetyx'
 
 
 from django.db import models
-from OPENiapp.APIS.commonModels import FileModel, TagsModel
+from OPENiapp.APIS.models import FileModel, TagsModel
 
 
 __all__ = ["OpeniArticle",]

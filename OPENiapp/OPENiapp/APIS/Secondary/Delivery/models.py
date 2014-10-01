@@ -1,7 +1,7 @@
 __author__ = 'alvertisjo'
 
 from django.db import models
-from OPENiapp.APIS.commonModels import GenericModel
+from OPENiapp.APIS.models import GenericModel
 from OPENiapp.APIS.Secondary.Shipping.models import OpeniShipping
 
 

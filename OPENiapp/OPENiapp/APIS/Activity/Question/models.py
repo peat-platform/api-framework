@@ -1,5 +1,5 @@
 from django.db import models
-from OPENiapp.APIS.commonModels import *
+from OPENiapp.APIS.models import *
 
 from OPENiapp.APIS.Secondary.QuestionOption.models import OpeniQuestionOption
 

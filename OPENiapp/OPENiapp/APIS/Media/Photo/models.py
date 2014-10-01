@@ -2,7 +2,7 @@
 __author__ = 'mpetyx'
 
 from django.db import models
-from OPENiapp.APIS.commonModels import *
+from OPENiapp.APIS.models import *
 
 __all__ = ["OpeniPhoto",]
 class OpeniPhoto(GenericModel):

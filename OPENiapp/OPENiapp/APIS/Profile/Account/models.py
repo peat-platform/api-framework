@@ -1,5 +1,5 @@
 from django.db import models
-from OPENiapp.APIS.commonModels import *
+from OPENiapp.APIS.models import *
 from django.contrib.auth.models import User as OpeniUser
 from OPENiapp.APIS.Products_and_Services.Wallet.models import OpeniWallet
 

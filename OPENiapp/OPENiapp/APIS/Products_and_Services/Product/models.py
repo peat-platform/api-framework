@@ -2,7 +2,7 @@ __author__ = 'alvertisjo'
 
 
 from django.db import models
-from OPENiapp.APIS.commonModels import GenericModel, ProductModel
+from OPENiapp.APIS.models import GenericModel, ProductModel
 
 
 class OpeniProduct(GenericModel):

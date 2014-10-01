@@ -3,7 +3,7 @@ __author__ = 'alvertisjo'
 
 
 from django.db import models
-from OPENiapp.APIS.commonModels import GenericModel, ServiceModel
+from OPENiapp.APIS.models import GenericModel, ServiceModel
 
 
 class OpeniService(GenericModel):

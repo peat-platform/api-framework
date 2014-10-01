@@ -1,5 +1,5 @@
 from django.db import models
-from OPENiapp.APIS.commonModels import GenericModel,DurationModel, AddressModel
+from OPENiapp.APIS.models import GenericModel,DurationModel, AddressModel
 from OPENiapp.APIS.Products_and_Services.Order.models import OpeniOrder
 
 class OpeniShipping(GenericModel):

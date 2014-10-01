@@ -172,6 +172,7 @@ INSTALLED_APPS = (
     # 'allauth.socialaccount.providers.xing',
 
     'OPENiapp',
+    'OPENiapp.APIS',
 
     # Activity API
     'OPENiapp.APIS.Activity',
