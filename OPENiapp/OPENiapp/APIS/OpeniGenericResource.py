@@ -47,8 +47,11 @@ class GenericResource(ContextAwareResource):
         cbs = ["OPENi"]
         params = ""
         id = ""
+        connection = ""
         if 'id' in kwargs:
             id = kwargs['id']
+        if 'connection' in kwargs:
+            connection = kwargs['connection']
         try:
             user = request.GET.get("user")
             u = User.objects.filter(username=user)
@@ -68,7 +71,6 @@ class GenericResource(ContextAwareResource):
         pathArray = path.split('/')
         version = pathArray[1]
         object = pathArray[2].lower()
-        connection = ""
 
         #append_to_method = "_"
         #connections = []
@@ -77,15 +79,15 @@ class GenericResource(ContextAwareResource):
         #for part in connections:
         #    append_to_method += part
 
-        if (len(pathArray) > 3):
-            if (pathArray[3] != ""):
-                id = pathArray[3]
-        if (len(pathArray) > 4):
-            connection = pathArray[4]
+        #if (len(pathArray) > 3):
+        #    if (pathArray[3] != ""):
+        #        id = pathArray[3]
+        #if (len(pathArray) > 4):
+        #    connection = pathArray[4]
 
-        method = request_method + '_' + object
-        if len(connection)>1:
-            method += "_" + connection
+        #method = request_method + '_' + object
+        #if len(connection)>1:
+        #    method += "_" + connection
 
         executable = execution(u, cbs, method, id, params)
         result = executable.make_all_connections()
@@ -119,7 +121,8 @@ class GenericResource(ContextAwareResource):
     def prepend_urls(self):
         return [
             url(r"^(?P<resource_name>%s)/generic%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="generic"),
-            url(r"^(?P<resource_name>%s)/(?P<id>\d+)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="id")
+            url(r"^(?P<resource_name>%s)/(?P<id>\S)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="id"),
+            url(r"^(?P<resource_name>%s)/(?P<id>\S)/(?P<connection>)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="connections")
         ]
 
 class GenericMeta:
