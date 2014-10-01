@@ -96,6 +96,8 @@ class ServiceModel(models.Model):
 
 class GenericModel(OpeniContextAwareModel):
     # id is missing because it is the default
+    # id = models.TextField(unique=False, blank=True, null=True)
+
     url = models.TextField()
     object_type = models.TextField()
     service = models.TextField()

@@ -4,12 +4,18 @@ __author__ = 'mpetyx'
 from .models import OpeniBadge
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from tastypie import fields
+from cloudletClient.CloudletResource import SampleCloudletResource
+
+class BadgeResource(SampleCloudletResource): #GenericResource):
+    # uuid = fields.CharField(attribute='uuid')
+    # title = fields.CharField(attribute='title')
+    # description = fields.CharField(attribute='description')
+    # icon = fields.CharField(attribute='icon')
 
 
-class BadgeResource(GenericResource):
     class Meta(GenericMeta):
-        queryset = OpeniBadge.objects.all()
+        # queryset = OpeniBadge.objects.all()
+        object_class = OpeniBadge
         resource_name = 'Badge'
-
+        excludes = ['id']

@@ -85,13 +85,14 @@ class GenericResource(ContextAwareResource):
         #if (len(pathArray) > 4):
         #    connection = pathArray[4]
 
-        #method = request_method + '_' + object
-        #if len(connection)>1:
-        #    method += "_" + connection
-
-        executable = execution(u, cbs, method, id, params)
-        result = executable.make_all_connections()
-        return self.create_response(request, result)
+        # if request_method:
+        #     method = request_method + '_' + object
+        #     if len(connection)>1:
+        #        method += "_" + connection
+        #
+        #     executable = execution(u, cbs, method, id, params)
+        #     result = executable.make_all_connections()
+        #     return self.create_response(request, result)
 
         #if (user and apps and method and data):
         #    executable = execution(u, apps, method, data)

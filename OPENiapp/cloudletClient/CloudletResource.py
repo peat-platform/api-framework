@@ -4,12 +4,14 @@ __author__ = 'mpetyx'
 # Cloudlet generally just tosses around dictionaries, so we'll lightly
 # wrap that.
 
+from OPENiapp.APIS.OpeniGenericResource import GenericResource
+
 from tastypie.resources import Resource, ModelResource
 from tastypie import fields
 from tastypie.authorization import Authorization
 from tastypie.bundle import Bundle
 
-from client import CloudletClient
+from .client import CloudletClient
 
 class CloudletObject(object):
     def __init__(self, initial=None):
@@ -27,19 +29,22 @@ class CloudletObject(object):
     def to_dict(self):
         return self._data
 
+    class _meta:
+        pass
 
-class SampleCloudletResource(Resource):
+
+class SampleCloudletResource(GenericResource):
     # Just like a Django ``Form`` or ``Model``, we're defining all the
     # fields we're going to handle with the API here.
-    uuid = fields.CharField(attribute='uuid')
-    user_uuid = fields.CharField(attribute='user_uuid')
-    message = fields.CharField(attribute='message')
-    created = fields.IntegerField(attribute='created')
+    # uuid = fields.CharField(attribute='uuid')
+    # title = fields.CharField(attribute='title')
+    # description = fields.CharField(attribute='description')
+    # # created = fields.IntegerField(attribute='created')
 
-    class Meta:
-        resource_name = 'SampleCloudlet'
-        object_class = CloudletObject
-        authorization = Authorization()
+    # class Meta:
+    #     resource_name = 'SampleCloudlet'
+    #     object_class = CloudletObject
+    #     authorization = Authorization()
 
     # Specific to this resource, just to get the needed Cloudlet bits.
     def _client(self):
@@ -61,10 +66,20 @@ class SampleCloudletResource(Resource):
         else:
             kwargs['pk'] = bundle_or_obj.uuid
 
+        # Need to be removed
+        # kwargs['pk'] = "omorfia"
+
         return kwargs
 
     def get_object_list(self, request):
-        results = self._client.get_object_list()
+        # results = self._client.get_object_list()
+        results = []
+
+        temp = dict({'uuid':"michael",'title':2, 'description':4, 'icon':2})
+
+        # results = [dict({'uuid':"omorfos",'title':2, 'description':4, 'icon':2})]
+
+        results.append(CloudletObject(initial=temp))
 
         return results
 
@@ -80,9 +95,10 @@ class SampleCloudletResource(Resource):
     def obj_create(self, bundle, **kwargs):
         bundle.obj = CloudletObject(initial=kwargs)
         bundle = self.full_hydrate(bundle)
-        bucket = self._bucket()
-        new_message = bucket.new(bundle.obj.uuid, data=bundle.obj.to_dict())
-        new_message.store()
+        print bundle.obj.to_dict()
+        # bucket = self._bucket()
+        # new_message = bucket.new(bundle.obj.uuid, data=bundle.obj.to_dict())
+        # new_message.store()
         return bundle
 
     def obj_update(self, bundle, **kwargs):
