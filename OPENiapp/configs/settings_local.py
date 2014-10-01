@@ -221,7 +221,6 @@ INSTALLED_APPS = (
     'OPENiapp.APIS.Profile',
     'OPENiapp.APIS.Profile.Account',
     'OPENiapp.APIS.Profile.Application',
-    'OPENiapp.APIS.Profile.Device',
     'OPENiapp.APIS.Profile.Group',
     'OPENiapp.APIS.Profile.User',
 

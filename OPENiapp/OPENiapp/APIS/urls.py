@@ -87,13 +87,11 @@ api.register(WalletResource())
 # Profile
 from .Profile.Account.Resources import AccountResource
 from .Profile.Application.Resources import ApplicationResource
-from .Profile.Device.Resources import DeviceResource
 from .Profile.User.Resources import UserResource
 from .Profile.Group.Resources import GroupResource
 
 api.register(AccountResource())
 api.register(ApplicationResource())
-api.register(DeviceResource())
 api.register(UserResource())
 api.register(GroupResource())
 
