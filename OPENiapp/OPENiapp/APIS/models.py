@@ -22,7 +22,7 @@ class DurationModel(models.Model):
     ends_time = models.TextField()
 
 class FromModel(models.Model):
-    from_id = models.TextField()
+    from_id = models.TextField(blank=True, null=True)
     object_type = models.TextField()
     url = models.TextField()
     name = models.TextField()
@@ -99,5 +99,5 @@ class GenericModel(OpeniContextAwareModel):
     url = models.TextField()
     object_type = models.TextField()
     service = models.TextField()
-    From = models.ForeignKey(FromModel)
-    Time = models.ForeignKey(TimeModel)
+    From = models.ForeignKey(FromModel, blank=True, null=True)
+    Time = models.ForeignKey(TimeModel, blank=True, null=True)
