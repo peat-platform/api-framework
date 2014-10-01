@@ -4,7 +4,7 @@ __author__ = 'mpetyx'
 # Cloudlet generally just tosses around dictionaries, so we'll lightly
 # wrap that.
 
-from tastypie.resources import Resource
+from tastypie.resources import Resource, ModelResource
 from tastypie import fields
 from tastypie.authorization import Authorization
 from tastypie.bundle import Bundle
