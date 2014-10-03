@@ -13,8 +13,6 @@ class RegirestedApp(admin.ModelAdmin):
     pass
 
 
-
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Cloudlet, CloudletAdmin)
 admin.site.register(RegisteredApplication, RegirestedApp)
-
