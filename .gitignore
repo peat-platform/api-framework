@@ -23,3 +23,5 @@ OPENiapp/obj/*
 .idea/modules.xml
 
 OPENiapp/OPENiapp/Providers/Vimeo/connector.py
+*.sln
+*.suo
