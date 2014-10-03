@@ -48,6 +48,7 @@ class GenericResource(ContextAwareResource):
         params = ""
         id = ""
         connection = ""
+        u = User.objects.filter(username = "romdim")
         if 'id' in kwargs:
             id = kwargs['id']
         if 'connection' in kwargs:
@@ -71,6 +72,21 @@ class GenericResource(ContextAwareResource):
         pathArray = path.split('/')
         version = pathArray[1]
         object = pathArray[2].lower()
+
+        method = request_method + '_' + object
+        if (id != ""):
+            method += '_' + id
+            if (connection != ""):
+                method += '_' + connection
+        else:
+            if (object == 'status'):
+                method += 'e'
+            if (object != 'rsvp'):
+                method += 's'
+
+        executable = execution(u, cbs, method, id, params)
+        result = executable.make_all_connections()
+        return self.create_response(request, result)
 
         #append_to_method = "_"
         #connections = []
@@ -164,64 +180,8 @@ class GenericMeta:
                 "data": {
                     "type": "String",
                     "required": True,
-                    "description": "The required data",
-            #         'allowableValues': {
-            #     'valueType' : "LIST",
-            #     'values': ["yo"]
-            #
-            # }
-          #           'allowableValues': {
-          #       'valueType' : "LIST",
-          #       'values': [
-          #   "placed",
-          #   " approved",
-          #   " delivered"
-          # ]
-          #
-          #   },
+                    "description": "The required data"
                 },
             }
         },
-
-        # {
-        #     "name": "comments",
-        #     "http_method": "GET",
-        #     "resource_type": "list",
-        #     "description": "comments from CBS",
-        #     "fields": {
-        #         "cbs": {
-        #             "type": "string",
-        #             "required": True,
-        #             "description": "list of selected CBS"
-        #         }
-        #     }
-        # },
-        #
-        # {
-        #     "name": "likes",
-        #     "http_method": "GET",
-        #     "resource_type": "list",
-        #     "description": "likes from CBS",
-        #     "fields": {
-        #         "cbs": {
-        #             "type": "string",
-        #             "required": True,
-        #             "description": "list of selected CBS"
-        #         }
-        #     }
-        # },
-        #
-        # {
-        #     "name": "dislikes",
-        #     "http_method": "GET",
-        #     "resource_type": "list",
-        #     "description": "dislikes from CBS",
-        #     "fields": {
-        #         "cbs": {
-        #             "type": "string",
-        #             "required": True,
-        #             "description": "list of selected CBS"
-        #         }
-        #     }
-        # }
     ]

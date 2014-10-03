@@ -11,6 +11,7 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class CheckinResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()
+        list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'put', 'delete']
         resource_name = 'Checkin'
         authentication = Authentication()
@@ -25,25 +26,25 @@ class CheckinResource(GenericResource):
             {
                 "name": "likes",
                 "http_method": "GET",
-                "description": "Retrieve a list of Checkin Likes",
+                "summary": "Retrieve a list of Checkin Likes",
                 "fields": {}
             },
             {
                 "name": "likes",
                 "http_method": "POST",
-                "description": "Like a Checkin",
+                "summary": "Like a Checkin",
                 "fields": {}
             },
             {
                 "name": "comments",
                 "http_method": "GET",
-                "description": "Retrieve a list of Checkin Comments",
+                "summary": "Retrieve a list of Checkin Comments",
                 "fields": {}
             },
             {
                 "name": "comments",
                 "http_method": "POST",
-                "description": "Create a new Checkin Comment",
+                "summary": "Create a new Checkin Comment",
                 "fields": {
                     "title": {
                         "type": "string",
