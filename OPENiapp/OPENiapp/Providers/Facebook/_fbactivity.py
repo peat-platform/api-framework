@@ -74,6 +74,34 @@ class fbActivity(bcActivity):
     
     #   region Connections
 
+    def get_checkin_comments(self, id):
+        """ GET API_PATH/[CHECKIN_ID]/comments """
+        # /checkin_id/comments (ie /675350314_10154201196440315/comments)
+        raw_datas = self.connector.get('/' + id + '/comments')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['title', 'text', 'target_id'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['title', 'text', 'target_id'])
+
+        alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', '', ''])
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': len(raw_datas['data']),
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_comment_response(data))
+        return response
+
 
     #   endregion Connections
 
@@ -114,6 +142,9 @@ class fbActivity(bcActivity):
                     }
         return response
 
+    def get_events(self, id):
+        get_account_events('me')
+
     def get_account_events(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/events """
         # /account_id/events (ie /675350314/events)
@@ -146,6 +177,40 @@ class fbActivity(bcActivity):
     
     #   region Connections
 
+    def get_event_rsvps(self, id):
+        """ GET API_PATH/[EVENT_ID]/attending """
+        # /event_id/attending (ie /577733618968497/attending)
+        raw_datas = self.connector.get('/' + id + '/attending')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['rsvp', 'target_id'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['rsvp_status', 'id'])
+
+        alternatives = ['', 'rsvp', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', ''])
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': len(raw_datas['data']),
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_rsvp_response(data))
+        return response
+
+    def post_event_rsvps(self, id, params):
+        """ POST API_PATH/[EVENT_ID]/attending """
+        # /event_id/attending (ie /577733618968497/attending)
+        if (check_if_exists(params, 'rsvp') != defJsonRes):
+            return self.connector.post('/' + id + '/' + params['rsvp'])
+        return "Insufficient Parameters"
 
     #   endregion Connections
 
@@ -179,6 +244,9 @@ class fbActivity(bcActivity):
                     }
         return response
 
+    def get_statuses(self, id):
+        get_account_statuses('me')
+
     def get_account_statuses(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/STATUSES """
         # /account_id/statuses (ie /675350314/statuses)
@@ -207,6 +275,9 @@ class fbActivity(bcActivity):
             response['data'].append(self.format_status_response(data))
         return response
 
+    def post_statuses(self, id, params):
+        post_account_statuses('me', params)
+
     def post_account_statuses(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/feed """
         # /account_id/feed (ie /675350314/feed)
@@ -215,19 +286,19 @@ class fbActivity(bcActivity):
                 return self.connector.post(path = id +'/feed', message = params['message'])
         return "Insufficient Parameters"
 
-    def post_aggregation_statuses(self, id, params):
-        """ POST API_PATH/{AGGREGATION_ID}/feed """
-        # /aggregation_id/feed (ie /sth/feed)
-        if (id):
-            if (check_if_exists(params, 'message') != defJsonRes):
-                return self.connector.post(path = id +'/feed', message = params['message'])
-            #if (check_if_exists(params, 'page_id') != defJsonRes):
-            #    return self.connector.post(path = params['page_id'] +'/feed', message = params['message'])
-            #elif (check_if_exists(params, 'event_id') != defJsonRes):
-            #    return self.connector.post(path = params['event_id'] +'/feed', message = params['message'])
-            #elif (check_if_exists(params, 'group_id') != defJsonRes):
-            #    return self.connector.post(path = params['group_id'] +'/feed', message = params['message'])
-        return "Insufficient Parameters"
+    #def post_aggregation_statuses(self, id, params):
+    #    """ POST API_PATH/{AGGREGATION_ID}/feed """
+    #    # /aggregation_id/feed (ie /sth/feed)
+    #    if (id):
+    #        if (check_if_exists(params, 'message') != defJsonRes):
+    #            return self.connector.post(path = id +'/feed', message = params['message'])
+    #        #if (check_if_exists(params, 'page_id') != defJsonRes):
+    #        #    return self.connector.post(path = params['page_id'] +'/feed', message = params['message'])
+    #        #elif (check_if_exists(params, 'event_id') != defJsonRes):
+    #        #    return self.connector.post(path = params['event_id'] +'/feed', message = params['message'])
+    #        #elif (check_if_exists(params, 'group_id') != defJsonRes):
+    #        #    return self.connector.post(path = params['group_id'] +'/feed', message = params['message'])
+    #    return "Insufficient Parameters"
 
     def delete_status(self, id):
         """ DELETE API_PATH/{STATUS_ID} """
@@ -235,6 +306,44 @@ class fbActivity(bcActivity):
         return self.connector.delete(id)
     
     #   region Connections
+
+    def get_status_likes(self, id):
+        """ GET API_PATH/[STATUS_ID]/likes """
+        # /status_id/likes (ie /10154016839520315/likes)
+        raw_datas = self.connector.get('/' + id + '/likes')
+
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['target_id'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['target_id'])
+
+        alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
+        alternatives.extend([params['status_id']])
+
+        response = {
+                    'meta':
+                        {
+                            'total_count': len(raw_datas['data']),
+                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                            'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+        for raw_data in raw_datas['data']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_like_response(data))
+        return response
+
+    def post_status_likes(self, id):
+        """ POST API_PATH/[STATUS_ID]/likes """
+        # /status_id/likes (ie /10154016839520315/likes)
+        return self.connector.post(path = id +'/likes')
+
+    def delete_status_likes(self, id):
+        """ DELETE API_PATH/[STATUS_ID]/likes """
+        # /status_id/likes (ie /10154016839520315/likes)
+        return self.connector.delete(path = id +'/likes')
 
     def get_status_comments(self, id):
         """ GET API_PATH/[STATUS_ID]/comments """
@@ -278,44 +387,6 @@ class fbActivity(bcActivity):
                 return self.connector.post(path = id +'/comments', source = params['source'])
         return "Insufficient Parameters"
 
-    def post_status_likes(self, id):
-        """ POST API_PATH/[STATUS_ID]/likes """
-        # /status_id/likes (ie /10154016839520315/likes)
-        return self.connector.post(path = id +'/likes')
-
-    def get_status_likes(self, id):
-        """ GET API_PATH/[STATUS_ID]/likes """
-        # /status_id/likes (ie /10154016839520315/likes)
-        raw_datas = self.connector.get('/' + id + '/likes')
-
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
-        names.extend(['target_id'])
-
-        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
-        fields.extend(['target_id'])
-
-        alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend([params['status_id']])
-
-        response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'data': []
-                    }
-        for raw_data in raw_datas['data']:
-            data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_like_response(data))
-        return response
-
-    def delete_status_likes(self, id):
-        """ DELETE API_PATH/[STATUS_ID]/likes """
-        # /status_id/likes (ie /10154016839520315/likes)
-        return self.connector.delete(path = id +'/likes')
-
     #   endregion Connections
     
     #   endregion Status Object
@@ -331,76 +402,7 @@ class fbActivity(bcActivity):
         response = self.connector.delete('/' + id)
         return response
 
-    #   Checkins
-
-    def get_checkin_comments(self, id):
-        """ GET API_PATH/[CHECKIN_ID]/comments """
-        # /checkin_id/comments (ie /675350314_10154201196440315/comments)
-        raw_datas = self.connector.get('/' + id + '/comments')
-
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
-        names.extend(['title', 'text', 'target_id'])
-
-        fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
-        fields.extend(['title', 'text', 'target_id'])
-
-        alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', '', ''])
-
-        response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'data': []
-                    }
-        for raw_data in raw_datas['data']:
-            data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_comment_response(data))
-        return response
-
     #   endregion Comment Object
-
-    #   region rsvp Object
-
-    def get_event_rsvp(self, id):
-        """ GET API_PATH/[EVENT_ID]/attending """
-        # /event_id/attending (ie /577733618968497/attending)
-        raw_datas = self.connector.get('/' + id + '/attending')
-
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
-        names.extend(['rsvp', 'target_id'])
-
-        fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
-        fields.extend(['rsvp_status', 'id'])
-
-        alternatives = ['', 'rsvp', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', ''])
-
-        response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'data': []
-                    }
-        for raw_data in raw_datas['data']:
-            data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_rsvp_response(data))
-        return response
-
-    def post_event_rsvp(self, id, params):
-        """ POST API_PATH/[EVENT_ID]/attending """
-        # /event_id/attending (ie /577733618968497/attending)
-        if (check_if_exists(params, 'rsvp') != defJsonRes):
-            return self.connector.post('/' + id + '/' + params['rsvp'])
-        return "Insufficient Parameters"
-
-    #   endregion rsvp Object
 
     #   endregion Secondary Objects
 
