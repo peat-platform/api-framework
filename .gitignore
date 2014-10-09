@@ -21,5 +21,3 @@ OPENiapp/obj/*
 .idea/misc.xml
 
 .idea/modules.xml
-
-OPENiapp/OPENiapp/Providers/Vimeo/connector.py
