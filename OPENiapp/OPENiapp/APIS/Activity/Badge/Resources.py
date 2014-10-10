@@ -5,9 +5,9 @@ from .models import OpeniBadge
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from tastypie import fields
-from cloudletClient.CloudletResource import SampleCloudletResource
+from cloudletClient.CloudletResource import CloudletResource
 
-class BadgeResource(SampleCloudletResource): #GenericResource):
+class BadgeResource(CloudletResource): #GenericResource):
     # uuid = fields.CharField(attribute='uuid')
     # title = fields.CharField(attribute='title')
     # description = fields.CharField(attribute='description')

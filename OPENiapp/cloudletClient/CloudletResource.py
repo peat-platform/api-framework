@@ -33,7 +33,7 @@ class CloudletObject(object):
         pass
 
 
-class SampleCloudletResource(GenericResource):
+class CloudletResource(GenericResource):
     # Just like a Django ``Form`` or ``Model``, we're defining all the
     # fields we're going to handle with the API here.
     # uuid = fields.CharField(attribute='uuid')
