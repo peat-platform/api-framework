@@ -143,7 +143,7 @@ class fbActivity(bcActivity):
         return response
 
     def get_events(self, id):
-        get_account_events('me')
+        return self.get_account_events('me')
 
     def get_account_events(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/events """
@@ -245,7 +245,7 @@ class fbActivity(bcActivity):
         return response
 
     def get_statuses(self, id):
-        get_account_statuses('me')
+        return self.get_account_statuses('me')
 
     def get_account_statuses(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/STATUSES """

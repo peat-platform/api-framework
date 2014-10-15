@@ -44,7 +44,7 @@ class twActivity(bcActivity):
         return response
 
     def get_statuses(self, id):
-        get_account_statuses('me')
+        return self.get_account_statuses('')
 
     def get_account_statuses(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/STATUSES """
