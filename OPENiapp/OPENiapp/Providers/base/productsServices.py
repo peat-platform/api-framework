@@ -117,7 +117,7 @@ class bcProductsServices:
         return defaultMethodResponse
     
     #def post_score_to_account(self, data):
-    def post_scores(self, id, params):
+    def post_scores(self, params):
         """ POST API_PATH/{GAME_ID}/scores """
         return defaultMethodResponse
     
