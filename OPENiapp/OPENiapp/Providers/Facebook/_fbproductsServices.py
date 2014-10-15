@@ -13,10 +13,10 @@ class fbProductsServices(bcProductsServices):
     #   region Application Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Application%20Mapping/
     
-    def get_an_application(self, params):
+    def get_application(self, id):
         """ GET API_PATH/[APP_ID] """
         # /application_id (ie /10153665526210315)
-        raw_data = self.connector.get('/' + params['app_id'])
+        raw_data = self.connector.get('/' + id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks'])
@@ -40,11 +40,14 @@ class fbProductsServices(bcProductsServices):
         
         return response
 
-    def get_all_applications_for_account(self, params):
+    def get_applications(self):
+        return get_all_applications_for_account('me')
+
+    def get_all_applications_for_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/applications """
         # Note: Facebook only returns applications where user is developer
         # /account_id/applications/developer (ie /675350314/applications/developer)
-        raw_datas = self.connector.get('/' + params['user_id'] + '/applications/developer')
+        raw_datas = self.connector.get('/' + id + '/applications/developer')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks'])
@@ -70,11 +73,11 @@ class fbProductsServices(bcProductsServices):
                 
         return response
     
-    def edit_an_application(self, params):
+    def put_application(self, id, params):
         """ POST API_PATH/[APP_ID] """
         # /application_id (ie /10153665526210315)
         response = self.connector.post(
-            '/' + params['app_id'],
+            '/' + id,
             app_domains = check_if_exists(params, 'app_domains', ''),
             auth_dialog_data_help_url = check_if_exists(params, 'auth_dialog_data_help_url', ''),
             auth_dialog_headline = check_if_exists(params, 'auth_dialog_headline', ''),
@@ -120,10 +123,13 @@ class fbProductsServices(bcProductsServices):
 
     #   region Score Object
 
-    def get_scores_from_account(self, params):
+    def get_scores(self):
+        return get_scores_from_account('me')
+
+    def get_scores_from_account(self, id):
         """ GET API_PATH/{ACCOUNT_ID}/scores """
         # /account_id/scores (ie /675350314/scores)
-        raw_datas = self.connector.get('/' + params['account_id'] + '/scores')
+        raw_datas = self.connector.get('/' + id + '/scores')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['value', 'target_id'])
@@ -149,10 +155,10 @@ class fbProductsServices(bcProductsServices):
                 
         return response
     
-    def get_scores_from_game(self, params):
+    def get_game_scores(self, id):
         """ GET API_PATH/{GAME_ID}/scores """
         # /app_id/scores (ie /722334637784491/score)
-        raw_datas = self.connector.get('/' + params['app_id'] + '/score')
+        raw_datas = self.connector.get('/' + id + '/score')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['value', 'target_id'])
@@ -178,21 +184,24 @@ class fbProductsServices(bcProductsServices):
                 
         return response
 
+    def post_scores(self, params):
+        post_score_to_account('me', params)
+
     # Does not work due to FB's wrong documentation
-    def post_score_to_account(self, data):
+    def post_score_to_account(self, id, params):
         """ POST API_PATH/{GAME_ID}/scores """
         # /account_id/scores (ie /675350314/scores)
         response = self.connector.post(
-            '/' + params['account_id'],
+            '/' + id,
             score = check_if_exists(params, 'score', '')
             )
         return response
 
-    def delete_all_scores_from_game(self, data):
+    def delete_game_scores(self, id):
         """ DELETE API_PATH/{GAME_ID}/scores """
         # /account_id/scores (ie /675350314/scores)
         response = self.connector.delete(
-            '/' + params['account_id']
+            '/' + id
             )
         return response
 
