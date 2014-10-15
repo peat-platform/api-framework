@@ -74,6 +74,9 @@ class twActivity(bcActivity):
             response['data'].append(self.format_status_response(data))
         return response
 
+    def post_statuses(self, id, params):
+        return self.post_account_statuses('')
+
     def post_account_statuses(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/feed """
         # /statuses/update (ie statuses/update/)
