@@ -63,6 +63,7 @@ class Cloudlet(models.Model):
     user = models.OneToOneField(User)
     locationIP = models.TextField()
 
+
 User.cloudlet = property(lambda d: Cloudlet.objects.filter(user=d))
 
 class RegisteredApplication(models.Model):

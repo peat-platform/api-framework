@@ -103,5 +103,3 @@ class GenericModel(OpeniContextAwareModel):
     service = models.TextField()
     From = models.ForeignKey(FromModel, blank=True, null=True)
     Time = models.ForeignKey(TimeModel, blank=True, null=True)
-    class Meta:
-        abstract = True

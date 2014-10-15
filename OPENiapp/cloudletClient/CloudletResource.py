@@ -5,10 +5,9 @@ __author__ = 'mpetyx'
 # wrap that.
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
-
-from tastypie.resources import Resource, ModelResource
-from tastypie import fields
-from tastypie.authorization import Authorization
+from OPENiapp.models import Cloudlet
+# from tastypie.resources import Resource, ModelResource
+# from tastypie import fields
 from tastypie.bundle import Bundle
 
 from .client import CloudletClient
@@ -33,22 +32,12 @@ class CloudletObject(object):
         pass
 
 
-class SampleCloudletResource(GenericResource):
-    # Just like a Django ``Form`` or ``Model``, we're defining all the
-    # fields we're going to handle with the API here.
-    # uuid = fields.CharField(attribute='uuid')
-    # title = fields.CharField(attribute='title')
-    # description = fields.CharField(attribute='description')
-    # # created = fields.IntegerField(attribute='created')
+class CloudletResource(GenericResource):
 
-    # class Meta:
-    #     resource_name = 'SampleCloudlet'
-    #     object_class = CloudletObject
-    #     authorization = Authorization()
-
-    # Specific to this resource, just to get the needed Cloudlet bits.
-    def _client(self):
-        return CloudletClient()
+    def _client(self,bundle, username, password):
+        current_user = User.objects.get(pk = bundle.request.user.id)
+        owner = Cloudlet.objects.get()
+        return CloudletClient(username=owner.username,password=owner.password)
 
     def _bucket(self):
         client = self._client()
@@ -75,10 +64,9 @@ class SampleCloudletResource(GenericResource):
         # results = self._client.get_object_list()
         results = []
 
+        # Bringing the results from Object list and serializing it into json objects based on schema
         temp = dict({'uuid':"michael",'title':2, 'description':4, 'icon':2})
-
-        # results = [dict({'uuid':"omorfos",'title':2, 'description':4, 'icon':2})]
-
+        # Appending each one to the results
         results.append(CloudletObject(initial=temp))
 
         return results
