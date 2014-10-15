@@ -31,12 +31,12 @@ class bcActivity:
         return defaultMethodResponse
 
     #def get_all_checkins_for_account(self, params):
-    def get_account_checkins(self, id):
+    def get_checkins(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/checkins """
         return defaultMethodResponse
 
     #def post_checkin_to_account(self, params):
-    def post_account_checkins(self, id, params):
+    def post_checkins(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/checkins """
         return defaultMethodResponse
         
@@ -67,12 +67,12 @@ class bcActivity:
         return defaultMethodResponse
     
     #def get_all_events_for_account(self, params):
-    def get_account_events(self, id):
+    def get_events(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/events """
         return defaultMethodResponse
     
     #def post_event_to_account(self, params):
-    def post_account_events(self, id, params):
+    def post_events(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/events """
         return defaultMethodResponse
         
@@ -110,12 +110,12 @@ class bcActivity:
         return defaultMethodResponse
     
     #def get_all_statuses_for_account(self, params):
-    def get_account_statuses(self, id):
+    def get_statuses(self, id):
         """ GET API_PATH/{ACCOUNT_ID}/STATUSES """
         return defaultMethodResponse
     
     #def post_status_to_account(self, params):
-    def post_account_statuses(self, id, params):
+    def post_statuses(self, id, params):
         """ POST API_PATH/{ACCOUNT_ID}/STATUSES """
         return defaultMethodResponse
     
@@ -205,7 +205,7 @@ class bcActivity:
         return defaultMethodResponse
     
     #def get_comments_for_account(self, params):
-    def get_account_comments(self, id):
+    def get_comments(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/comments """
         return defaultMethodResponse
 
@@ -270,7 +270,7 @@ class bcActivity:
         return defaultMethodResponse
     
     #def get_likes_for_account(self, params):
-    def get_account_likes(self, id):
+    def get_likes(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/likes """
         return defaultMethodResponse
 
@@ -346,7 +346,7 @@ class bcActivity:
         return response
     
     #def get_favorites_for_user(self, params):
-    def get_user_favorites(self, id):
+    def get_favorites(self, id):
         """ GET API_PATH/[USER_ID]/favorites """
         return defaultMethodResponse
     
