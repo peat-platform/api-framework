@@ -16,12 +16,12 @@ class bcLocation:
         return response
     
     # def get_a_place(self, params):
-    def get_place(self, params):
+    def get_place(self, id):
         """ GET API_PATH/[PLACE_ID] """
         return defaultMethodResponse
     
     #def get_all_places_for_account(self, params):
-    def get_places(self, params):
+    def get_places(self):
         """ GET API_PATH/[ACCOUNT_ID]/places """
         return defaultMethodResponse
     
@@ -35,12 +35,12 @@ class bcLocation:
     #    return defaultMethodResponse
     
     #def edit_a_place(self, params):
-    def put_place(self, params):
+    def put_place(self, id, params):
         """ PUT API_PATH/[PLACE_ID] """
         return defaultMethodResponse
     
     #def delete_a_place(self, params):
-    def delete_place(self, params):
+    def delete_place(self, id):
         """ DELETE API_PATH/[PLACE_ID] """
         return defaultMethodResponse
     

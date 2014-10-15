@@ -17,11 +17,11 @@ class goLocation(bcLocation):
     
     #   region Place Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Place%20Mapping/
-    def get_a_place(self, params):
+    def get_place(self, id):
         """ GET API_PATH/[PLACE_ID] """
         # /reference (ie /CnRsAAAA98C4wD-VFvzGq-KHVEFhlHuy1TD1W6UYZw7KjuvfVsKMRZkbCVBVDxXFOOCM108n9PuJMJxeAxix3WB6B16c1p2bY1ZQyOrcu1d9247xQhUmPgYjN37JMo5QBsWipTsnoIZA9yAzA-0pnxFM6yAcDhIQbU0z05f3xD3m9NQnhEDjvBoUw-BdcocVpXzKFcnMXUpf-nkyF1w)
         #raw_data = self.connector.get_place(params['place_id'])
-        raw_data = self.connector.get_place(params['reference'])
+        raw_data = self.connector.get_place(id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
@@ -57,7 +57,7 @@ class goLocation(bcLocation):
         return response
 
     
-    def post_place_to_account(self, params):
+    def post_places(self, params):
         """ POST API_PATH/place/add """
         # /
         if ((check_if_exists(params, 'name') != defJsonRes) & (check_if_exists(params, 'lat_lng') != defJsonRes) & (check_if_exists(params, 'accuracy') != defJsonRes) & (check_if_exists(params, 'types') != defJsonRes)):
@@ -70,13 +70,11 @@ class goLocation(bcLocation):
                     )
         return defaultMethodResponse
     
-    def delete_a_place(self, params):
+    def delete_place(self, id):
         """ DELETE API_PATH/reference """
-        if (check_if_exists(params, 'reference') != defJsonRes):
-            return self.delete_place(
-                reference = params['reference']
-                )
-        return defaultMethodResponse
+        return self.delete_place(
+            reference = id
+            )
 
     #   endregion Place Object
 
