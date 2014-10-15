@@ -114,7 +114,7 @@ class fbActivity(bcActivity):
                     }
         return response
 
-    def get_events(self, id):
+    def get_events(self):
         return self.get_account_events('me')
 
     def get_account_events(self, id):
@@ -182,7 +182,7 @@ class fbActivity(bcActivity):
                     }
         return response
 
-    def get_statuses(self, id):
+    def get_statuses(self):
         return self.get_account_statuses('me')
 
     def get_account_statuses(self, id):
@@ -213,7 +213,7 @@ class fbActivity(bcActivity):
             response['data'].append(self.format_status_response(data))
         return response
     
-    def post_statuses(self, id, params):
+    def post_statuses(self, params):
         return self.post_account_statuses('me', params)
 
     def post_account_statuses(self, id, params):
