@@ -58,8 +58,8 @@ class execution:
              provider = YTprovider()
         elif (cbs == "vimeo"):
              provider = VMprovider(access_token[0])
-#         elif (cbs == "onedrive"):
-#             provider = ODprovider(access_token[0])
+        elif (cbs == "windowslive"):
+             provider = ODprovider(access_token[0])
 
         return provider
 

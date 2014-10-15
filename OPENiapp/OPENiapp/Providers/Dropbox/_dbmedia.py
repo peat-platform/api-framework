@@ -49,7 +49,7 @@ class dbMedia(bcMedia):
 
     #   region Audio Object
 
-    def get_an_audio(self, data):
+    def get_audio(self, id):
         """ Get a audio by its id """
         # /audio_id (ie /cat.mp3 --> has to be the full filename, no ID) 
         f, metadata = self.connector.get_file_and_metadata('/' + data['audio_id'])
@@ -79,7 +79,7 @@ class dbMedia(bcMedia):
             return { 'response': response }
         return "Not a Audio"
     
-    def get_all_audios_for_account(self, params):
+    def get_account_audios(self, id):
         """ Get all audios for an account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             metadata = self.connector.metadata('/')
@@ -121,7 +121,7 @@ class dbMedia(bcMedia):
             response['meta']['total_count'] = i                        
             return response
 
-    def post_audio_to_account(self, params):
+    def post_account_audio(self, id, params):
         """ Post a audio to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -130,7 +130,7 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
     
     
-    def get_all_audios_for_album(self, data):
+    def get_album_audios(self, id, params):
         """ Get all audios for an album """
         metadata = self.connector.metadata('/' + params['album_id'])
         account = self.connector.account_info()
@@ -166,7 +166,7 @@ class dbMedia(bcMedia):
         response['meta']['total_count'] = i                      
         return response
 
-    def post_audio_to_album(self, params):
+    def post_album_audio(self, id, params):
         """ Post a audio to a simple account """
         if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -175,11 +175,11 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
 
 
-    def edit_a_audio(self, data):
+    def edit_audio(self, id, params):
         """ Edit a audio object """
         return {'result': 'Not applicable'}
 
-    def delete_a_audio(self, params):
+    def delete_audio(self, id):
         """ Delete a audio object """
         if (check_if_exists(params, 'audio_id') != defJsonRes):
             return self.connector.file_delete(params['audio_id'])
@@ -192,7 +192,7 @@ class dbMedia(bcMedia):
     
     #   region File Object
 
-    def get_a_file(self, data):
+    def get_file(self, id):
         """ Get a file by its id """
         # /file_id (ie /cat.txt --> has to be the full filename, no ID) 
         f, metadata = self.connector.get_file_and_metadata('/' + data['file_id'])
@@ -223,7 +223,7 @@ class dbMedia(bcMedia):
             return { 'response': response }
         return "Not a File"
     
-    def get_all_files_for_account(self, params):
+    def get_account_files(self, id):
         """ Get all files for an account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             metadata = self.connector.metadata('/')
@@ -265,7 +265,7 @@ class dbMedia(bcMedia):
             response['meta']['total_count'] = i                         
             return response
 
-    def post_file_to_account(self, params):
+    def post_file(self, id, params):
         """ Post a file to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -274,7 +274,7 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
     
     
-    def get_all_files_for_album(self, params):
+    def get_album_files(self, id):
         """ Get all files for an album """
         metadata = self.connector.metadata('/' + params['album_id'])
         account = self.connector.account_info()
@@ -310,7 +310,7 @@ class dbMedia(bcMedia):
         response['meta']['total_count'] = i                     
         return response
 
-    def post_file_to_album(self, params):
+    def post_album_file(self, id, params):
         """ Post a file to a simple account """
         if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -319,11 +319,11 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
 
 
-    def edit_a_file(self, data):
+    def edit_file(self, id, params):
         """ Edit a file object """
         return {'result': 'Not applicable'}
 
-    def delete_a_file(self, params):
+    def delete_file(self, id):
         """ Delete a file object """
         if (check_if_exists(params, 'file_id') != defJsonRes):
             return self.connector.file_delete(params['file_id'])
@@ -336,12 +336,13 @@ class dbMedia(bcMedia):
     
     #   region Photo Object
 
-    def get_a_photo(self, data):
+    def get_photo(self, id):
         """ Get a photo by its id """
         # /photo_id (ie /cat.jpg --> has to be the full filename, no ID) 
-        f, metadata = self.connector.get_file_and_metadata('/' + data['photo_id'])
+        return str(id)
+        f, metadata = self.connector.get_file_and_metadata('/' + id)
         account = self.connector.account_info()
-        media = self.connector.media('/' + data['photo_id'])
+        media = self.connector.media('/' + id)
                
         raw_data = metadata
         if ('image' in raw_data['mime_type']):
@@ -366,7 +367,7 @@ class dbMedia(bcMedia):
             return { 'response': response }
         return "Not a Photo"
     
-    def get_all_photos_for_account(self, params):
+    def get_account_photos(self, id):
         """ Get all photos for an account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             metadata = self.connector.metadata('/')
@@ -408,7 +409,7 @@ class dbMedia(bcMedia):
             response['meta']['total_count'] = i                          
             return response
 
-    def post_photo_to_account(self, params):
+    def post_photo(self, id, params):
         """ Post a photo to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -418,7 +419,7 @@ class dbMedia(bcMedia):
 
     
     
-    def get_all_photos_for_album(self, params):
+    def get_album_photos(self, id):
         """ Get all photos for an album """
         metadata = self.connector.metadata('/' + params['album_id'])
         account = self.connector.account_info()
@@ -455,7 +456,7 @@ class dbMedia(bcMedia):
         return response
 
 
-    def post_photo_to_album(self, params):
+    def post_album_photo(self, id, params):
         """ Post a photo to a simple account """
         if (check_if_exists(params, 'album_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -464,11 +465,11 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
 
 
-    def edit_a_photo(self, data):
+    def edit_photo(self, id, params):
         """ Edit a photo object """
         return {'result': 'Not applicable'}
 
-    def delete_a_photo(self, params):
+    def delete_photo(self, id):
         """ Delete a photo object """
         if (check_if_exists(params, 'photo_id') != defJsonRes):
             return self.connector.file_delete(params['photo_id'])
@@ -482,7 +483,7 @@ class dbMedia(bcMedia):
     
     #   region Video Object
 
-    def get_a_video(self, data):
+    def get_video(self, id):
         """ Get a video by its id """
         # /video_id (ie /cat.mov --> has to be the full filename, no ID) 
         f, metadata = self.connector.get_file_and_metadata('/' + data['video_id'])
@@ -511,7 +512,7 @@ class dbMedia(bcMedia):
             return { 'response': response }
         return "Not a Video"
     
-    def get_all_videos_for_account(self, params):
+    def get_account_videos(self, id):
         """ Get all videos for an account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             metadata = self.connector.metadata('/')
@@ -553,7 +554,7 @@ class dbMedia(bcMedia):
             response['meta']['total_count'] = i                          
             return response
     
-    def get_all_videos_for_album(self, params):
+    def get_album_videos(self, id):
         """ Get all videos for an album """
         metadata = self.connector.metadata('/' + params['album_id'])
         account = self.connector.account_info()
@@ -589,7 +590,7 @@ class dbMedia(bcMedia):
         response['meta']['total_count'] = i                      
         return response
 
-    def post_video_to_account(self, params):
+    def post_account_video(self, id, params):
         """ Post a video to a simple account """
         if (check_if_exists(params, 'user_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -598,7 +599,7 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
     
     
-    def post_video_to_aggregation(self, data):
+    def post_aggregation_video(self, id, params):
         """ Get all videos for an account """
         if (check_if_exists(params, 'aggregation_id') != defJsonRes):
             if (check_if_exists(params, 'source') != defJsonRes):
@@ -607,14 +608,14 @@ class dbMedia(bcMedia):
         return "Insufficient Parameters"
 
 
-    def edit_a_video(self, data):
+    def edit_video(self, id, params):
         """ Edit a video object """
         return {'result': 'Not applicable'}
 
-    def delete_a_video(self, params):
+    def delete_video(self, id):
         """ Delete a video object """
-        if (check_if_exists(params, 'video_id') != defJsonRes):
-            return self.connector.file_delete(params['video_id'])
+        if (check_if_exists(id) != defJsonRes):
+            return self.connector.file_delete(id)
         return "Insufficient Parameters"
 
 
@@ -625,13 +626,12 @@ class dbMedia(bcMedia):
 
 
     #   region Folder Aggregation 
-    #   As described here: https://opensourceprojects.eu/p/openi/wiki/Folder%20Mapping
 
-    def get_a_folder(self, params):
+    def get_folder(self, id):
         """ GET API_PATH/[FOLDER_ID] """
         # /album_id (ie /10153665525255315)
         """ Get all folder for an album """
-        metadata = self.connector.metadata('/' + params['album_id'])
+        metadata = self.connector.metadata('/' +id)
         account = self.connector.account_info()
                        
         raw_datas = metadata
@@ -657,18 +657,18 @@ class dbMedia(bcMedia):
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['data'].append(self.format_photo_response(data))
                               
-        return response
-    
-    def post_folder_to_account(self, params):
+        return response 
+
+    def post_account_folder(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID] """
-        if (check_if_exists(params, 'folder_id') != defJsonRes):
-            return self.connector.file_create_folder(params['folder_id'])
+        if (check_if_exists(id) != defJsonRes):
+            return self.connector.file_create_folder(id)
         return "Insufficient Parameters"
 
-    def delete_a_folder(self, params):
+    def delete_folder(self, id):
         """ DELETE API_PATH/[FOLDER_ID] """
-        if (check_if_exists(params, 'folder_id') != defJsonRes):
-            return self.connector.file_delete(params['folder_id'])
+        if (check_if_exists(id) != defJsonRes):
+            return self.connector.file_delete(id)
         return "Insufficient Parameters"
     
     #   endregion Folder Aggregation
