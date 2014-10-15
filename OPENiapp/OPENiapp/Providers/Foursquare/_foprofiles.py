@@ -7,10 +7,13 @@ class foProfiles(bcProfiles):
     """
     #   region Profiles API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Profiles%20API/
+
+    def get_account(self):
+        return get_an_account('self')
     
-    def get_an_account(self, params):
+    def get_an_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID] """
-        raw_data = self.connector.users('self')
+        raw_data = self.connector.users(id)
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['person_name', 'person_surname', 'person_middlename', 'person_birthdate'])

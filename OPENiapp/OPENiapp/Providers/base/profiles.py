@@ -20,8 +20,9 @@ class bcProfiles:
                    }
         response.update(format_generic(params))
         return response
-
-    def get_an_account(self, params):
+    
+    #def get_an_account(self, params):
+    def get_account(self):
         """ GET API_PATH/[ACCOUNT_ID] """
         return defaultMethodResponse
 
