@@ -21,3 +21,5 @@ OPENiapp/obj/*
 .idea/misc.xml
 
 .idea/modules.xml
+
+OPENiapp/apiplatform.log
