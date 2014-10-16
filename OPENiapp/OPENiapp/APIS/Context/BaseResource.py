@@ -24,9 +24,11 @@ class ContextAwareResource(ModelResource):
             id = kwargs['id']
         if 'connection' in kwargs:
             connection = kwargs['connection']
+
+        user = request.GET.get("user")
+        u = User.objects.filter(username=user)
+
         try:
-            user = request.GET.get("user")
-            u = User.objects.filter(username=user)
             cbs = ast.literal_eval(request.GET.get("cbs"))
             id = ast.literal_eval(request.GET.get("id"))
             params = ast.literal_eval(request.GET.get("params"))
