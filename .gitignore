@@ -29,3 +29,5 @@ api-framework.sln
 api-framework.v12.suo
 
 *.log
+
+checkio.py
