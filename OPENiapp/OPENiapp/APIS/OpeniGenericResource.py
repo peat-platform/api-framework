@@ -72,6 +72,21 @@ class GenericResource(ContextAwareResource):
         version = pathArray[1]
         object = pathArray[2].lower()
 
+        method = request_method + '_' + object
+        if (id != ""):
+            # method += '_' + str(id)
+            if (connection != ""):
+                method += '_' + connection
+        else:
+            if (object == 'status'):
+                method += 'e'
+            if (object != 'rsvp'):
+                method += 's'
+
+        executable = execution(u, cbs, method, id, params)
+        result = executable.make_all_connections()
+        return self.create_response(request, result)
+
         #append_to_method = "_"
         #connections = []
         #if (len(pathArray) > 3):
@@ -121,9 +136,8 @@ class GenericResource(ContextAwareResource):
 
     def prepend_urls(self):
         return [
-            url(r"^(?P<resource_name>%s)/generic%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="generic"),
-            url(r"^(?P<resource_name>%s)/(?P<id>\S)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="id"),
-            url(r"^(?P<resource_name>%s)/(?P<id>\S)/(?P<connection>)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="connections")
+            url(r"^(?P<resource_name>%s)/(?P<id>\S+)/(?P<connection>\S+)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="connections"),
+            url(r"^(?P<resource_name>%s)/(?P<id>\S+)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="id")
         ]
 
 class GenericMeta:

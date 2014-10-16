@@ -15,27 +15,32 @@ class bcLocation:
         response.update(format_generic(params))
         return response
     
-    def get_a_place(self, params):
+    # def get_a_place(self, params):
+    def get_place(self, id):
         """ GET API_PATH/[PLACE_ID] """
         return defaultMethodResponse
-
-    def get_all_places_for_account(self, params):
+    
+    #def get_all_places_for_account(self, params):
+    def get_places(self):
         """ GET API_PATH/[ACCOUNT_ID]/places """
         return defaultMethodResponse
-
-    def post_place_to_account(self, params):
+    
+    #def post_place_to_account(self, params):
+    def post_places(self, params):
         """ POST API_PATH/[ACCOUNT_ID]/places """
         return defaultMethodResponse
         
-    def post_place_to_aggregation(self, params):
-        """ POST API_PATH/[AGGREGATION_ID]/places """
-        return defaultMethodResponse
-
-    def edit_a_place(self, params):
+    #def post_place_to_aggregation(self, params):
+    #    """ POST API_PATH/[AGGREGATION_ID]/places """
+    #    return defaultMethodResponse
+    
+    #def edit_a_place(self, params):
+    def put_place(self, id, params):
         """ PUT API_PATH/[PLACE_ID] """
         return defaultMethodResponse
-
-    def delete_a_place(self, params):
+    
+    #def delete_a_place(self, params):
+    def delete_place(self, id):
         """ DELETE API_PATH/[PLACE_ID] """
         return defaultMethodResponse
     
@@ -45,31 +50,26 @@ class bcLocation:
         """ GET API_PATH/[PLACE_ID]/comments """
         return defaultMethodResponse
 
-    def post_place_comment(self, params):
+    def post_place_comments(self, params):
         """ POST API_PATH/[PLACE_ID]/comments """
         return defaultMethodResponse
-
-    def delete_place_comment(self, params):
-        """ DELETE API_PATH/[COMMENT_ID] """
-        return defaultMethodResponse
-
-    def edit_place_comment(self, params):
-        """ PUT API_PATH/[COMMENT_ID] """
-        return defaultMethodResponse
-
-    def like_a_place(self, params):
+    
+    #def like_a_place(self, params):
+    def post_place_likes(self, params):
         """ POST API_PATH/[PLACE_ID]/likes """
         return defaultMethodResponse
 
     def get_place_likes(self, params):
         """ GET API_PATH/[PLACE_ID]/likes """
         return defaultMethodResponse
-
-    def unlike_place(self, params):
+    
+    #def unlike_place(self, params):
+    def delete_place_likes(self, params):
         """ DELETE API_PATH/[PLACE_ID]/likes """
         return defaultMethodResponse
-
-    def dislike_place(self, params):
+    
+    #def dislike_place(self, params):
+    def post_place_dislikes(self, params):
         """ POST API_PATH/[PLACE_ID]/dislikes """
         return defaultMethodResponse
 

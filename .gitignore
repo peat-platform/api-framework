@@ -23,3 +23,9 @@ OPENiapp/obj/*
 .idea/modules.xml
 
 OPENiapp/apiplatform.log
+
+api-framework.sln
+
+api-framework.v12.suo
+
+*.log

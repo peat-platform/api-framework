@@ -43,6 +43,9 @@ class twActivity(bcActivity):
                     }
         return response
 
+    def get_statuses(self):
+        return self.get_account_statuses('')
+
     def get_account_statuses(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/STATUSES """
         # /statuses/user_timeline (ie statuses/user_timeline/10876852)
@@ -71,6 +74,9 @@ class twActivity(bcActivity):
             response['data'].append(self.format_status_response(data))
         return response
 
+    def post_statuses(self, params):
+        return self.post_account_statuses('', params)
+
     def post_account_statuses(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/feed """
         # /statuses/update (ie statuses/update/)
@@ -88,10 +94,10 @@ class twActivity(bcActivity):
 
     #   region Favorite Object
 
-    def get_user_favorites(self, id):
+    def get_favorites(self):
         """ GET API_PATH/[USER_ID]/favorites """
         # /favorites/list (ie favorites/list/10876852)
-        raw_datas = self.connector.get_favorites(id = id)
+        raw_datas = self.connector.get_favorites(id = 'me')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])

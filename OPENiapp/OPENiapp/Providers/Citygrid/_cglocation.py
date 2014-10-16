@@ -14,7 +14,7 @@ class cgLocation(bcLocation):
     #   region Place Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Place%20Mapping/
 
-    def get_a_place(self, params):
+    def get_place(self, params):
         """ GET API_PATH/[PLACE_ID] """
         # Returns a detailed instance of Citygrid
         #https://api.citygridmedia.com/content/places/v2/detail?id=10100230&id_type=cs&placement=search_page&client_ip=123.4.56.78&publisher=test&format=json

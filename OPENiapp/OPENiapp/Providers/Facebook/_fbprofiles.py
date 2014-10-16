@@ -8,7 +8,7 @@ class fbProfiles(bcProfiles):
     #   region Profiles API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Profiles%20API/
     
-    def get_an_account(self, params):
+    def get_account(self):
         """ GET API_PATH/[ACCOUNT_ID] """
         raw_data = self.connector.get('me')
 

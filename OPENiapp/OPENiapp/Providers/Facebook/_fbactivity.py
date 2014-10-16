@@ -114,6 +114,9 @@ class fbActivity(bcActivity):
                     }
         return response
 
+    def get_events(self):
+        return self.get_account_events('me')
+
     def get_account_events(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/events """
         # /account_id/events (ie /675350314/events)
@@ -179,6 +182,9 @@ class fbActivity(bcActivity):
                     }
         return response
 
+    def get_statuses(self):
+        return self.get_account_statuses('me')
+
     def get_account_statuses(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/STATUSES """
         # /account_id/statuses (ie /675350314/statuses)
@@ -206,6 +212,9 @@ class fbActivity(bcActivity):
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['data'].append(self.format_status_response(data))
         return response
+    
+    def post_statuses(self, params):
+        return self.post_account_statuses('me', params)
 
     def post_account_statuses(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/feed """
@@ -215,6 +224,7 @@ class fbActivity(bcActivity):
                 return self.connector.post(path = id +'/feed', message = params['message'])
         return "Insufficient Parameters"
 
+    # Not exposed currently
     def post_aggregation_statuses(self, id, params):
         """ POST API_PATH/{AGGREGATION_ID}/feed """
         # /aggregation_id/feed (ie /sth/feed)
