@@ -7,11 +7,7 @@ from django.shortcuts import render
 import ast
 import logging
 
-from allauth.socialaccount.models import SocialToken
 
-from django.contrib.auth.models import User
-
-from OPENiapp.Providers.generic import execution
 
 from django.conf.urls import url
 from tastypie.utils import trailing_slash

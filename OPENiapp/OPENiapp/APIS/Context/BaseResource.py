@@ -8,6 +8,10 @@ import logging
 import ast
 from OPENiapp.Providers.generic import execution
 
+from allauth.socialaccount.models import SocialToken
+
+from django.contrib.auth.models import User
+
 
 __author__ = 'amertis'
 class ContextAwareResource(ModelResource):
