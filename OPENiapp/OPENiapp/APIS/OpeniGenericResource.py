@@ -76,7 +76,7 @@ class GenericResource(ContextAwareResource):
 
     def get_list(self, request, **kwargs):
 
-        self.cbs_handling(request=request, kwargs)
+        self.cbs_handling(request=request, **kwargs)
 
         #append_to_method = "_"
         #connections = []

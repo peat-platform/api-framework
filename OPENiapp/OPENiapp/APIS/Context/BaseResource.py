@@ -66,7 +66,7 @@ class ContextAwareResource(ModelResource):
         bundle = self.full_hydrate(bundle)
 
         ### EXTRA CODE
-        self.cbs_handling(bundle.request,kwargs)
+        self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
 
         if bundle.obj.context is None:
@@ -101,7 +101,7 @@ class ContextAwareResource(ModelResource):
         ### EXTRA CODE
         self.cbs_handling(bundle.request,kwargs)
         ### EXTRA CODE
-        
+
         if 'pk' not in kwargs:
             raise BadRequest("no pk parameter found")
         try:
