@@ -28,51 +28,6 @@ class GenericResource(ContextAwareResource):
 
         return bundle.request.method()
 
-    def cbs_handling(self, request,  **kwargs):
-        cbs = ["OPENi"]
-        params = ""
-        id = ""
-        connection = ""
-        if 'id' in kwargs:
-            id = kwargs['id']
-        if 'connection' in kwargs:
-            connection = kwargs['connection']
-        try:
-            user = request.GET.get("user")
-            u = User.objects.filter(username=user)
-            cbs = ast.literal_eval(request.GET.get("cbs"))
-            id = ast.literal_eval(request.GET.get("id"))
-            params = ast.literal_eval(request.GET.get("params"))
-
-            #apps = ast.literal_eval(request.GET.get("apps"))
-            #method = request.GET.get("method")
-            #data = ast.literal_eval(request.GET.get("data"))
-        except:
-            logging.info("no cbs is being asked")
-
-        request_method = request.META['REQUEST_METHOD'].lower()
-        path = request.path
-
-        pathArray = path.split('/')
-        version = pathArray[1]
-        object = pathArray[2].lower()
-
-        method = request_method + '_' + object
-        if (id != ""):
-            # method += '_' + str(id)
-            if (connection != ""):
-                method += '_' + connection
-        else:
-            if (object == 'status'):
-                method += 'e'
-            if (object != 'rsvp'):
-                method += 's'
-
-        executable = execution(u, cbs, method, id, params)
-        result = executable.make_all_connections()
-        return self.create_response(request, result)
-
-
 
     def get_list(self, request, **kwargs):
 
