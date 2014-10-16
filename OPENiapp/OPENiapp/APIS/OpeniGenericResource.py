@@ -23,27 +23,12 @@ from OPENiapp.APIS.Context.Resources import ContextResource
 
 class GenericResource(ContextAwareResource):
     context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True) # ,related_name='Context'
-    def applications_asked(self, bundle):
-
-        return 1
-
-    def http_headers_in_request(self, bundle):
-
-        return 1
 
     def request_method(self, bundle):
 
         return bundle.request.method()
 
-    def get_list(self, request, **kwargs):
-        """
-        Returns a serialized list of resources.
-
-        Calls ``obj_get_list`` to provide the data, then handles that result
-        set and serializes it.
-
-        Should return a HttpResponse (200 OK).
-        """
+    def cbs_handling(self, request,  **kwargs):
         cbs = ["OPENi"]
         params = ""
         id = ""
@@ -86,6 +71,12 @@ class GenericResource(ContextAwareResource):
         executable = execution(u, cbs, method, id, params)
         result = executable.make_all_connections()
         return self.create_response(request, result)
+
+
+
+    def get_list(self, request, **kwargs):
+
+        self.cbs_handling(request=request, kwargs)
 
         #append_to_method = "_"
         #connections = []
