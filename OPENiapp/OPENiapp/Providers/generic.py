@@ -74,7 +74,7 @@ class execution:
         elif (self.id != ""):
             return method_to_call(self.id)
         else:
-            return method_to_call(self.params)
+            return method_to_call()
         #return method_to_call(self.data)
 
 
