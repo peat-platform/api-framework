@@ -21,4 +21,13 @@ OPENiapp/obj/*
 .idea/misc.xml
 
 .idea/modules.xml
+
 OPENiapp/apiplatform.log
+
+api-framework.sln
+
+api-framework.v12.suo
+
+*.log
+
+checkio.py

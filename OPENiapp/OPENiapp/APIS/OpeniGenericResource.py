@@ -7,11 +7,7 @@ from django.shortcuts import render
 import ast
 import logging
 
-from allauth.socialaccount.models import SocialToken
 
-from django.contrib.auth.models import User
-
-from OPENiapp.Providers.generic import execution
 
 from django.conf.urls import url
 from tastypie.utils import trailing_slash
@@ -23,69 +19,15 @@ from OPENiapp.APIS.Context.Resources import ContextResource
 
 class GenericResource(ContextAwareResource):
     context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True) # ,related_name='Context'
-    def applications_asked(self, bundle):
-
-        return 1
-
-    def http_headers_in_request(self, bundle):
-
-        return 1
 
     def request_method(self, bundle):
 
         return bundle.request.method()
 
+
     def get_list(self, request, **kwargs):
-        """
-        Returns a serialized list of resources.
 
-        Calls ``obj_get_list`` to provide the data, then handles that result
-        set and serializes it.
-
-        Should return a HttpResponse (200 OK).
-        """
-        cbs = ["OPENi"]
-        params = ""
-        id = ""
-        connection = ""
-        if 'id' in kwargs:
-            id = kwargs['id']
-        if 'connection' in kwargs:
-            connection = kwargs['connection']
-        try:
-            user = request.GET.get("user")
-            u = User.objects.filter(username=user)
-            cbs = ast.literal_eval(request.GET.get("cbs"))
-            id = ast.literal_eval(request.GET.get("id"))
-            params = ast.literal_eval(request.GET.get("params"))
-
-            #apps = ast.literal_eval(request.GET.get("apps"))
-            #method = request.GET.get("method")
-            #data = ast.literal_eval(request.GET.get("data"))
-        except:
-            logging.info("no cbs is being asked")
-
-        request_method = request.META['REQUEST_METHOD'].lower()
-        path = request.path
-
-        pathArray = path.split('/')
-        version = pathArray[1]
-        object = pathArray[2].lower()
-
-        method = request_method + '_' + object
-        if (id != ""):
-            # method += '_' + str(id)
-            if (connection != ""):
-                method += '_' + connection
-        else:
-            if (object == 'status'):
-                method += 'e'
-            if (object != 'rsvp'):
-                method += 's'
-
-        executable = execution(u, cbs, method, id, params)
-        result = executable.make_all_connections()
-        return self.create_response(request, result)
+        self.cbs_handling(request=request, **kwargs)
 
         #append_to_method = "_"
         #connections = []
