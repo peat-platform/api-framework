@@ -79,6 +79,10 @@ class ContextAwareResource(ModelResource):
         cbs_return = self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
 
+        # To-Do: change is needed, now openi does not work, only cbs
+        if cbs_return != 'OPENi':
+            return self.create_response(request, cbs_return)
+
         if bundle.obj.context is None:
             raise BadRequest("context attribute is not defined")
         bundle.obj.context.save()
@@ -87,8 +91,6 @@ class ContextAwareResource(ModelResource):
         bundle.obj.context.objectid = bundle.obj.id
         # bundle.obj.context.save(update_fields=["objectid"])
         bundle.obj.context.save()
-        #if cbs_return != 'OPENi' and cbs_return != 'user_error':
-        #    bundle
         return bundle
     @transaction.atomic
     def obj_update(self, bundle, **kwargs):
@@ -96,6 +98,10 @@ class ContextAwareResource(ModelResource):
         ### EXTRA CODE
         cbs_return = self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
+        
+        # To-Do: change is needed, now openi does not work, only cbs
+        if cbs_return != 'OPENi':
+            return self.create_response(request, cbs_return)
 
         if 'id' not in bundle.data:
             raise BadRequest("id property not found")
@@ -113,6 +119,10 @@ class ContextAwareResource(ModelResource):
         ### EXTRA CODE
         cbs_return = self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
+        
+        # To-Do: change is needed, now openi does not work, only cbs
+        if cbs_return != 'OPENi':
+            return self.create_response(request, cbs_return)
 
         if 'pk' not in kwargs:
             raise BadRequest("no pk parameter found")
