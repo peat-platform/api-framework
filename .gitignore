@@ -3,32 +3,21 @@ OPENiapp/.idea/*
 OPENiapp/.idea/
 OPENiapp/.idea
 
+api-framework.sln
+api-framework.v12.suo
 OPENiapp/OPENiapp.pyproj
 OPENiapp/OPENiapp.pyproj.user
-OPENiapp/OPENiapp.sln
-OPENiapp/OPENiapp.v12.suo
 OPENiapp/web.config
 OPENiapp/bin/*
 OPENiapp/obj/*
 
 .idea/*
 
-
-.idea/*
-
 *.db
-
-.idea/misc.xml
-
-.idea/modules.xml
+*.log
 
 OPENiapp/apiplatform.log
 
-api-framework.sln
-
-api-framework.v12.suo
-
-*.log
+OPENiapp/OPENiapp/Providers/Youtube/client_secrets.json
 
 checkio.py
-OPENiapp/OPENiapp/Providers/Youtube/client_secrets.json
