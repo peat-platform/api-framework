@@ -27,35 +27,7 @@ class GenericResource(ContextAwareResource):
 
     def get_list(self, request, **kwargs):
 
-        self.cbs_handling(request=request, **kwargs)
-
-        #append_to_method = "_"
-        #connections = []
-        #if (len(pathArray) > 3):
-        #    connections = pathArray[3:]
-        #for part in connections:
-        #    append_to_method += part
-
-        #if (len(pathArray) > 3):
-        #    if (pathArray[3] != ""):
-        #        id = pathArray[3]
-        #if (len(pathArray) > 4):
-        #    connection = pathArray[4]
-
-        # if request_method:
-        #     method = request_method + '_' + object
-        #     if len(connection)>1:
-        #        method += "_" + connection
-        #
-        #     executable = execution(u, cbs, method, id, params)
-        #     result = executable.make_all_connections()
-        #     return self.create_response(request, result)
-
-        #if (user and apps and method and data):
-        #    executable = execution(u, apps, method, data)
-            
-        #    result = executable.make_all_connections()
-        #    return self.create_response(request, result)
+        cbs_data = self.cbs_handling(request=request, **kwargs)
         
         # Default actions down here, for get_list (that is if there is no fb or other CBS request!
         base_bundle = self.build_bundle(request=request)
@@ -74,7 +46,8 @@ class GenericResource(ContextAwareResource):
 
         to_be_serialized[self._meta.collection_name] = bundles
         to_be_serialized = self.alter_list_data_to_serialize(request, to_be_serialized)
-        return self.create_response(request, to_be_serialized)
+        cbs_data.append(to_be_serialized)
+        return self.create_response(request, cbs_data)
 
     def prepend_urls(self):
         return [
@@ -83,6 +56,7 @@ class GenericResource(ContextAwareResource):
         ]
 
 class GenericMeta:
+    always_return_data = True
     list_allowed_methods = ['get', 'post']
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()

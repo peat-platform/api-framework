@@ -19,52 +19,56 @@ class ContextAwareResource(ModelResource):
     context = fields.ToOneField(ContextResource, 'context',full=True)
 
     # TODO remove this only to openigenericresource
-    def cbs_handling(self, request,  **kwargs):
-        cbs = ["OPENi"]
-        params = ""
-        id = ""
-        connection = ""
-        if 'id' in kwargs:
+    def cbs_handling(self, request, **kwargs):
+        try:
+            resource_name = kwargs['resource_name']
+        except:
+            # To-Do: Make a proper error message.
+            return "404"
+        try:
             id = kwargs['id']
-        if 'connection' in kwargs:
+        except:
+            id =""
+        try:
             connection = kwargs['connection']
+        except:
+            connection = ""
 
-        user = request.GET.get("user")
-        u = User.objects.filter(username=user)
+        # Try to parse the parameters of the call
+        try:
+            user = request.GET.get("user")
+            u = User.objects.filter(username=user)
+        except:
+            # To-Do: Make an appropriate error response!
+            return 'user_error'
 
+        # Try to get the cbs required for the call
         try:
             cbs = ast.literal_eval(request.GET.get("cbs"))
-            id = ast.literal_eval(request.GET.get("id"))
-            params = ast.literal_eval(request.GET.get("params"))
-
-            #apps = ast.literal_eval(request.GET.get("apps"))
-            #method = request.GET.get("method")
-            #data = ast.literal_eval(request.GET.get("data"))
         except:
-            logging.info("no cbs is being asked")
+            return 'OPENi'
+
+        # Try to parse the parameters of the call
+        try:
+            params = ast.literal_eval(request.GET.get("params"))
+        except:
+            params = ""
 
         request_method = request.META['REQUEST_METHOD'].lower()
-        path = request.path
-
-        pathArray = path.split('/')
-        version = pathArray[1]
-        object = pathArray[2].lower()
-
-        method = request_method + '_' + object
-        if (id != ""):
-            # method += '_' + str(id)
-            if (connection != ""):
-                method += '_' + connection
-        else:
-            if (object == 'status'):
+        resource_name = resource_name.lower()
+        method = request_method + '_' + resource_name
+        # If there is a connection in the url then add it to the method
+        if connection != "":
+            method += '_' + connection
+            # If there is an id in the url then make the methods plural.
+        if id == "":
+            if (resource_name == 'status'):
                 method += 'e'
-            if (object != 'rsvp'):
+            if (resource_name != 'rsvp'):
                 method += 's'
 
         executable = execution(u, cbs, method, id, params)
-        result = executable.make_all_connections()
-        return self.create_response(request, result)
-
+        return executable.make_all_connections()
 
 
     @transaction.atomic
@@ -72,7 +76,7 @@ class ContextAwareResource(ModelResource):
         bundle = self.full_hydrate(bundle)
 
         ### EXTRA CODE
-        self.cbs_handling(bundle.request,**kwargs)
+        cbs_return = self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
 
         if bundle.obj.context is None:
@@ -83,12 +87,14 @@ class ContextAwareResource(ModelResource):
         bundle.obj.context.objectid = bundle.obj.id
         # bundle.obj.context.save(update_fields=["objectid"])
         bundle.obj.context.save()
+        #if cbs_return != 'OPENi' and cbs_return != 'user_error':
+        #    bundle
         return bundle
     @transaction.atomic
     def obj_update(self, bundle, **kwargs):
 
         ### EXTRA CODE
-        self.cbs_handling(bundle.request,kwargs)
+        cbs_return = self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
 
         if 'id' not in bundle.data:
@@ -105,7 +111,7 @@ class ContextAwareResource(ModelResource):
     def obj_delete(self, bundle, **kwargs):
 
         ### EXTRA CODE
-        self.cbs_handling(bundle.request,kwargs)
+        cbs_return = self.cbs_handling(bundle.request,**kwargs)
         ### EXTRA CODE
 
         if 'pk' not in kwargs:
