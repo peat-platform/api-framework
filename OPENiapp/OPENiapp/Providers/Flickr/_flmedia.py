@@ -16,10 +16,10 @@ class flMedia(bcMedia):
     #   region Photo Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Photo_Mapping
 
-    def get_a_photo(self, params):
+    def get_photo(self, id):
         ''' GET API_PATH/[PHOTO_ID] '''
         # /media/media-id (ie media/15124908031)
-        photo = self.connector.Photo(id = params['media_id'])
+        photo = self.connector.Photo(id = id)
         raw_data = photo.getInfo()
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -49,10 +49,13 @@ class flMedia(bcMedia):
                     }
         return response
 
-    def get_all_photos_for_account(self, params):
+    def get_photos(self):
+        return get_all_photos_for_account('me')
+
+    def get_all_photos_for_account(self, id):
         ''' GET API_PATH/[ACCOUNT_ID]/photos '''
         # /users/username (ie users/chris_dane)
-        user = self.connector.Person.findByUserName(params['username'])
+        user = self.connector.Person.findByUserName(id)
         raw_datas = user.getPhotos()
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -88,10 +91,10 @@ class flMedia(bcMedia):
 
     #   region Connections
 
-    def get_photo_comments(self, params):
+    def get_photo_comments(self, id):
         ''' GET API_PATH/[PHOTO_ID]/comments '''
         # /media/media-id/comments (ie media/15124908031/comments)
-        photo = self.connector.Photo(id = params['media_id'])
+        photo = self.connector.Photo(id = id)
         raw_datas = photo.getComments()
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -101,7 +104,7 @@ class flMedia(bcMedia):
         fields.extend(['title', 'text', 'target_id'])
 
         alternatives = ['', 'comment', 'flickr', '', '', 'account', '', '', '', '', '']
-        alternatives.extend(['', '', params['media_id']])
+        alternatives.extend(['', '', id])
 
         response = {
                     'meta':
@@ -117,22 +120,17 @@ class flMedia(bcMedia):
             response['data'].append(self.format_comment_response(data))
         return response
 
-    def post_comment_to_photo(self, params):
+    def post_photo_comments(self, id, params):
         ''' POST API_PATH/[PHOTO_ID]/comments '''
         # /media/media-id/comments (ie media/15124908031/comments)
-        if ((check_if_exists(params, 'media_id') != defJsonRes) and (check_if_exists(params, 'comment_text') != defJsonRes)):
-            photo = self.connector.Photo(id = params['media_id'])
+        if (check_if_exists(params, 'comment_text') != defJsonRes):
+            photo = self.connector.Photo(id = id)
             return photo.addComment(text = params['comment_text'])
         return "Insufficient Parameters"
 
-    def delete_comment_from_photo(self, params):
-        ''' DELETE API_PATH/[COMMENT_ID] '''
-        # /media/media-id/comments/comment-id (ie media/628147512937366504_917877895/comments/628902539272471262)
-        if ((check_if_exists(params, 'media_id') != defJsonRes) and (check_if_exists(params, 'comment_id') != defJsonRes)):
-            photo = self.connector.Photo(id = params['media_id'])
-            comment = photo.Comment(id = params['comment_id'])
-            return comment.delete()
-        return "Insufficient Parameters"
+    def delete_comment(self, id):
+        comment = photo.Comment(id = params['comment_id'])
+        return comment.delete()
 
     #   endregion Connections
 

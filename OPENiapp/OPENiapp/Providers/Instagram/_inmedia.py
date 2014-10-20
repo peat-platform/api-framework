@@ -10,9 +10,9 @@ class inMedia(bcMedia):
     
     #   region Photo Object
 
-    def get_a_photo(self, params):
+    def get_photo(self, id):
         # /media/media-id (ie media/628147512937366504_917877895)
-        raw_data = self.connector.media(params['media_id'])
+        raw_data = self.connector.media(id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
@@ -42,10 +42,13 @@ class inMedia(bcMedia):
         
         return response
 
-    def get_all_photos_for_account(self, params):
+    def get_photos(self):
+        return get_all_photos_for_account('me')
+
+    def get_all_photos_for_account(self, id):
         ''' GET API_PATH/[ACCOUNT_ID]/photos '''
         # /users/user-id (ie users/917877895)
-        raw_datas, next = self.connector.user_recent_media(params['account_id'])
+        raw_datas, next = self.connector.user_recent_media(id)
         if (next == None):
             next = defJsonRes
         
@@ -82,10 +85,10 @@ class inMedia(bcMedia):
 
     #   region Connections
 
-    def get_comments_for_photo(self, params):
+    def get_photo_comments(self, id):
         ''' GET API_PATH/[PHOTO_ID]/comments '''
         # /media/media-id/comments (ie media/628147512937366504_917877895/comments)
-        raw_datas = self.connector.media_comments(params['media_id'])
+        raw_datas = self.connector.media_comments(id)
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
@@ -94,7 +97,7 @@ class inMedia(bcMedia):
         fields.extend(['title', 'text', 'target_id'])
 
         alternatives = ['', 'comment', 'Instagram', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', '', params['media_id']])
+        alternatives.extend(['', '', id])
 
         response = {
                     'meta':
@@ -110,30 +113,25 @@ class inMedia(bcMedia):
             response['data'].append(format_comment_response(data))
         return response
     
-    def post_comment_to_photo(self, params):
+    def post_photo_comments(self, id):
         """ POST API_PATH/[PHOTO_ID]/comments """
         # /media/media-id/comments (ie media/628147512937366504_917877895/comments)
         # 'error_message': 'Please visit http://bit.ly/instacomments for commenting access' Please email apidevelopers[at]instagram.com for access.
         return defaultMethodResponse
 
-    def delete_comment_from_photo(self, params):
+    def delete_comment(self, id):
         ''' DELETE API_PATH/[COMMENT_ID] '''
-        # /media/media-id/comments/comment-id (ie media/628147512937366504_917877895/comments/628902539272471262)
-        if ((check_if_exists(params, 'media_id') != defJsonRes) and (check_if_exists(params, 'comment_id') != defJsonRes)):
-            return self.connector.delete_comment(params['media_id'], params['comment_id'])
-        return "Insufficient Parameters"
+        return self.connector.delete_comment(id)
 
-    def like_photo(self, params):
+    def post_photo_likes(self, id):
         ''' POST API_PATH/[PHOTO_ID]/likes '''
         # /media/media-id/likes (ie media/628147512937366504_917877895/likes)
-        if (check_if_exists(params, 'media_id') != defJsonRes):
-            return self.connector.like_media(params['media_id'])
-        return "Insufficient Parameters"
+        return self.connector.like_media(id)
 
-    def get_likes_for_photo(self, params):
+    def get_photo_likes(self, id):
         ''' GET API_PATH/[PHOTO_ID]/likes '''
         # /media/media-id/likes (ie media/628147512937366504_917877895/likes)
-        raw_datas = self.connector.media_likes(params['media_id'])
+        raw_datas = self.connector.media_likes(id)
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
@@ -142,7 +140,7 @@ class inMedia(bcMedia):
         fields.extend(['target_id'])
 
         alternatives = ['', 'like', 'Instagram', '', '', '', '', '', '', '', '']
-        alternatives.extend([params['media_id']])
+        alternatives.extend([id])
 
         response = {
                     'meta':
@@ -158,12 +156,10 @@ class inMedia(bcMedia):
             response['data'].append(format_likes_response(data))
         return response
 
-    def unlike_photo(self, params):
+    def delete_photo_likes(self, id):
         ''' DELETE API_PATH/[PHOTO_ID]/likes '''
         # /media/media-id/likes (ie media/628147512937366504_917877895/likes)
-        if (check_if_exists(params, 'media_id') != defJsonRes):
-            return self.connector.unlike_media(params['media_id'])
-        return "Insufficient Parameters"
+        return self.connector.unlike_media(id)
 
     #   endregion Connections
 

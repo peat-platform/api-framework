@@ -13,28 +13,20 @@ class bcMedia:
                    }
         response.update(format_generic(params))
         return response
+
+    def get_audios(self):
+        """ GET API_PATH/[ACCOUNT_ID]/audios """
+        return defaultMethodResponse
+
+    def post_audios(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/audio """
+        return defaultMethodResponse
     
     def get_audio(self, id):
         """ GET API_PATH/[AUDIO_ID] """
         return defaultMethodResponse
 
-    def get_account_audios(self, id):
-        """ GET API_PATH/[ACCOUNT_ID]/audios """
-        return defaultMethodResponse
-
-    def post_audio(self, id, params):
-        """ POST API_PATH/[ACCOUNT_ID]/audio """
-        return defaultMethodResponse
-
-    def get_album_audios(self, id, params):
-        """ GET API_PATH/[ACCOUNT_ID]/audios """
-        return defaultMethodResponse
-        
-    def post_album_audio(self, id, params):
-        """ POST API_PATH/[ALBUM_ID]/audios """
-        return defaultMethodResponse
-
-    def edit_audio(self, id, params):
+    def put_audio(self, id, params):
         """ PUT API_PATH/[AUDIO_ID] """
         return defaultMethodResponse
 
@@ -56,28 +48,20 @@ class bcMedia:
                    }
         response.update(format_generic(params))
         return response
+
+    def get_files(self):
+        """ GET API_PATH/[ACCOUNT_ID]/files """
+        return defaultMethodResponse
+
+    def post_files(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/files """
+        return defaultMethodResponse
     
     def get_file(self, id):
         """ GET API_PATH/[FILE_ID] """
         return defaultMethodResponse
 
-    def get_account_files(self, id):
-        """ GET API_PATH/[ACCOUNT_ID]/files """
-        return defaultMethodResponse
-
-    def post_file(self, id, params):
-        """ POST API_PATH/[ACCOUNT_ID]/photos """
-        return defaultMethodResponse
-
-    def get_album_files(self, id):
-        """ GET API_PATH/[ACCOUNT_ID]/files """
-        return defaultMethodResponse
-        
-    def post_album_file(self, id, params):
-        """ POST API_PATH/[ALBUM_ID]/files """
-        return defaultMethodResponse
-
-    def edit_file(self, id, params):
+    def put_file(self, id, params):
         """ PUT API_PATH/[FILE_ID] """
         return defaultMethodResponse
 
@@ -103,28 +87,20 @@ class bcMedia:
                    }
         response.update(format_generic(params))
         return response
+
+    def get_photos(self):
+        """ GET API_PATH/[ACCOUNT_ID]/photos """
+        return defaultMethodResponse
+
+    def post_photos(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/photos """
+        return defaultMethodResponse
     
     def get_photo(self, id):
         """ GET API_PATH/[PHOTO_ID] """
         return defaultMethodResponse
 
-    def get_account_photos(self, id):
-        """ GET API_PATH/[ACCOUNT_ID]/photos """
-        return defaultMethodResponse
-
-    def post_photo(self, id, params):
-        """ POST API_PATH/[ACCOUNT_ID]/photos """
-        return defaultMethodResponse
-
-    def get_album_photos(self, id):
-        """ GET API_PATH/[ACCOUNT_ID]/photos """
-        return defaultMethodResponse
-        
-    def post_album_photo(self, id, params):
-        """ POST API_PATH/[ALBUM_ID]/photos """
-        return defaultMethodResponse
-
-    def edit_photo(self, id, params):
+    def put_photo(self, id, params):
         """ PUT API_PATH/[PHOTO_ID] """
         return defaultMethodResponse
 
@@ -138,36 +114,28 @@ class bcMedia:
         """ GET API_PATH/[PHOTO_ID]/comments """
         return defaultMethodResponse
 
-    def post_photo_comment(self, id, params):
+    def post_photo_comments(self, id, params):
         """ POST API_PATH/[PHOTO_ID]/comments """
-        return defaultMethodResponse
-
-    def delete_photo_comment(self, id):
-        """ DELETE API_PATH/[COMMENT_ID] """
-        return defaultMethodResponse
-
-    def edit_photo_comment(self, id, params):
-        """ PUT API_PATH/[COMMENT_ID] """
-        return defaultMethodResponse
-
-    def post_photo_like(self, id, params):
-        """ POST API_PATH/[PHOTO_ID]/likes """
         return defaultMethodResponse
 
     def get_photo_likes(self, id):
         """ GET API_PATH/[PHOTO_ID]/likes """
         return defaultMethodResponse
 
-    def post_photo_unlike(self, id, params):
-        """ DELETE API_PATH/[PHOTO_ID]/likes """
+    def post_photo_likes(self, id, params):
+        """ POST API_PATH/[PHOTO_ID]/likes """
         return defaultMethodResponse
 
-    def post_photo_dislike(self, id, params):
-        """ POST API_PATH/[PHOTO_ID]/dislikes """
+    def delete_photo_likes(self, id, params):
+        """ DELETE API_PATH/[PHOTO_ID]/likes """
         return defaultMethodResponse
 
     def get_photo_dislikes(self, id):
         """ GET API_PATH/[PHOTO_ID]/dislikes """
+        return defaultMethodResponse
+
+    def post_photo_dislikes(self, id, params):
+        """ POST API_PATH/[PHOTO_ID]/dislikes """
         return defaultMethodResponse
 
     def delete_photo_dislikes(self, id):
@@ -191,24 +159,20 @@ class bcMedia:
                    }
         response.update(format_generic(params))
         return response
+
+    def get_videos(self):
+        """ GET API_PATH/[ACCOUNT_ID]/videos """
+        return defaultMethodResponse
+
+    def post_videos(self, params):
+        """ POST API_PATH/[ACCOUNT_ID]/videos """
+        return defaultMethodResponse
     
     def get_video(self, id):
         """ GET API_PATH/[VIDEO_ID] """
         return defaultMethodResponse
 
-    def get_account_videos(self, id):
-        """ GET API_PATH/[ACCOUNT_ID]/videos """
-        return defaultMethodResponse
-
-    def post_account_video(self, id, params):
-        """ POST API_PATH/[ACCOUNT_ID]/videos """
-        return defaultMethodResponse
-        
-    def post_aggregation_video(self, id, params):
-        """ POST API_PATH/[AGGREGATION_ID]/videos """
-        return defaultMethodResponse
-
-    def edit_video(self, id, params):
+    def pust_video(self, id, params):
         """ PUT API_PATH/[VIDEO_ID] """
         return defaultMethodResponse
 
@@ -222,28 +186,28 @@ class bcMedia:
         """ GET API_PATH/[VIDEO_ID]/comments """
         return defaultMethodResponse
 
-    def post_video_comment(self, id, params):
+    def post_video_comments(self, id, params):
         """ POST API_PATH/[VIDEO_ID]/comments """
-        return defaultMethodResponse
-
-    def post_video_like(self, id, params):
-        """ POST API_PATH/[VIDEO_ID]/likes """
         return defaultMethodResponse
 
     def get_video_likes(self, id, params):
         """ GET API_PATH/[VIDEO_ID]/likes """
         return defaultMethodResponse
 
-    def post_video_unlike(self, id, params):
-        """ DELETE API_PATH/[VIDEO_ID]/likes """
+    def post_video_likes(self, id, params):
+        """ POST API_PATH/[VIDEO_ID]/likes """
         return defaultMethodResponse
 
-    def post_video_dislike(self, id, params):
-        """ POST API_PATH/[VIDEO_ID]/dislikes """
+    def delete_video_likes(self, id, params):
+        """ DELETE API_PATH/[VIDEO_ID]/likes """
         return defaultMethodResponse
 
     def get_video_dislikes(self, id):
         """ GET API_PATH/[VIDEO_ID]/dislikes """
+        return defaultMethodResponse
+
+    def post_video_dislikes(self, id, params):
+        """ POST API_PATH/[VIDEO_ID]/dislikes """
         return defaultMethodResponse
 
     def delete_video_dislikes(self, id):
@@ -267,15 +231,15 @@ class bcMedia:
         response.update(format_generic(params))
         return response
 
+    def post_folders(self, params):
+        """ POST API_PATH/[ACCOUNT_ID] """
+        return defaultMethodResponse
+
     def get_folder(self, id):
         """ GET API_PATH/[FOLDER_ID] """
         return defaultMethodResponse
 
-    def post_account_folder(self, id, params):
-        """ POST API_PATH/[ACCOUNT_ID] """
-        return defaultMethodResponse
-
-    def edit_folder(self, id, params):
+    def put_folder(self, id, params):
         """ PUT API_PATH/[FOLDER_ID] """
         return defaultMethodResponse
 
@@ -284,5 +248,33 @@ class bcMedia:
         return defaultMethodResponse
 
     #   endregion Folder Aggregation
+
+    #   region Album Aggregation
+    
+    def get_album_audios(self, id, params):
+        """ GET API_PATH/[ACCOUNT_ID]/audios """
+        return defaultMethodResponse
+        
+    def post_album_audios(self, id, params):
+        """ POST API_PATH/[ALBUM_ID]/audios """
+        return defaultMethodResponse
+
+    def get_album_files(self, id):
+        """ GET API_PATH/[ACCOUNT_ID]/files """
+        return defaultMethodResponse
+        
+    def post_album_files(self, id, params):
+        """ POST API_PATH/[ALBUM_ID]/files """
+        return defaultMethodResponse
+
+    def get_album_photos(self, id):
+        """ GET API_PATH/[ACCOUNT_ID]/photos """
+        return defaultMethodResponse
+        
+    def post_album_photos(self, id, params):
+        """ POST API_PATH/[ALBUM_ID]/photos """
+        return defaultMethodResponse
+
+    #   endregion Album Aggregation
 
     #   endregion Media API

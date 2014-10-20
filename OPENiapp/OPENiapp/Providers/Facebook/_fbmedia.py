@@ -35,10 +35,10 @@ class fbMedia(bcMedia):
     
     #   region Photo Object
 
-    def get_a_photo(self, params):
+    def get_photo(self, id):
         """ GET API_PATH/[PHOTO_ID] """
         # /photo_id (ie /10153665526210315)
-        raw_data = self.connector.get('/' + params['photo_id'])
+        raw_data = self.connector.get('/' + id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
@@ -79,11 +79,14 @@ class fbMedia(bcMedia):
         response['data'][0]['tags'] = tag_array
         
         return response
+
+    def get_photos(self):
+        return get_account_photos('me')
     
-    def get_all_photos_for_account(self, params):
+    def get_account_photos(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/photos """
         # /account_id/photos (ie /675350314/photos)
-        raw_datas = self.connector.get(params['user_id'] +'/photos')
+        raw_datas = self.connector.get(id +'/photos')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
@@ -119,79 +122,29 @@ class fbMedia(bcMedia):
         
         return response
 
-    def post_photo_to_account(self, params):
+    def post_photos(self, params):
+        return post_account_photos('me', params)
+
+    def post_account_photos(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/photos """
         # /account_id/photos (ie /675350314/photos)
-        if (check_if_exists(params, 'user_id') != defJsonRes):
-            if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['user_id'] +'/photos', source = open(params['path_string'], 'rb'))
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = params['user_id'] +'/photos', url = params['url'])
-        return "Insufficient Parameters"
-    
-    def get_all_photos_for_album(self, params):
-        """ Get all photos for an album """
-        # /album_id/photos (ie /10150259489830315/photos)
-        raw_datas = self.connector.get(params['album_id'] +'/photos')
-        
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
-        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
-
-        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longitude', 'place.location.height', 'tags.data', 'height', 'width']
-
-        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-
-        response = {
-                    'meta':
-                        {
-                         'total_count': len(raw_datas['data']),
-                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                         'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'data': []
-                    }
-
-        for idx, raw_data in enumerate(raw_datas['data']):
-            data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
-
-            # Curate tag array from Facebook
-            tag_array = []
-            if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
-                for tag in raw_data['tags']['data']:
-                    tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
-                    tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
-                    tag_alternatives = ['', '', '', '', '', '', '']
-                    tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
-                    tag_array.append(format_tags(tag_data))
-            response['data'][idx]['tags'] = tag_array
-        
-        return response
-        
-    def post_photo_to_album(self, data):
-        """ POST API_PATH/[ALBUM_ID]/photos """
-        # /album_id/photos (ie /10150259489830315/photos)
-        if (check_if_exists(params, 'album_id') != defJsonRes):
-            if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['album_id'] +'/photos', source = open(params['source'], 'rb'))
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = params['album_id'] +'/photos', url = open(params['url'], 'rb'))
+        if (check_if_exists(params, 'source') != defJsonRes):
+            return self.connector.post(path = id +'/photos', source = open(params['path_string'], 'rb'))
+        elif (check_if_exists(params, 'url') != defJsonRes):
+            return self.connector.post(path = id +'/photos', url = params['url'])
         return "Insufficient Parameters"
 
-    def delete_a_photo(self, params):
+    def delete_photo(self, id):
         """ DELETE API_PATH/[PHOTO_ID] """
         # /photo_id (ie /10153665526210315)
-        if (check_if_exists(params, 'photo_id') != defJsonRes):
-            return self.connector.delete(params['photo_id'])
-        return "Insufficient Parameters"
-    
+        return self.connector.delete(id)    
 
     #   region Connections
     
-    def get_comments_for_photo(self, params):
+    def get_photo_comments(self, id):
         """ GET API_PATH/[PHOTO_ID]/comments """
         # /photo_id/comments (ie /10153665526210315/comments)
-        raw_datas = self.connector.get('/' + params['photo_id'] + '/comments')
+        raw_datas = self.connector.get('/' + id + '/comments')
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
@@ -216,31 +169,28 @@ class fbMedia(bcMedia):
             response['data'].append(self.format_comment_response(data))
         return response
     
-    def post_comment_to_photo(self, params):
+    def post_photo_comments(self, id, params):
         """ POST API_PATH/[PHOTO_ID]/comments """
         # /photo_id/comments (ie /10153665526210315/comments)
-        if (check_if_exists(params, 'photo_id') != defJsonRes):
-            if (check_if_exists(params, 'message') != defJsonRes):
-                return self.connector.post(path = params['photo_id'] +'/comments', message = params['message'])
-            elif (check_if_exists(params, 'attachment_id') != defJsonRes):
-                return self.connector.post(path = params['photo_id'] +'/comments', attachment_id = params['attachment_id'])
-            elif (check_if_exists(params, 'attachment_url') != defJsonRes):
-                return self.connector.post(path = params['photo_id'] +'/comments', attachment_url = params['attachment_url'])
-            elif (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['photo_id'] +'/comments', source = params['source'])
+        if (check_if_exists(params, 'message') != defJsonRes):
+            return self.connector.post(path = id +'/comments', message = params['message'])
+        elif (check_if_exists(params, 'attachment_id') != defJsonRes):
+            return self.connector.post(path = id +'/comments', attachment_id = params['attachment_id'])
+        elif (check_if_exists(params, 'attachment_url') != defJsonRes):
+            return self.connector.post(path = id +'/comments', attachment_url = params['attachment_url'])
+        elif (check_if_exists(params, 'source') != defJsonRes):
+            return self.connector.post(path = id +'/comments', source = params['source'])
         return "Insufficient Parameters"
     
-    def like_photo(self, params):
+    def post_photo_likes(self, id):
         """ POST API_PATH/[PHOTO_ID]/likes """
         # /photo_id/likes (ie /10153665526210315/likes)
-        if (check_if_exists(params, 'photo_id') != defJsonRes):
-            return self.connector.post(path = params['photo_id'] +'/likes')
-        return "Insufficient Parameters"
+        return self.connector.post(path = id +'/likes')
     
-    def get_likes_for_photo(self, params):
+    def get_photo_likes(self, id):
         """ GET API_PATH/[PHOTO_ID]/likes """
         # /photo_id/likes (ie /10153665526210315/likes)
-        raw_datas = self.connector.get('/' + params['photo_id'] + '/likes')
+        raw_datas = self.connector.get('/' + id + '/likes')
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
@@ -265,25 +215,22 @@ class fbMedia(bcMedia):
             response['data'].append(format_likes_response(data))
         return response
     
-    def unlike_photo(self, params):
+    def delete_photo_likes(self, id):
         """ DELETE API_PATH/[PHOTO_ID]/likes """
         # /photo_id/likes (ie /10153665526210315/likes)
-        if (check_if_exists(params, 'photo_id') != defJsonRes):
-            return self.connector.delete(path = params['photo_id'] +'/likes')
-        return "Insufficient Parameters"
+        return self.connector.delete(path = id +'/likes')
 
     #   endregion Connections
 
     #   endregion Photo Object
-
     
     
     #   region Video Object
     
-    def get_a_video(self, params):
+    def get_video(self, id):
         """ GET API_PATH/[VIDEO_ID] """
         # /video_id (ie /1708014064955)
-        raw_data = self.connector.get('/' + params['video_id'])
+        raw_data = self.connector.get('/' + id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
@@ -327,10 +274,13 @@ class fbMedia(bcMedia):
         
         return response
 
-    def get_all_videos_for_account(self, params):
+    def get_videos(self):
+        return get_account_videos('me')
+
+    def get_account_videos(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/videos """
         # account_id/videos (ie /675350314/videos)
-        raw_datas = self.connector.get('/' + params['account_id'] + '/videos')
+        raw_datas = self.connector.get('/' + id + '/videos')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
@@ -378,39 +328,39 @@ class fbMedia(bcMedia):
         
         return response
 
-    def post_video_to_account(self, params):
+    def post_videos(self, params):
+        return post_video_to_account('me', params)
+
+    def post_video_to_account(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/videos """
         # /account_id/videos (ie /675350314/videos)
-        if (check_if_exists(params, 'user_id') != defJsonRes):
-            if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['user_id'] +'/videos', source = open(self.params.path_string, 'rb'))
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = params['user_id'] +'/videos', url = open(self.params.url, 'rb'))
+        if (check_if_exists(params, 'source') != defJsonRes):
+            return self.connector.post(path = id +'/videos', source = open(self.params.path_string, 'rb'))
+        elif (check_if_exists(params, 'url') != defJsonRes):
+            return self.connector.post(path = id +'/videos', url = open(self.params.url, 'rb'))
         return "Insufficient Parameters"
         
-    def post_video_to_aggregation(self, params):
-        """ POST API_PATH/[AGGREGATION_ID]/videos """
-        # /aggregation_id/videos (ie /sth/videos)
-        if (check_if_exists(params, 'aggregation_id') != defJsonRes):
-            if (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['aggregation_id'] +'/videos', source = open(self.params.path_string, 'rb'))
-            elif (check_if_exists(params, 'url') != defJsonRes):
-                return self.connector.post(path = params['aggregation_id'] +'/videos', url = open(self.params.url, 'rb'))
-        return "Insufficient Parameters"
+    #def post_video_to_aggregation(self, params):
+    #    """ POST API_PATH/[AGGREGATION_ID]/videos """
+    #    # /aggregation_id/videos (ie /sth/videos)
+    #    if (check_if_exists(params, 'aggregation_id') != defJsonRes):
+    #        if (check_if_exists(params, 'source') != defJsonRes):
+    #            return self.connector.post(path = params['aggregation_id'] +'/videos', source = open(self.params.path_string, 'rb'))
+    #        elif (check_if_exists(params, 'url') != defJsonRes):
+    #            return self.connector.post(path = params['aggregation_id'] +'/videos', url = open(self.params.url, 'rb'))
+    #    return "Insufficient Parameters"
 
-    def delete_a_video(self, params):
+    def delete_video(self, id):
         """ DELETE API_PATH/[VIDEO_ID] """
         # /video_id (ie /1708014064955)
-        if (check_if_exists(params, 'video_id') != defJsonRes):
-            return self.connector.delete('/' + params['video_id'])
-        return "Insufficient Parameters"
+        return self.connector.delete('/' + id)
     
     #   region Connections
 
-    def get_comments_for_video(self, params):
+    def get_video_comments(self, id):
         """ GET API_PATH/[VIDEO_ID]/comments """
         # /video_id/comments (ie /1708014064955/comments)
-        raw_datas = self.connector.get('/' + params['video_id'] + '/comments')
+        raw_datas = self.connector.get('/' + id + '/comments')
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
@@ -419,7 +369,7 @@ class fbMedia(bcMedia):
         fields.extend(['title', 'message', 'target_id'])
 
         alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', '', params['video_id']])
+        alternatives.extend(['', '', id])
 
         response = {
                     'meta':
@@ -435,31 +385,28 @@ class fbMedia(bcMedia):
             response['data'].append(self.format_comment_response(data))
         return response
 
-    def post_comment_to_video(self, params):
+    def post_video_comments(self, id, params):
         """ POST API_PATH/[VIDEO_ID]/comments """
         # /video_id/comments (ie /1708014064955/comments)
-        if (check_if_exists(params, 'video_id') != defJsonRes):
-            if (check_if_exists(params, 'message') != defJsonRes):
-                return self.connector.post(path = params['video_id'] +'/comments', message = params['message'])
-            elif (check_if_exists(params, 'attachment_id') != defJsonRes):
-                return self.connector.post(path = params['video_id'] +'/comments', attachment_id = params['attachment_id'])
-            elif (check_if_exists(params, 'attachment_url') != defJsonRes):
-                return self.connector.post(path = params['video_id'] +'/comments', attachment_url = params['attachment_url'])
-            elif (check_if_exists(params, 'source') != defJsonRes):
-                return self.connector.post(path = params['video_id'] +'/comments', source = params['source'])
+        if (check_if_exists(params, 'message') != defJsonRes):
+            return self.connector.post(path = id +'/comments', message = params['message'])
+        elif (check_if_exists(params, 'attachment_id') != defJsonRes):
+            return self.connector.post(path = id +'/comments', attachment_id = params['attachment_id'])
+        elif (check_if_exists(params, 'attachment_url') != defJsonRes):
+            return self.connector.post(path = id +'/comments', attachment_url = params['attachment_url'])
+        elif (check_if_exists(params, 'source') != defJsonRes):
+            return self.connector.post(path = id +'/comments', source = params['source'])
         return "Insufficient Parameters"
 
-    def like_video(self, params):
+    def post_video_likes(self, id):
         """ POST API_PATH/[VIDEO_ID]/likes """
         # /video_id/likes (ie /1708014064955/likes)
-        if (check_if_exists(params, 'video_id') != defJsonRes):
-            return self.connector.post(path = params['video_id'] +'/likes')
-        return "Insufficient Parameters"
+        return self.connector.post(path = id +'/likes')
 
-    def get_likes_for_video(self, params):
+    def get_video_likes(self, id):
         """ GET API_PATH/[VIDEO_ID]/likes """
         # /video_id/likes (ie /1708014064955/likes)
-        raw_datas = self.connector.get('/' + params['video_id'] + '/likes')
+        raw_datas = self.connector.get('/' + id + '/likes')
 
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
@@ -468,7 +415,7 @@ class fbMedia(bcMedia):
         fields.extend(['target_id'])
 
         alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend([params['video_id']])
+        alternatives.extend([id])
 
         response = {
                     'meta':
@@ -484,27 +431,24 @@ class fbMedia(bcMedia):
             response['data'].append(self.format_like_response(data))
         return response
 
-    def unlike_video(self, params):
+    def delete_video_likes(self, id):
         """ DELETE API_PATH/[VIDEO_ID]/likes """
         # /video_id/likes (ie /1708014064955/likes)
-        if (check_if_exists(params, 'video_id') != defJsonRes):
-            return self.connector.delete(path = params['video_id'] +'/likes')
-        return "Insufficient Parameters"
+        return self.connector.delete(path = id +'/likes')
 
     #   endregion Connections
 
-    #   endregion Video Object
-    
+    #   endregion Video Object    
 
 
     #   region Folder Aggregation 
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Folder%20Mapping
 
-    def get_a_folder(self, params):
+    def get_folder(self, id):
         """ GET API_PATH/[FOLDER_ID] """
         # /album_id (ie /10153665525255315)
-        raw_data = self.connector.get('/' + params['album_id'])
-        raw_data2 = self.connector.get('/' + params['album_id'] + '/photos')
+        raw_data = self.connector.get('/' + id)
+        raw_data2 = self.connector.get('/' + id + '/photos')
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'data'])
@@ -525,18 +469,71 @@ class fbMedia(bcMedia):
                     }
         response['data'][0]['data'] = self.get_all_photos_for_album({'album_id': params['album_id']})
         return response
+
+    def post_folders(self, params):
+        return post_folder_to_account('me', params)
     
-    def post_folder_to_account(self, params):
+    def post_folder_to_account(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID] """
         # /account_id (ie /675350314)
-        if (check_if_exists(params, 'account_id') != defJsonRes):
-            return self.connector.post(
-                    '/' + params['account_id'] + '/albums',
-                    name = data['name'],
-                    message = check_if_exists(params, 'message', ''),
-                    privacy = check_if_exists(params, 'privacy', {}))
-        return "Insufficient Parameters"
+        return self.connector.post(
+                '/' + id + '/albums',
+                name = params['name'],
+                message = check_if_exists(params, 'message', ''),
+                privacy = check_if_exists(params, 'privacy', {}))
 
     #   endregion Folder Aggregation
+
+    #   region Album Aggregation
+    
+    def get_album_photos(self, id):
+        """ Get all photos for an album"""
+        # /album_id/photos (ie /10150259489830315/photos)
+        raw_datas = self.connector.get(id +'/photos')
+        
+        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
+
+        fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longitude', 'place.location.height', 'tags.data', 'height', 'width']
+
+        alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+
+        response = {
+                    'meta':
+                        {
+                         'total_count': len(raw_datas['data']),
+                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
+                         'next': self.check_if_exists(raw_datas, 'paging.next')
+                        },
+                    'data': []
+                    }
+
+        for idx, raw_data in enumerate(raw_datas['data']):
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['data'].append(self.format_photo_response(data))
+
+            # Curate tag array from Facebook
+            tag_array = []
+            if (check_if_exists(raw_data, 'tags.data') != defJsonRes):
+                for tag in raw_data['tags']['data']:
+                    tag_names = ['tags_id', 'tags_name', 'tags_time_created_time', 'tags_time_edited_time', 'tags_time_deleted_time', 'tags_x-location', 'tags_y-location']
+                    tag_fields = ['id', 'name', 'created_time', '', '', 'x', 'y']
+                    tag_alternatives = ['', '', '', '', '', '', '']
+                    tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
+                    tag_array.append(format_tags(tag_data))
+            response['data'][idx]['tags'] = tag_array
+        
+        return response
+        
+    def post_album_photos(self, id, params):
+        """ POST API_PATH/[ALBUM_ID]/photos """
+        # /album_id/photos (ie /10150259489830315/photos)
+        if (check_if_exists(params, 'source') != defJsonRes):
+            return self.connector.post(path = id +'/photos', source = open(params['source'], 'rb'))
+        elif (check_if_exists(params, 'url') != defJsonRes):
+            return self.connector.post(path = id +'/photos', url = open(params['url'], 'rb'))
+        return "Insufficient Parameters"
+
+    #   endregion Album Aggregation
 
     #   endregion Media API

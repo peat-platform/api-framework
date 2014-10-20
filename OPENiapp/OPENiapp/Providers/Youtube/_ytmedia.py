@@ -26,9 +26,9 @@ class ytMedia(bcMedia):
     
     #   region Video Object
 
-    def get_a_video(self, data):
+    def get_video(self, id):
         """ GET API_PATH/[VIDEO_ID] """
-        metadata = self.connector.videos().list(id =data['video_id'], part = "id, snippet, recordingDetails, fileDetails").execute()
+        metadata = self.connector.videos().list(id = id, part = "id, snippet, recordingDetails, fileDetails").execute()
         raw_data = metadata['items'][0]
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -75,7 +75,10 @@ class ytMedia(bcMedia):
         
         return response
 
-    def get_all_videos_for_account(self, params):
+    def get_videos(self):
+        return get_all_videos_for_account('me')
+
+    def get_all_videos_for_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/videos """
         channels_response = self.connector.channels().list(
           mine=True,
@@ -148,7 +151,7 @@ class ytMedia(bcMedia):
         return response
           
 
-    def post_video_to_account(self, params):
+    def post_videos(self, params):
         """ POST API_PATH/[ACCOUNT_ID]/videos """
         if (check_if_exists(params, 'source') != defJsonRes):
             tags = None
@@ -205,37 +208,29 @@ class ytMedia(bcMedia):
             ).execute()
         return "Insufficient Parameters"
 
-    def edit_a_video(self, params):
-        """ PUT API_PATH/[VIDEO_ID] """
-        return defaultMethodResponse
-
-    def delete_a_video(self, data):
+    def delete_video(self, id):
         """ DELETE API_PATH/[VIDEO_ID] """
-        if (check_if_exists(data, 'video_id') != defJsonRes):
-            return self.connector.videos().delete(id=data['video_id']).execute()
-        return "Insufficient Parameters"
+        return self.connector.videos().delete(id=id).execute()
     
     #   region Connections
 
-    def get_comments_for_video(self, data):
+    def get_video_comments(self, id):
         """ GET API_PATH/[VIDEO_ID]/comments """
         #not longer in youtube api v3
         return defaultMethodResponse
 
-    def post_comment_to_video(self, data):
+    def post_video_comments(self, id):
         """ POST API_PATH/[VIDEO_ID]/comments """
          #not longer in youtube api v3
         return defaultMethodResponse
 
-    def like_video(self, data):
+    def post_video_likes(self, id):
         """ POST API_PATH/[VIDEO_ID]/likes """
-        if (check_if_exists(data, 'video_id') != defJsonRes):
-            return self.connector.videos().rate(id=data['video_id'], rating="like").execute()
-        return "Insufficient Parameters"
+        return self.connector.videos().rate(id=id, rating="like").execute()
 
-    def get_likes_for_video(self, data):
+    def get_video_likes(self, id):
         """ GET API_PATH/[VIDEO_ID]/likes """
-        metadata = self.connector.videos().list(id =data['video_id'], part = "statistics").execute()
+        metadata = self.connector.videos().list(id =d id, part = "statistics").execute()
         raw_datas = metadata['items'][0]
         print raw_datas
 
@@ -251,21 +246,17 @@ class ytMedia(bcMedia):
         
         return response
 
-    def unlike_video(self, data):
+    def delete_video_likes(self, id):
         """ DELETE API_PATH/[VIDEO_ID]/likes """
-        if (check_if_exists(data, 'video_id') != defJsonRes):
-            return self.connector.videos().rate(id=data['video_id'], rating="none").execute()
-        return "Insufficient Parameters"
+        return self.connector.videos().rate(id = id, rating="none").execute()
 
-    def dislike_video(self, data):
+    def post_video_dislikes(self, id):
         """ POST API_PATH/[VIDEO_ID]/dislikes """
-        if (check_if_exists(data, 'video_id') != defJsonRes):
-            return self.connector.videos().rate(id=data['video_id'], rating="dislike").execute()
-        return "Insufficient Parameters"
+        return self.connector.videos().rate(id = id, rating="dislike").execute()
 
-    def get_dislikes_for_video(self, data):
+    def get_video_dislikes(self, id):
         """ GET API_PATH/[VIDEO_ID]/dislikes """
-        metadata = self.connector.videos().list(id =data['video_id'], part = "statistics").execute()
+        metadata = self.connector.videos().list(id = id, part = "statistics").execute()
         raw_datas = metadata['items'][0]
         print raw_datas
 
@@ -280,10 +271,6 @@ class ytMedia(bcMedia):
                     }
         
         return response
-
-    def delete_dislikes_of_video(self, params):
-        """ DELETE API_PATH/[VIDEO_ID]/dislikes """
-        return defaultMethodResponse
 
     #   endregion Connections
 
