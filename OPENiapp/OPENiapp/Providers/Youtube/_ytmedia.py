@@ -75,8 +75,8 @@ class ytMedia(bcMedia):
         
         return response
 
-    # def get_videos(self):
-    #     return get_all_videos_for_account('me')
+    def get_videos(self):
+        return self.get_all_videos_for_account('me')
 
     def get_all_videos_for_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/videos """
