@@ -46,7 +46,7 @@ class GenericResource(ContextAwareResource):
 
         to_be_serialized[self._meta.collection_name] = bundles
         to_be_serialized = self.alter_list_data_to_serialize(request, to_be_serialized)
-        cbs_data.update(to_be_serialized)
+        cbs_data.append(to_be_serialized)
         return self.create_response(request, cbs_data)
 
     def prepend_urls(self):

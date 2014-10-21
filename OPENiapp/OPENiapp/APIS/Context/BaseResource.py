@@ -24,7 +24,7 @@ class ContextAwareResource(ModelResource):
             resource_name = kwargs['resource_name']
         except:
             # To-Do: Make a proper error message.
-            return {"error": "Resource Name is not valid. Please refer to the documentation"}
+            return [{"error": "Resource Name is not valid. Please refer to the documentation"}]
         try:
             id = kwargs['id']
         except:
@@ -40,13 +40,13 @@ class ContextAwareResource(ModelResource):
             u = User.objects.filter(username=user)
         except:
             # To-Do: Make an appropriate error response!
-            return {"error": "User is not authenticated. Please refer to the documentation"}
+            return [{"error": "User is not authenticated. Please refer to the documentation"}]
 
         # Try to get the cbs required for the call
         try:
             cbs = ast.literal_eval(request.GET.get("cbs"))
         except:
-            return {"CBS": "No additional CBS was selected."}
+            return [{"CBS": "No additional CBS was selected."}]
 
         # Try to parse the parameters of the call
         try:
