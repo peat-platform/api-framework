@@ -41,7 +41,7 @@ class fbProductsServices(bcProductsServices):
         return response
 
     def get_applications(self):
-        return get_all_applications_for_account('me')
+        return self.get_all_applications_for_account('me')
 
     def get_all_applications_for_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/applications """
@@ -124,7 +124,7 @@ class fbProductsServices(bcProductsServices):
     #   region Score Object
 
     def get_scores(self):
-        return get_scores_from_account('me')
+        return self.get_scores_from_account('me')
 
     def get_scores_from_account(self, id):
         """ GET API_PATH/{ACCOUNT_ID}/scores """
@@ -185,7 +185,7 @@ class fbProductsServices(bcProductsServices):
         return response
 
     def post_scores(self, params):
-        post_score_to_account('me', params)
+        return self.post_score_to_account('me', params)
 
     # Does not work due to FB's wrong documentation
     def post_score_to_account(self, id, params):

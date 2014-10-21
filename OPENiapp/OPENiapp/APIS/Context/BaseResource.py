@@ -24,7 +24,7 @@ class ContextAwareResource(ModelResource):
             resource_name = kwargs['resource_name']
         except:
             # To-Do: Make a proper error message.
-            return "404"
+            return [{"error": "Resource Name is not valid. Please refer to the documentation"}]
         try:
             id = kwargs['id']
         except:
@@ -40,13 +40,13 @@ class ContextAwareResource(ModelResource):
             u = User.objects.filter(username=user)
         except:
             # To-Do: Make an appropriate error response!
-            return 'user_error'
+            return [{"error": "User is not authenticated. Please refer to the documentation"}]
 
         # Try to get the cbs required for the call
         try:
             cbs = ast.literal_eval(request.GET.get("cbs"))
         except:
-            return 'OPENi'
+            return [{"CBS": "No additional CBS was selected."}]
 
         # Try to parse the parameters of the call
         try:
@@ -80,7 +80,9 @@ class ContextAwareResource(ModelResource):
         ### EXTRA CODE
 
         # To-Do: change is needed, now openi does not work, only cbs
-        if cbs_return != 'OPENi':
+        try:
+           cbs_return['CBS']
+        except:
             return self.create_response(request, cbs_return)
 
         if bundle.obj.context is None:
@@ -100,7 +102,9 @@ class ContextAwareResource(ModelResource):
         ### EXTRA CODE
         
         # To-Do: change is needed, now openi does not work, only cbs
-        if cbs_return != 'OPENi':
+        try:
+           cbs_return['CBS']
+        except:
             return self.create_response(request, cbs_return)
 
         if 'id' not in bundle.data:
@@ -121,7 +125,9 @@ class ContextAwareResource(ModelResource):
         ### EXTRA CODE
         
         # To-Do: change is needed, now openi does not work, only cbs
-        if cbs_return != 'OPENi':
+        try:
+           cbs_return['CBS']
+        except:
             return self.create_response(request, cbs_return)
 
         if 'pk' not in kwargs:

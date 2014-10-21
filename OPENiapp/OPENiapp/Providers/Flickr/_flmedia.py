@@ -50,7 +50,7 @@ class flMedia(bcMedia):
         return response
 
     def get_photos(self):
-        return get_all_photos_for_account('me')
+        return self.get_all_photos_for_account('me')
 
     def get_all_photos_for_account(self, id):
         ''' GET API_PATH/[ACCOUNT_ID]/photos '''

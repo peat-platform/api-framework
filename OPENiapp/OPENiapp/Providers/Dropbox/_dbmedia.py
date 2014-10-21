@@ -80,7 +80,7 @@ class dbMedia(bcMedia):
         return "Not a Audio"
 
     def get_audios(self):
-        return get_account_audios('me')
+        return self.get_account_audios('me')
     
     def get_account_audios(self, id):
         """ Get all audios for an account """
@@ -124,7 +124,7 @@ class dbMedia(bcMedia):
         return response
 
     def post_audios(self, params):
-        return post_account_audio(self, 'me', params)
+        return self.post_account_audio(self, 'me', params)
 
     def post_account_audio(self, id, params):
         """ Post a audio to a simple account """
@@ -175,7 +175,7 @@ class dbMedia(bcMedia):
         return "Not a File"
 
     def get_files(self):
-        return get_account_files('me')
+        return self.get_account_files('me')
     
     def get_account_files(self, id):
         """ Get all files for an account """
@@ -267,7 +267,7 @@ class dbMedia(bcMedia):
         return "Not a Photo"
 
     def get_photos(self):
-        return get_account_photos('me')
+        return self.get_account_photos('me')
     
     def get_account_photos(self, id):
         """ Get all photos for an account """
@@ -358,7 +358,7 @@ class dbMedia(bcMedia):
         return "Not a Video"
 
     def get_videos(self):
-        return get_account_videos('me')
+        return self.get_account_videos('me')
     
     def get_account_videos(self, id):
         """ Get all videos for an account """
