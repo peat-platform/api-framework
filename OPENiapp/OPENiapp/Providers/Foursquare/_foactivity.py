@@ -61,6 +61,10 @@ class foActivity(bcActivity):
             response['data'][0]['place']['address']['height'] = self.check_if_exists(raw_data2, 'venue.location.height', '')
 
         return response
+
+    def get_checkins(self):
+        """ GET API_PATH/[ACCOUNT_ID] """
+        return self.connector.users.checkins()
     
     #   region Connections
 

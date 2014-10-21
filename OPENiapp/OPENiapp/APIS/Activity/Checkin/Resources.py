@@ -11,11 +11,11 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class CheckinResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'put', 'delete']
         resource_name = 'Checkin'
         authentication = Authentication()
         authorization = Authorization()
+        list_allowed_methods = []
+        detail_allowed_methods = []
         # filtering = {
         #     'slug': ALL,
         #     'user': ALL_WITH_RELATIONS,
@@ -24,22 +24,142 @@ class CheckinResource(GenericResource):
 
         extra_actions = [
             {
+                "name": "",
+                "http_method": "POST",
+                "summary": "Create a new openi checkin",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                },
+                "resource_type": "list"
+            },
+            {
+                "name": "",
+                "http_method": "PUT",
+                "summary": "Update an existing OPENi checkin",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "Delete an existing OPENi checkin",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve a single OPENi,Facebook or Foursquare checkin by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve a list of OPENi,Facebook and Foursquare checkins",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                },
+                "resource_type": "list"
+            },
+            {
                 "name": "likes",
                 "http_method": "GET",
                 "summary": "Retrieve a list of Checkin Likes",
-                "fields": {}
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
             },
             {
                 "name": "likes",
                 "http_method": "POST",
                 "summary": "Like a Checkin",
-                "fields": {}
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
             },
             {
                 "name": "comments",
                 "http_method": "GET",
                 "summary": "Retrieve a list of Checkin Comments",
-                "fields": {}
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
             },
             {
                 "name": "comments",
@@ -71,6 +191,16 @@ class CheckinResource(GenericResource):
                         "required": False,
                         "description": "Facebook: Source"
                     },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
                 }
             }
         ]

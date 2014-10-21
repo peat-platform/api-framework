@@ -81,7 +81,7 @@ class fbMedia(bcMedia):
         return response
 
     def get_photos(self):
-        return get_account_photos('me')
+        return self.get_account_photos('me')
     
     def get_account_photos(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/photos """
