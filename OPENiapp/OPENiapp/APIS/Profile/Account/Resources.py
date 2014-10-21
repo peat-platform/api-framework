@@ -20,9 +20,22 @@ class AccountResource(GenericResource):
 
         extra_actions = [
             {
-                "name": "checkins",
+                "name": "",
                 "http_method": "GET",
-                "description": "Retrieve a list of Account Checkins",
-                "fields": {}
-            },
+                "summary": "Retrieve the user profile from CBS",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook, Foursquare, Google"
+                    },
+
+                }
+            }
         ]

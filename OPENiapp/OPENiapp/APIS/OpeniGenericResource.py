@@ -27,7 +27,7 @@ class GenericResource(ContextAwareResource):
 
     def get_list(self, request, **kwargs):
 
-        cbs_data = self.cbs_handling(request=request, **kwargs)
+        cbs_data = list(self.cbs_handling(request=request, **kwargs))
         
         # Default actions down here, for get_list (that is if there is no fb or other CBS request!
         base_bundle = self.build_bundle(request=request)
