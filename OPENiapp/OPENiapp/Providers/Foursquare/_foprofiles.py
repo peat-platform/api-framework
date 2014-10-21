@@ -9,7 +9,7 @@ class foProfiles(bcProfiles):
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Profiles%20API/
 
     def get_account(self):
-        return get_an_account('self')
+        return self.get_an_account('self')
     
     def get_an_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID] """

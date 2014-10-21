@@ -81,7 +81,7 @@ class fbMedia(bcMedia):
         return response
 
     def get_photos(self):
-        return get_account_photos('me')
+        return self.get_account_photos('me')
     
     def get_account_photos(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/photos """
@@ -123,7 +123,7 @@ class fbMedia(bcMedia):
         return response
 
     def post_photos(self, params):
-        return post_account_photos('me', params)
+        return self.post_account_photos('me', params)
 
     def post_account_photos(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/photos """
@@ -275,7 +275,7 @@ class fbMedia(bcMedia):
         return response
 
     def get_videos(self):
-        return get_account_videos('me')
+        return self.get_account_videos('me')
 
     def get_account_videos(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/videos """
@@ -329,7 +329,7 @@ class fbMedia(bcMedia):
         return response
 
     def post_videos(self, params):
-        return post_video_to_account('me', params)
+        return self.post_video_to_account('me', params)
 
     def post_video_to_account(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID]/videos """
@@ -471,7 +471,7 @@ class fbMedia(bcMedia):
         return response
 
     def post_folders(self, params):
-        return post_folder_to_account('me', params)
+        return self.post_folder_to_account('me', params)
     
     def post_folder_to_account(self, id, params):
         """ POST API_PATH/[ACCOUNT_ID] """

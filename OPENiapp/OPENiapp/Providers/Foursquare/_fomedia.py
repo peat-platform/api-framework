@@ -44,7 +44,7 @@ class foMedia(bcMedia):
         return response
 
     def get_photos(self):
-        return get_all_photos_for_account('self')
+        return self.get_all_photos_for_account('self')
 
     def get_all_photos_for_account(self, id):
         ''' GET API_PATH/[ACCOUNT_ID]/photos '''
