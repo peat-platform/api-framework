@@ -101,6 +101,16 @@ class PlaceResource(GenericResource):
                 "summary": "Create a new Place on CBS",
                 "resource_type": "list",
                 "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Google, Citygrid"
+                    },
                     "name": {
                         "type": "string",
                         "required": False,
