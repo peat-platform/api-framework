@@ -12,20 +12,13 @@ class PlaceResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniPlace.objects.all()
         resource_name = 'Place'
-        authentication = Authentication()
-        authorization = Authorization()
-        # filtering = {
-        #     'slug': ALL,
-        #     'user': ALL_WITH_RELATIONS,
-        #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-        # }
 
         extra_actions = [
             {
                 "name": "",
                 "http_method": "GET",
                 "resource_type": "list", # view
-                "summary": "Retrieve a list of Checkin Likes",
+                "summary": "Retrieve a list of Places over CBS",
                 "fields": {
                     "user": {
                         "type": "string",
@@ -37,39 +30,101 @@ class PlaceResource(GenericResource):
                         "required": False,
                         "description": "Google, Citygrid"
                     },
-                }
+                    "id":{
+                        "description": "CityGrid",
+                        "type": "string",
+                        "required": False,
+
+                    },
+                    "id_type":{
+                        "description": "CityGrid",
+                        "type": "string",
+                        "required": False,
+                    },
+                    "phone":{
+                        "description": "CityGrid",
+                        "type": "string",
+                        "required": False,
+
+                    },
+                    "publisher":{
+                        "description": "CityGrid",
+                        "type": "string",
+                        "required": False,
+
+                    },
+                    "customer_only":{
+                        "description": "CityGrid",
+                        "type": "string",
+                        "required": False,
+
+                    },
+                    "all_results":{
+                        "description": "CityGrid",
+                        "type": "string",
+                        "required": False,
+                    },
+                    "route":{
+                        "description": "Google",
+                        "type": "string",
+                        "required": False,
+                    },
+                    "street_number":{
+                        "description": "Google",
+                        "type": "string",
+                        "required": False,
+                    },
+                    "locality":{
+                        "description": "Google",
+                        "type": "string",
+                        "required": False,
+                    },
+                    "country":{
+                        "description": "Google",
+                        "type": "string",
+                        "required": False,
+                    },
+                    "postal_code":{
+                        "description": "Google",
+                        "type": "string",
+                        "required": False,
+                    }
+
+                },
+
             },
 
 
             {
-                "name": "comments",
+                "name": "",
                 "http_method": "POST",
-                "summary": "Create a new Checkin Comment",
+                "summary": "Create a new Place on CBS",
+                "resource_type": "list",
                 "fields": {
-                    "title": {
+                    "name": {
                         "type": "string",
                         "required": False,
-                        "description": "Title of the Comment"
+                        "description": "Google"
                     },
-                    "text": {
+                    "lat_lng": {
                         "type": "string",
                         "required": False,
-                        "description": "Text of the Comment, (Facebook: message, Twitter: status)"
+                        "description": "Google"
                     },
-                    "attachment_id": {
+                    "accuracy": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook: Attachment ID"
+                        "description": "Google"
                     },
-                    "attachment_url": {
+                    "types": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook: Attachment url"
+                        "description": "Google"
                     },
-                    "source": {
+                    "language": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook: Source"
+                        "description": "Google"
                     },
                 }
             }

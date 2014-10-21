@@ -75,8 +75,8 @@ class ytMedia(bcMedia):
         
         return response
 
-    def get_videos(self):
-        return get_all_videos_for_account('me')
+    # def get_videos(self):
+    #     return get_all_videos_for_account('me')
 
     def get_all_videos_for_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID]/videos """
@@ -230,7 +230,7 @@ class ytMedia(bcMedia):
 
     def get_video_likes(self, id):
         """ GET API_PATH/[VIDEO_ID]/likes """
-        metadata = self.connector.videos().list(id =d id, part = "statistics").execute()
+        metadata = self.connector.videos().list(id = id, part = "statistics").execute()
         raw_datas = metadata['items'][0]
         print raw_datas
 
