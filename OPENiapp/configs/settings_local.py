@@ -96,15 +96,17 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    "request.middleware.RequestMiddleware",
+    # "request.middleware.RequestMiddleware",
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
 
 ROOT_URLCONF = 'OPENiapp.urls'
 TASTYPIE_SWAGGER_API_MODULE = 'OPENiapp.APIS.urls.api'
@@ -249,7 +251,8 @@ INSTALLED_APPS = (
     'tastypie',
     'tastypie_swagger',
     # 'south',
-    'request',
+    #'request',
+    'corsheaders',
 
 
 )
