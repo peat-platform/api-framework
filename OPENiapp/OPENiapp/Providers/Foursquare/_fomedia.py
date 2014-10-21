@@ -10,10 +10,10 @@ class foMedia(bcMedia):
     
     #   region Photo Object
 
-    def get_a_photo(self, params):
+    def get_photo(self, id):
         ''' GET API_PATH/[PHOTO_ID] '''
         # /media/media-id (ie media/628147512937366504_917877895)
-        raw_data = self.connector.photos(params['photo_id'])
+        raw_data = self.connector.photos(id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
@@ -43,10 +43,13 @@ class foMedia(bcMedia):
         
         return response
 
-    def get_all_photos_for_account(self, data):
+    def get_photos(self):
+        return get_all_photos_for_account('self')
+
+    def get_all_photos_for_account(self, id):
         ''' GET API_PATH/[ACCOUNT_ID]/photos '''
         # /users/user-id (ie users/917877895)
-        raw_datas = self.connector.users.photos('self')
+        raw_datas = self.connector.users.photos(id)
         
         names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])

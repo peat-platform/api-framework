@@ -53,7 +53,7 @@ class SwaggerApiDataMixin(object):
         context = super(SwaggerApiDataMixin, self).get_context_data(*args, **kwargs)
         context.update({
             'apiVersion': self.kwargs.get('version', 'Unknown'),
-            'swaggerVersion': '1.2',
+            'swaggerVersion': '1.1',
         })
         return context
 
@@ -109,7 +109,7 @@ class ResourcesView(TastypieApiMixin, SwaggerApiDataMixin, JSONView):
         # Construct schema endpoints from resources
         apis = [{'path': '/%s' % name} for name in sorted(self.tastypie_api._registry.keys())]
         context.update({
-            'basePath': self.request.build_absolute_uri(reverse('%s:schema' % self.kwargs.get('namespace'))).rstrip('/'),
+            'basePath': self.request.build_absolute_uri(reverse('%s:schema' % self.kwargs.get('namespace'))),
             'apis': apis,
         })
         return context
@@ -136,7 +136,6 @@ class SchemaView(TastypieApiMixin, SwaggerApiDataMixin, JSONView):
         context.update({
             'basePath': '/',
             'apis': mapping.build_apis(),
-            'models': mapping.build_models(),
-            'resourcePath': '/{0}'.format(resource._meta.resource_name)
+            'models': mapping.build_models()
         })
         return context
