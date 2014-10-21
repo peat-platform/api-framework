@@ -8,8 +8,26 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class ScoreResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniScore.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'Score'
-        authentication = Authentication()
-        authorization = Authorization()
+
+        extra_actions = [
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve the scores of the current user from CBS",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+
+                }
+            }
+        ]

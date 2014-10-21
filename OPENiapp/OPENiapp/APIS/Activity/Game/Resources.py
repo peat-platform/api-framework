@@ -2,23 +2,21 @@ __author__ = 'mpetyx'
 
 
 from tastypie.authorization import DjangoAuthorization
-from .models import OpeniApplication
+from .models import OpeniGame
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
 
-class ApplicationResource(GenericResource):
+
+class GameResource(GenericResource):
     class Meta(GenericMeta):
-        queryset = OpeniApplication.objects.all()
-        resource_name = 'Application'
-
+        queryset = OpeniGame.objects.all()
+        resource_name = 'Game'
 
         extra_actions = [
             {
-                "name": "",
+                "name": "scores",
                 "http_method": "GET",
-                "summary": "Retrieve the applications of the current user from CBS",
+                "summary": "Retrieve the user scores for a profile from CBS",
                 "resource_type": "list",
                 "fields": {
                     "user": {
@@ -35,9 +33,10 @@ class ApplicationResource(GenericResource):
                 }
             },
             {
-                "name": "",
-                "http_method": "GET",
-                "summary": "Retrieve an application of the current user from CBS",
+                "name": "scores",
+                "http_method": "POST",
+                "summary": "Post the user scores for a profile from CBS",
+                "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",
@@ -49,14 +48,24 @@ class ApplicationResource(GenericResource):
                         "required": False,
                         "description": "Facebook"
                     },
+                    "score":{
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "id":{
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    }
 
                 }
             },
-
             {
-                "name": "",
-                "http_method": "PUT",
-                "summary": "Retrieve an application of the current user from CBS",
+                "name": "scores",
+                "http_method": "DELETE",
+                "summary": "DELETE the user scores for a profile from CBS",
+                "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",
@@ -68,7 +77,16 @@ class ApplicationResource(GenericResource):
                         "required": False,
                         "description": "Facebook"
                     },
-
+                    "score":{
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "id":{
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    }
 
                 }
             }

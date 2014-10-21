@@ -189,6 +189,7 @@ INSTALLED_APPS = (
     'OPENiapp.APIS.Activity.Question',
     'OPENiapp.APIS.Activity.Sleep',
     'OPENiapp.APIS.Activity.Status',
+    'OPENiapp.APIS.Activity.Game',
     'OPENiapp.APIS.Activity.Workout',
 
     # Context API

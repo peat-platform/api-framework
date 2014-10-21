@@ -11,6 +11,7 @@ from .Activity.Checkin.Resources import CheckinResource
 from .Activity.Event.Resources import EventResource
 from .Activity.Measurement.Resources import MeasurementResource
 from .Activity.Note.Resources import NoteResource
+from .Activity.Game.Resources import GameResource
 from .Activity.Nutrition.Resources import NutritionResource
 from .Activity.Question.Resources import QuestionResource
 from .Activity.Sleep.Resources import SleepResource
@@ -29,6 +30,7 @@ api.register(SleepResource())
 api.register(StatusResource())
 api.register(WorkoutResource())
 api.register(NotebookResource())
+api.register(GameResource())
 
 
 # Context
