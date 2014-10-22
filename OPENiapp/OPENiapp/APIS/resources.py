@@ -10,3 +10,15 @@ class PersonModelResource(ModelResource):
         queryset = PersonModel.objects.all()
         list_allowed_methods = ['get','post']
         resource_name = "PersonModel"
+
+class FromResource(ModelResource):
+
+    class Meta:
+        queryset = FromModel.objects.all()
+        resource_name = "From"
+
+class TimeResource(ModelResource):
+
+    class Meta:
+        queryset = TimeModel.objects.all()
+        resource_name = "Time"

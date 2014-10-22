@@ -2,13 +2,6 @@ __author__ = 'mpetyx'
 
 from OPENiapp.APIS.Context.BaseResource import ContextAwareResource
 
-from django.http import HttpResponse
-from django.shortcuts import render
-import ast
-import logging
-
-
-
 from django.conf.urls import url
 from tastypie.utils import trailing_slash
 from OPENiapp.APIS.OPENiAuthorization import Authorization
@@ -17,8 +10,13 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 from tastypie import fields
 from OPENiapp.APIS.Context.Resources import ContextResource
 
+from OPENiapp.APIS.resources import *
+
+
 class GenericResource(ContextAwareResource):
     context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True) # ,related_name='Context'
+    From = fields.ForeignKey(FromResource, 'From', null=True, blank=True) # ,related_name='Context'
+    Time = fields.ForeignKey(TimeResource, 'Time', null=True, blank=True) # ,related_name='Context'
 
     def request_method(self, bundle):
 
@@ -61,12 +59,6 @@ class GenericMeta:
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()
     authorization = Authorization()
-    # filtering = {
-    #     'slug': ALL,
-    #     'user': ALL_WITH_RELATIONS,
-    #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-    # }
-
 
     extra_actions = [
 
@@ -113,45 +105,5 @@ class GenericMeta:
             }
         },
 
-        # {
-        #     "name": "comments",
-        #     "http_method": "GET",
-        #     "resource_type": "list",
-        #     "description": "comments from CBS",
-        #     "fields": {
-        #         "cbs": {
-        #             "type": "string",
-        #             "required": True,
-        #             "description": "list of selected CBS"
-        #         }
-        #     }
-        # },
-        #
-        # {
-        #     "name": "likes",
-        #     "http_method": "GET",
-        #     "resource_type": "list",
-        #     "description": "likes from CBS",
-        #     "fields": {
-        #         "cbs": {
-        #             "type": "string",
-        #             "required": True,
-        #             "description": "list of selected CBS"
-        #         }
-        #     }
-        # },
-        #
-        # {
-        #     "name": "dislikes",
-        #     "http_method": "GET",
-        #     "resource_type": "list",
-        #     "description": "dislikes from CBS",
-        #     "fields": {
-        #         "cbs": {
-        #             "type": "string",
-        #             "required": True,
-        #             "description": "list of selected CBS"
-        #         }
-        #     }
-        # }
+
     ]
