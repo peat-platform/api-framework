@@ -83,7 +83,7 @@ class ContextAwareResource(ModelResource):
         try:
            cbs_return['CBS']
         except:
-            return self.create_response(request, cbs_return)
+            return self.create_response(bundle.request, cbs_return)
 
         if bundle.obj.context is None:
             raise BadRequest("context attribute is not defined")
@@ -94,6 +94,8 @@ class ContextAwareResource(ModelResource):
         # bundle.obj.context.save(update_fields=["objectid"])
         bundle.obj.context.save()
         return bundle
+
+
     @transaction.atomic
     def obj_update(self, bundle, **kwargs):
 
@@ -105,7 +107,7 @@ class ContextAwareResource(ModelResource):
         try:
            cbs_return['CBS']
         except:
-            return self.create_response(request, cbs_return)
+            return self.create_response(bundle.request, cbs_return)
 
         if 'id' not in bundle.data:
             raise BadRequest("id property not found")
@@ -128,7 +130,7 @@ class ContextAwareResource(ModelResource):
         try:
            cbs_return['CBS']
         except:
-            return self.create_response(request, cbs_return)
+            return self.create_response(bundle.request, cbs_return)
 
         if 'pk' not in kwargs:
             raise BadRequest("no pk parameter found")

@@ -8,7 +8,7 @@ import os
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 # os.environ['HTTPS'] = "on"
-#APPEND_SLASH = False
+APPEND_SLASH = False
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
