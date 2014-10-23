@@ -75,16 +75,13 @@ class ContextAwareResource(ModelResource):
     def obj_create(self, bundle, **kwargs):
         bundle = self.full_hydrate(bundle)
 
-        ### EXTRA CODE
-        cbs_return = self.cbs_handling(bundle.request,**kwargs)
-        ### EXTRA CODE
-
-        # To-Do: change is needed, now openi does not work, only cbs
         try:
-           cbs_return['CBS']
-           cbs_return['error']
-        except:
+            kwargs['resource_name']
+            bundle.request.GET.get("cbs")
+            cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
+        except:
+            pass
 
         if bundle.obj.context is None:
             raise BadRequest("context attribute is not defined")
@@ -99,17 +96,14 @@ class ContextAwareResource(ModelResource):
 
     @transaction.atomic
     def obj_update(self, bundle, **kwargs):
-
-        ### EXTRA CODE
-        cbs_return = self.cbs_handling(bundle.request,**kwargs)
-        ### EXTRA CODE
         
-        # To-Do: change is needed, now openi does not work, only cbs
         try:
-           cbs_return['CBS']
-           cbs_return['error']
-        except:
+            kwargs['resource_name']
+            bundle.request.GET.get("cbs")
+            cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
+        except:
+            pass
 
         if 'id' not in bundle.data:
             raise BadRequest("id property not found")
@@ -124,16 +118,13 @@ class ContextAwareResource(ModelResource):
     @transaction.atomic
     def obj_delete(self, bundle, **kwargs):
 
-        ### EXTRA CODE
-        cbs_return = self.cbs_handling(bundle.request,**kwargs)
-        ### EXTRA CODE
-        
-        # To-Do: change is needed, now openi does not work, only cbs
         try:
-           cbs_return['CBS']
-           cbs_return['error']
-        except:
+            kwargs['resource_name']
+            bundle.request.GET.get("cbs")
+            cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
+        except:
+            pass
 
         if 'pk' not in kwargs:
             raise BadRequest("no pk parameter found")
