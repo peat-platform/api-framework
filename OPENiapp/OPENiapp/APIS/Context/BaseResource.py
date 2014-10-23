@@ -82,6 +82,7 @@ class ContextAwareResource(ModelResource):
         # To-Do: change is needed, now openi does not work, only cbs
         try:
            cbs_return['CBS']
+           cbs_return['error']
         except:
             return self.create_response(bundle.request, cbs_return)
 
@@ -106,6 +107,7 @@ class ContextAwareResource(ModelResource):
         # To-Do: change is needed, now openi does not work, only cbs
         try:
            cbs_return['CBS']
+           cbs_return['error']
         except:
             return self.create_response(bundle.request, cbs_return)
 
@@ -129,6 +131,7 @@ class ContextAwareResource(ModelResource):
         # To-Do: change is needed, now openi does not work, only cbs
         try:
            cbs_return['CBS']
+           cbs_return['error']
         except:
             return self.create_response(bundle.request, cbs_return)
 
