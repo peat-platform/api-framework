@@ -7,18 +7,12 @@ from .models import OpeniPlace
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 
 class PlaceResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniPlace.objects.all()
         resource_name = 'Place'
-
-        # filtering = {
-        #     'id': ALL,
-        #     'id': ALL_WITH_RELATIONS,
-        # }
 
         extra_actions = [
             {

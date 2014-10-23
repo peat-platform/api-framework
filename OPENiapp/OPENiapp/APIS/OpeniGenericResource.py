@@ -9,6 +9,7 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 
 from tastypie import fields
 from OPENiapp.APIS.Context.Resources import ContextResource
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 from OPENiapp.APIS.resources import *
 
@@ -59,6 +60,11 @@ class GenericMeta:
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()
     authorization = Authorization()
+
+    filtering = {
+            'id': ALL,
+            'id': ALL_WITH_RELATIONS,
+        }
 
     extra_actions = [
 
