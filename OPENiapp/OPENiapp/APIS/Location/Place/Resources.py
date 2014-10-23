@@ -20,6 +20,7 @@ class PlaceResource(GenericResource):
                 "http_method": "GET",
                 "resource_type": "list", # view
                 "summary": "Retrieve a list of Places over CBS",
+                "nickname":"Sample Naming",
                 "fields": {
                     "user": {
                         "type": "string",

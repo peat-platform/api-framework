@@ -22,3 +22,9 @@ class TimeResource(ModelResource):
     class Meta:
         queryset = TimeModel.objects.all()
         resource_name = "Time"
+
+class DurationResource(ModelResource):
+
+    class Meta:
+        queryset = DurationModel.objects.all()
+        resource_name = "Duration"

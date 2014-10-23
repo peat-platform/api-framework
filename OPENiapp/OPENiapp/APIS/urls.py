@@ -138,11 +138,14 @@ api.register(TagResource())
 from .Builder.Application.Resources import CBSResource, SocialAccountResource, SocialTokenResource
 from .Builder.RegisteredDeveloperApplication.Resources import RegisteredApplicationResource
 
+
 api.register(RegisteredApplicationResource())
 api.register(SocialTokenResource())
 api.register(SocialAccountResource())
 api.register(CBSResource())
 
 
+from .resources import DurationResource
+api.register(DurationResource())
 
 urlpatterns = api.urls

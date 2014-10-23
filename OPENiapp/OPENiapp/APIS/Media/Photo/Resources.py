@@ -16,12 +16,47 @@ from OPENiapp.APIS.Context.Resources import ContextResource
 
 class PhotoResource(GenericResource):
 
-    # journey = fields.ForeignKey(WorkJourneyResource, 'work_journey', null=True, blank=True)
     class Meta(GenericMeta):
         queryset = OpeniPhoto.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'Photo'
-        authentication = Authentication()
-        authorization = Authorization()
-        serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
+
+        extra_actions = [
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve a user folder from CBS",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "POST",
+                "summary": "Create a new folder on CBS",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+
+                }
+            }
+        ]

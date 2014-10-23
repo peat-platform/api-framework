@@ -37,44 +37,5 @@ class AccountResource(GenericResource):
                     },
 
                 }
-            },
-
-            {
-                "name": "scores",
-                "http_method": "GET",
-                "summary": "Retrieve the user scores for a profile from CBS",
-                "resource_type": "list",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    },
-
-                }
-            },
-            {
-                "name": "applications",
-                "http_method": "GET",
-                "summary": "Retrieve all user applications for a profile from CBS",
-                "resource_type": "list",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    },
-
-                }
             }
         ]

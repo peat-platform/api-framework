@@ -383,6 +383,11 @@ class ResourceSwaggerMapping(object):
 
     def build_apis(self):
         apis = [self.build_list_api(), self.build_detail_api()]
+        for api in apis:
+            print "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+            print api['operations'][0]['httpMethod']
+            print api['operations'][0]['nickname']
+            break
         apis.extend(self.build_extra_apis())
         return apis
 
