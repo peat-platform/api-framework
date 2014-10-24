@@ -64,51 +64,48 @@ class GenericMeta:
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()
     authorization = Authorization()
-    #
-    # filtering = {
-    #         'id': ALL,
-    #         'id': ALL_WITH_RELATIONS,
-    #     }
+    filtering = {
+            'id': ['exact']
+        }
+  
 
-    # extra_actions = [
+
+    # ext# _actions = [
     #
     #     {
-    #         "name": "generic",
-    #         "http_method": "GET",
-    #         "resource_type": "list",
-    #         "description": "Apply Method",
+    # #       "name": "generic",
+    #         "htt# method": "GET",
+    #   #     "resource_type": "list#
+    #         "description": "Apply M# hod",
     #         "fields": {
-    #             "user": {
+    # #           "user": {
     #                 "type": "string",
-    #                 "required": True,
-    #                 "description": "The user required for this action"
+    #      #          "required"# True,
+    #               # "description": "The user required for # is action"
     #             },
-    #             "apps": {
+    # #           "apps": {
     #                 "type": "string",
-    #                 "required": True,
-    #                 "description": "The CBS along with the App we want to do a request to"
+    #                 "required#  True,
+    #       #         "description": "The # S along with the App we want to do a r# uest to"
     #             },
-    #             "method": {
-    #                 "type": "string",
-    #                 "required": True,
-    #                 "description": "Method needed"
+    #   #         "method": {
+    #                 "type": "# ring",
+    #       #         "required": True,
+#   #                 "description": "Me# od needed"
     #             },
-    #             "data": {
-    #                 "type": "String",
+    # #           "data": {
+    #                 "type": "Strin# ,
     #                 "required": True,
-    #                 "description": "The required data",
-    #         #         'allowableValues': {
-    #         #     'valueType' : "LIST",
+ #  #                 "description": "The r# uired data",
+    #         #       # 'allowableValu# ': {
+    #      #  #     'valueType' : "LIST",
     #         #     'values': ["yo"]
     #         #
-    #         # }
-    #       #           'allowableValues': {
-    #       #       'valueType' : "LIST",
-    #       #       'values': [
-    #       #   "placed",
-    #       #   " approved",
-    #       #   " delivered"
-    #       # ]
+   #          # }
+    #       #    #      'allowableValues': #     #       #       'valueT# e' : "LIST",
+    #       # #     'values': #     #       #   "placed",
+    ##      #   " approved#
+    #       ##  " deli    #"    ##    #  # ]
     #       #
     #       #   },
     #             },
