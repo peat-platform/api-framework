@@ -23,7 +23,7 @@ class AccountResource(GenericResource):
                 "name": "",
                 "http_method": "GET",
                 "summary": "Retrieve the user profile from CBS",
-                "resource_type": "list",
+                # "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",

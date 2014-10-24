@@ -389,11 +389,9 @@ class ResourceSwaggerMapping(object):
         to_remove_apis = []
         for extra_api in extra_apis:
             for api in apis:
-                if api['path'] in extra_api['path']:
+                if api['path'] == extra_api['path']:
                     try:
                         if api['operations'][0]['nickname'] !="" and extra_api['operations'][0]['nickname'] =="":
-
-                            # if "/v.04/Place/" in api["path"]:
 
                                 operations = 0
 
@@ -402,12 +400,13 @@ class ResourceSwaggerMapping(object):
                                         api['operations'][operations]['parameters'].extend(extra_api['operations'][0]['parameters'])
                                         to_remove_apis.append(extra_api)
                                     operations = operations + 1
-
-                                # with open('api.json', 'w') as outfile:
-                                #     json.dump(api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
-                                #
-                                # with open('extra_api.json', 'w') as outfile:
-                                #     json.dump(extra_api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
+                                    
+                                    #
+                                    # with open('api.json', 'w') as outfile:
+                                    #     json.dump(api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
+                                    #
+                                    # with open('extra_api.json', 'w') as outfile:
+                                    #     json.dump(extra_api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
 
                     except:
                         continue
