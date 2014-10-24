@@ -38,12 +38,10 @@ class AccountResource(GenericResource):
 
                 }
             },
-
             {
-                "name": "scores",
+                "name": "Photos",
                 "http_method": "GET",
-                "summary": "Retrieve the user scores for a profile from CBS",
-                "resource_type": "list",
+                "summary": "Retrieve all user Photos from CBS",
                 "fields": {
                     "user": {
                         "type": "string",
@@ -53,16 +51,15 @@ class AccountResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
-                    },
+                        "description": "Facebook, Flickr, Foursquare, Instagram"
+                    }
 
                 }
             },
             {
-                "name": "applications",
+                "name": "Videos",
                 "http_method": "GET",
-                "summary": "Retrieve all user applications for a profile from CBS",
-                "resource_type": "list",
+                "summary": "Retrieve all user Videos from CBS",
                 "fields": {
                     "user": {
                         "type": "string",
@@ -73,7 +70,25 @@ class AccountResource(GenericResource):
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
+                    }
+
+                }
+            },
+            {
+                "name": "Videos",
+                "http_method": "Post",
+                "summary": "Retrieve all user Videos from CBS",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
                     },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    }
 
                 }
             }
