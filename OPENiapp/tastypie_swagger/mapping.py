@@ -29,7 +29,7 @@ class ResourceSwaggerMapping(object):
     http://django-tastypie.readthedocs.org/en/latest/resources.html
     https://github.com/wordnik/swagger-core/wiki/API-Declaration
     """
-    WRITE_ACTION_IGNORED_FIELDS = ['id', 'resource_uri',]
+    WRITE_ACTION_IGNORED_FIELDS = ['id', 'resource_uri', 'From', 'Time', 'service', 'url', 'object_type']
 
     # Default summary strings for operations
     OPERATION_SUMMARIES = {
