@@ -34,24 +34,6 @@ class ApplicationResource(GenericResource):
 
                 }
             },
-            {
-                "name": "",
-                "http_method": "GET",
-                "summary": "Retrieve an application of the current user from CBS",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    },
-
-                }
-            },
 
             {
                 "name": "",

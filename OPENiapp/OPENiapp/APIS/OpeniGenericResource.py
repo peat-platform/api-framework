@@ -23,6 +23,10 @@ class GenericResource(ContextAwareResource):
 
         return bundle.request.method()
 
+    def dehydrate(self, bundle):
+        bundle.data['service'] = "OPENi Cloudlet"
+        return bundle
+
 
     def get_list(self, request, **kwargs):
 
