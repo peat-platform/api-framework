@@ -76,7 +76,6 @@ class ContextAwareResource(ModelResource):
         bundle = self.full_hydrate(bundle)
 
         try:
-            kwargs['resource_name']
             bundle.request.GET.get("cbs")
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
@@ -98,7 +97,6 @@ class ContextAwareResource(ModelResource):
     def obj_update(self, bundle, **kwargs):
         
         try:
-            kwargs['resource_name']
             bundle.request.GET.get("cbs")
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
@@ -119,7 +117,6 @@ class ContextAwareResource(ModelResource):
     def obj_delete(self, bundle, **kwargs):
 
         try:
-            kwargs['resource_name']
             bundle.request.GET.get("cbs")
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
