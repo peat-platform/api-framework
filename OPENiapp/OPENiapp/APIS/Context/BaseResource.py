@@ -46,7 +46,7 @@ class ContextAwareResource(ModelResource):
         try:
             cbs = ast.literal_eval(request.GET.get("cbs"))
         except:
-            return [{"CBS": "No additional CBS was selected."}]
+            return [{"CBS": "Only Cloudlet Objects were retrieved. No additional CBS were selected."}]
 
         # Try to parse the parameters of the call
         try:
