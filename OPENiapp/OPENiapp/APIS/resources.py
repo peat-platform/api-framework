@@ -22,3 +22,19 @@ class TimeResource(ModelResource):
     class Meta:
         queryset = TimeModel.objects.all()
         resource_name = "Time"
+
+class DurationResource(ModelResource):
+    class Meta:
+        queryset = DurationModel.objects.all()
+        resource_name = "Duration"
+
+class LocationResource(ModelResource):
+    class Meta:
+        queryset = LocationModel.objects.all()
+        resource_name = "Location"
+
+
+# class OpeniNoteResource(ModelResource):
+#     class Meta:
+#         queryset = OpeninoteModel.objects.all()
+#         resource_name = "Note"

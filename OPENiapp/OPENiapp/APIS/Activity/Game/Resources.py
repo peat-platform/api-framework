@@ -34,38 +34,8 @@ class GameResource(GenericResource):
             },
             {
                 "name": "scores",
-                "http_method": "POST",
-                "summary": "Post the user scores for a profile from CBS",
-                "resource_type": "list",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    },
-                    "score":{
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    },
-                    "id":{
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    }
-
-                }
-            },
-            {
-                "name": "scores",
                 "http_method": "DELETE",
                 "summary": "DELETE the user scores for a profile from CBS",
-                "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",
@@ -73,11 +43,6 @@ class GameResource(GenericResource):
                         "description": "Current user"
                     },
                     "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    },
-                    "score":{
                         "type": "string",
                         "required": False,
                         "description": "Facebook"

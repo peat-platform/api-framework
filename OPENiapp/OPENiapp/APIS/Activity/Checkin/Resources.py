@@ -1,37 +1,50 @@
+from tastypie import fields
+
 __author__ = 'mpetyx'
 
 
 from .models import OpeniCheckin
-
+from OPENiapp.APIS.Location.Place.Resources import PlaceResource
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 
 
 class CheckinResource(GenericResource):
+    Place = fields.ForeignKey(PlaceResource, 'Place', null=True, blank=True)
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()
         resource_name = 'Checkin'
         authentication = Authentication()
         authorization = Authorization()
-        list_allowed_methods = []
-        detail_allowed_methods = []
-        # filtering = {
-        #     'slug': ALL,
-        #     'user': ALL_WITH_RELATIONS,
-        #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-        # }
 
         extra_actions = [
             {
                 "name": "",
-                "http_method": "POST",
-                "summary": "Create a new openi checkin",
+                "http_method": "GET",
+                "summary": "Retrieve a single cbs checkin by id",
                 "fields": {
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "The CBS you want to make a call to"
+                        "description": "available:Facebook"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve a list of cbs checkins",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Foursquare"
                     },
                     "user": {
                         "type": "string",
@@ -43,64 +56,13 @@ class CheckinResource(GenericResource):
             },
             {
                 "name": "",
-                "http_method": "PUT",
-                "summary": "Update an existing OPENi checkin",
+                "http_method": "POST",
+                "summary": "Create a new **** checkin",
                 "fields": {
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "The CBS you want to make a call to"
-                    },
-                    "user": {
-                        "type": "string",
-                        "required": True,
-                        "description": "Registered and authenicated user"
-                    }
-                }
-            },
-            {
-                "name": "",
-                "http_method": "DELETE",
-                "summary": "Delete an existing OPENi checkin",
-                "fields": {
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "The CBS you want to make a call to"
-                    },
-                    "user": {
-                        "type": "string",
-                        "required": True,
-                        "description": "Registered and authenicated user"
-                    }
-                }
-            },
-            {
-                "name": "",
-                "http_method": "GET",
-                "summary": "Retrieve a single OPENi,Facebook or Foursquare checkin by id",
-                "fields": {
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "The CBS you want to make a call to"
-                    },
-                    "user": {
-                        "type": "string",
-                        "required": True,
-                        "description": "Registered and authenicated user"
-                    }
-                }
-            },
-            {
-                "name": "",
-                "http_method": "GET",
-                "summary": "Retrieve a list of OPENi,Facebook and Foursquare checkins",
-                "fields": {
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "The CBS you want to make a call to"
+                        "description": "pending"
                     },
                     "user": {
                         "type": "string",
