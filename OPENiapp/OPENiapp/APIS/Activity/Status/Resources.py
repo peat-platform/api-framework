@@ -191,6 +191,7 @@ class StatusResource(GenericResource):
                 "name": "",
                 "http_method": "POST",
                 "summary": "Post a status",
+                "resource_type": "list",
                 "fields": {
                     "cbs": {
                         "type": "string",
