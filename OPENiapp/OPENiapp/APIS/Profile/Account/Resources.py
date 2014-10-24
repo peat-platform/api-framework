@@ -37,59 +37,5 @@ class AccountResource(GenericResource):
                     },
 
                 }
-            },
-            {
-                "name": "Photos",
-                "http_method": "GET",
-                "summary": "Retrieve all user Photos from CBS",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook, Flickr, Foursquare, Instagram"
-                    }
-
-                }
-            },
-            {
-                "name": "Videos",
-                "http_method": "GET",
-                "summary": "Retrieve all user Videos from CBS",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    }
-
-                }
-            },
-            {
-                "name": "Videos",
-                "http_method": "Post",
-                "summary": "Retrieve all user Videos from CBS",
-                "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
-                    "cbs": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook"
-                    }
-
-                }
             }
         ]
