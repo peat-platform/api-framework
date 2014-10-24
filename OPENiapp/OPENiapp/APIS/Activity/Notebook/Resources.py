@@ -15,5 +15,3 @@ class NotebookResource(GenericResource):
         list_allowed_methods = ['get', 'post']
         detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'Notebook'
-        authentication = Authentication()
-        authorization = Authorization()

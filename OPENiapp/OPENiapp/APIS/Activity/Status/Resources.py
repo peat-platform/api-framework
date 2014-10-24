@@ -11,16 +11,262 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class StatusResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniStatus.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'Status'
-        authentication = Authentication()
-        authorization = Authorization()
-        # filtering = {
-        #     'slug': ALL,
-        #     'user': ALL_WITH_RELATIONS,
-        #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-        # }
+        extra_actions = [
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve a single cbs status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook,Foursquare"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve a list of cbs events",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                },
+                "resource_type": "list"
+            },
+            {
+                "name": "like",
+                "http_method": "GET",
+                "summary": "Retrieve likes for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook, OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "comment",
+                "http_method": "GET",
+                "summary": "Retrieve comments for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook, OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "dislike",
+                "http_method": "GET",
+                "summary": "Retrieve dislikes for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "favorite",
+                "http_method": "GET",
+                "summary": "Retrieve favorites for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "comment",
+                "http_method": "POST",
+                "summary": "Post comment for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    },
+                    "text": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook text"
+                    },
+                    "attachment_id": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook attachment_id"
+                    },
+                    "attachment_url": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook attachment_url"
+                    },
+                    "source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook source"
+                    },
+                }
+            },
+            {
+                "name": "like",
+                "http_method": "POST",
+                "summary": "Like a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "favorites",
+                "http_method": "POST",
+                "summary": "Favorite a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Twitter"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "POST",
+                "summary": "Post a status",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Twitter, Facebook"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "text": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Twitter text"
+                    },
+                    "message": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook message"
+                    }
+                }
+            },
+            {
+                "name": "like",
+                "http_method": "DELETE",
+                "summary": "Delete like for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook, OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "dislike",
+                "http_method": "DELETE",
+                "summary": "Delete dislike for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "favorite",
+                "http_method": "DELETE",
+                "summary": "Delete favorite for a status by id",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:OPENi, Twitter"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+        ]
+
 
         
 
