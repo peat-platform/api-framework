@@ -23,7 +23,25 @@ class AccountResource(GenericResource):
                 "name": "",
                 "http_method": "GET",
                 "summary": "Retrieve the user profile from CBS",
-                # "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook, Foursquare, Google"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "Retrieve the user profile from CBS",
+                "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",

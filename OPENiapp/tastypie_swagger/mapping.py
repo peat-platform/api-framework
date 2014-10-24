@@ -397,11 +397,12 @@ class ResourceSwaggerMapping(object):
 
                                 while len(api['operations'])>=operations:
                                     if api['operations'][operations]['httpMethod']== extra_api['operations'][0]['httpMethod']:
+
                                         api['operations'][operations]['parameters'].extend(extra_api['operations'][0]['parameters'])
                                         to_remove_apis.append(extra_api)
+
                                     operations = operations + 1
-                                    
-                                    #
+
                                     # with open('api.json', 'w') as outfile:
                                     #     json.dump(api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
                                     #
