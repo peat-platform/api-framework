@@ -5,6 +5,7 @@ from django.db.models.sql.constants import QUERY_TERMS
 from django.utils.encoding import force_unicode
 
 from tastypie import fields
+import json
 
 from .utils import trailing_slash_or_none, urljoin_forced
 
@@ -383,11 +384,39 @@ class ResourceSwaggerMapping(object):
 
     def build_apis(self):
         apis = [self.build_list_api(), self.build_detail_api()]
-        for api in apis:
-            print "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
-            print api['operations'][0]['httpMethod']
-            print api['operations'][0]['nickname']
-            break
+        extra_apis = self.build_extra_apis()
+
+        to_remove_apis = []
+        for extra_api in extra_apis:
+            for api in apis:
+                if api['path'] in extra_api['path']:
+                    try:
+                        if api['operations'][0]['nickname'] !="" and extra_api['operations'][0]['nickname'] =="":
+
+                            # if "/v.04/Place/" in api["path"]:
+
+                                operations = 0
+
+                                while len(api['operations'])>=operations:
+                                    if api['operations'][operations]['httpMethod']== extra_api['operations'][0]['httpMethod']:
+                                        api['operations'][operations]['parameters'].extend(extra_api['operations'][0]['parameters'])
+                                        to_remove_apis.append(extra_api)
+                                    operations = operations + 1
+
+                                # with open('api.json', 'w') as outfile:
+                                #     json.dump(api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
+                                #
+                                # with open('extra_api.json', 'w') as outfile:
+                                #     json.dump(extra_api, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
+
+                    except:
+                        continue
+
+        # for i in xrange(len(to_remove_apis)):
+        #     print i
+        #     if to_remove_apis[i] in extra_apis:
+        #         extra_apis.remove(to_remove_apis[i])
+
         apis.extend(self.build_extra_apis())
         return apis
 
