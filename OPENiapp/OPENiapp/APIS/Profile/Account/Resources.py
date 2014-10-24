@@ -18,6 +18,11 @@ class AccountResource(GenericResource):
         queryset = OpeniAccount.objects.all()
         resource_name = 'Account'
 
+        def dehydrate(self, bundle):
+            # Include the request IP in the bundle.
+            bundle.data['service'] = "OPENi Cloudlet"
+            return bundle
+
         extra_actions = [
             {
                 "name": "",
