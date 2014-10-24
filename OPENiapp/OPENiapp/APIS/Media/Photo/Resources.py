@@ -97,7 +97,7 @@ class PhotoResource(GenericResource):
                 }
             },
             {
-                "name": "Commments",
+                "name": "Comments",
                 "http_method": "POST",
                 "summary": "Post a new comment on target Photo on CBS",
                 "fields": {
@@ -115,7 +115,7 @@ class PhotoResource(GenericResource):
                 }
             },
             {
-                "name": "Commments",
+                "name": "Comments",
                 "http_method": "GET",
                 "summary": "GET comments from Photo on CBS",
                 "fields": {

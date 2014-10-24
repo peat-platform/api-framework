@@ -89,7 +89,7 @@ class VideoResource(GenericResource):
                 }
             },
             {
-                "name": "Commments",
+                "name": "Comments",
                 "http_method": "POST",
                 "summary": "Post a new comment on target Video on CBS",
                 "fields": {
@@ -107,7 +107,7 @@ class VideoResource(GenericResource):
                 }
             },
             {
-                "name": "Commments",
+                "name": "Comments",
                 "http_method": "GET",
                 "summary": "GET comments from Video on CBS",
                 "fields": {
