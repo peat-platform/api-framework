@@ -412,12 +412,11 @@ class ResourceSwaggerMapping(object):
                     except:
                         continue
 
-        # for i in xrange(len(to_remove_apis)):
-        #     print i
-        #     if to_remove_apis[i] in extra_apis:
-        #         extra_apis.remove(to_remove_apis[i])
+        for i in xrange(len(to_remove_apis)):
+            if to_remove_apis[i] in extra_apis:
+                extra_apis.remove(to_remove_apis[i])
 
-        apis.extend(self.build_extra_apis())
+        apis.extend(extra_apis)
         return apis
 
     def build_property(self, name, type, description=""):
