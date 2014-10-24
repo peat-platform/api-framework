@@ -220,8 +220,8 @@ class fbActivity(bcActivity):
         """ POST API_PATH/[ACCOUNT_ID]/feed """
         # /account_id/feed (ie /675350314/feed)
         if (id):
-            if (check_if_exists(params, 'message') != defJsonRes):
-                return self.connector.post(path = id +'/feed', message = params['message'])
+            if (check_if_exists(params, 'text') != defJsonRes):
+                return self.connector.post(path = id +'/feed', message = params['text'])
         return "Insufficient Parameters"
 
     # Not exposed currently
