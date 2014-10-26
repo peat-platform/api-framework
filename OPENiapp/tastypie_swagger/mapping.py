@@ -290,12 +290,12 @@ class ResourceSwaggerMapping(object):
             'summary': self.get_operation_summary(detail=True, method=method),
             'httpMethod': method.upper(),
             'parameters': [
-                self.build_parameter(
-                    paramType='path',
-                    name=self._detail_uri_name(),
-                    dataType=self.resource_pk_type,
-                    description='Primary key of resource'
-                ),
+                # self.build_parameter(
+                #     paramType='path',
+                #     name=self._detail_uri_name(),
+                #     dataType=self.resource_pk_type,
+                #     description='Primary key of resource'
+                # ),
             ],
             'responseClass': self.resource_name,
             'nickname': '%s_detail' % self.resource_name,

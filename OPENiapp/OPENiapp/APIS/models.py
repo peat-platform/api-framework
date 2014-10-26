@@ -1,6 +1,7 @@
 from OPENiapp.APIS.Context.models import OpeniContextAwareModel
 
 from django.db import models
+from datetime import datetime
 
 #   Set of Properties
 class AddressModel(models.Model):
@@ -17,6 +18,9 @@ class TimeModel(models.Model):
     edited_time = models.TextField()
     deleted_time = models.TextField()
 
+    def __unicode__(self):
+        return "%s" % (self.created_time)
+
 class DurationModel(models.Model):
     starts_time = models.TextField()
     ends_time = models.TextField()
@@ -26,6 +30,9 @@ class FromModel(models.Model):
     object_type = models.TextField()
     url = models.TextField()
     name = models.TextField()
+
+    def __unicode__(self):
+        return "%s" % (self.from_id)
 
 class LocationModel(models.Model):
     latitude = models.TextField()
@@ -94,14 +101,13 @@ class ServiceModel(models.Model):
     Company = models.ForeignKey(OrganizationModel)
     year = models.TextField()
 
+
 class GenericModel(OpeniContextAwareModel):
-    # id is missing because it is the default
-    # id = models.TextField(unique=False, blank=True, null=True)
 
     url = models.TextField()
     object_type = models.TextField()
     service = models.TextField()
-    From = models.ForeignKey(FromModel, blank=True, null=True)
-    Time = models.ForeignKey(TimeModel, blank=True, null=True)
+    From = models.ForeignKey(FromModel,default=lambda: FromModel.objects.create(from_id="sample"))
+    Time = models.ForeignKey(TimeModel, default=lambda: TimeModel.objects.create(created_time= str(datetime.now())))
     class Meta:
         abstract = True

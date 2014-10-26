@@ -75,12 +75,12 @@ class ContextAwareResource(ModelResource):
     def obj_create(self, bundle, **kwargs):
         bundle = self.full_hydrate(bundle)
 
-        try:
-            bundle.request.GET.get("cbs")
-            cbs_return = self.cbs_handling(bundle.request,**kwargs)
-            return self.create_response(bundle.request, cbs_return)
-        except:
-            pass
+        # try:
+        #     bundle.request.GET.get("cbs")
+        #     cbs_return = self.cbs_handling(bundle.request,**kwargs)
+        #     return self.create_response(bundle.request, cbs_return)
+        # except:
+        #     pass
 
         if bundle.obj.context is None:
             raise BadRequest("context attribute is not defined")
