@@ -67,5 +67,3 @@ class GenericMeta:
     # filtering = {
     #         'id': ['exact']
     #     }
-  
-
