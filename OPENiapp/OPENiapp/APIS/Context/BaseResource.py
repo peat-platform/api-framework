@@ -75,12 +75,13 @@ class ContextAwareResource(ModelResource):
     def obj_create(self, bundle, **kwargs):
         bundle = self.full_hydrate(bundle)
 
-        # try:
-        #     bundle.request.GET.get("cbs")
-        #     cbs_return = self.cbs_handling(bundle.request,**kwargs)
-        #     return self.create_response(bundle.request, cbs_return)
-        # except:
-        #     pass
+        try:
+            if not bundle.request.GET.get("cbs"):
+                raise AttributeError
+            cbs_return = self.cbs_handling(bundle.request,**kwargs)
+            return self.create_response(bundle.request, cbs_return)
+        except:
+            pass
 
         if bundle.obj.context is None:
             raise BadRequest("context attribute is not defined")
@@ -97,7 +98,8 @@ class ContextAwareResource(ModelResource):
     def obj_update(self, bundle, **kwargs):
         
         try:
-            bundle.request.GET.get("cbs")
+            if not bundle.request.GET.get("cbs"):
+                raise AttributeError
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
         except:
@@ -117,7 +119,8 @@ class ContextAwareResource(ModelResource):
     def obj_delete(self, bundle, **kwargs):
 
         try:
-            bundle.request.GET.get("cbs")
+            if not bundle.request.GET.get("cbs"):
+                raise AttributeError
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
             return self.create_response(bundle.request, cbs_return)
         except:

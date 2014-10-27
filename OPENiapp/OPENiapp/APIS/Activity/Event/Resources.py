@@ -54,4 +54,22 @@ class EventResource(GenericResource):
                 "resource_type": "list"
             },
 
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "Retrieve a list of cbs events",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "available:Facebook,Twitter"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": True,
+                        "description": "Registered and authenicated user"
+                    }
+                },
+            },
+
         ]
