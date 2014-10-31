@@ -16,18 +16,17 @@ class VideoResource(GenericResource):
             {
                 "name": "",
                 "http_method": "GET",
-                "summary": "Retrieve all user Videos from CBS",
-                "resource_type": "list",
+                "summary": "",
                 "fields": {
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
+                        "description": "Facebook, OPENi"
                     }
 
                 }
@@ -40,18 +39,18 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
+                        "description": "Facebook, OPENi"
                     }
 
                 }
             },
             {
-                "name": "Videos",
+                "name": "",
                 "http_method": "GET",
                 "summary": "Retrieve all user Videos from CBS",
                 "resource_type": "list",
@@ -59,12 +58,12 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
+                        "description": "Facebook, OPENi"
                     }
 
                 }
@@ -78,9 +77,19 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook, OPENi"
+                    },
+                    "source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
@@ -96,9 +105,29 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook, OPENi"
+                    },
+                    "attachment_id": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "attachment_url": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "attachment_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "message": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
@@ -114,7 +143,7 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -132,7 +161,7 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -150,7 +179,7 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -168,7 +197,7 @@ class VideoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",

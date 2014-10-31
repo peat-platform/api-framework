@@ -1,4 +1,3 @@
-from tastypie.authorization import DjangoAuthorization
 from OPENiapp.APIS.Location.Place.Resources import PlaceResource
 from OPENiapp.APIS.resources import DurationResource
 from .models import OpeniEvent
@@ -20,18 +19,73 @@ class EventResource(GenericResource):
             {
                 "name": "",
                 "http_method": "GET",
-                "summary": "Retrieve a single cbs status by id",
+                "summary": "Retrieve a single event by id",
                 "fields": {
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "available:Facebook,Twitter"
+                        "description": "Facebook, Foursquare"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "Delete an Event",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "PUT",
+                "summary": "Retrieve a list of cbs events",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+
+
+            },
+            {
+                "name": "",
+                "http_method": "POST",
+                "summary": "",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
                 }
             },
 
@@ -43,33 +97,50 @@ class EventResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "available:Facebook,Twitter"
+                        "description": "Facebook"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 },
                 "resource_type": "list"
             },
-
             {
-                "name": "",
-                "http_method": "DELETE",
-                "summary": "Retrieve a list of cbs events",
+                "name": "rsvp",
+                "http_method": "GET",
+                "summary": "Retrieve rsvp for an event",
                 "fields": {
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "available:Facebook,Twitter"
+                        "description": "Facebook"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
-                },
+                }
             },
+            {
+                "name": "rsvp",
+                "http_method": "POST",
+                "summary": "Create rsvp for an event",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+
 
         ]

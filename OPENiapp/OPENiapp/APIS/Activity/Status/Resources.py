@@ -32,6 +32,23 @@ class StatusResource(GenericResource):
             },
             {
                 "name": "",
+                "http_method": "DELETE",
+                "summary": "Delete a Status",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
                 "http_method": "GET",
                 "summary": "Retrieve a list of cbs events",
                 "fields": {

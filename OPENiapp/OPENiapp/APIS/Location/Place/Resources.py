@@ -25,7 +25,7 @@ class PlaceResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -106,7 +106,7 @@ class PlaceResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -139,5 +139,63 @@ class PlaceResource(GenericResource):
                         "description": "Google"
                     },
                 }
-            }
+            },
+            {
+                "name": "",
+                "http_method": "PUT",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Google, OPENi"
+                    },
+
+                }
+            },
+
+
         ]

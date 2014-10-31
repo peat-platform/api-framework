@@ -14,20 +14,112 @@ class GameResource(GenericResource):
 
         extra_actions = [
             {
-                "name": "scores",
+            "name": "",
+                "http_method": "PUT",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
                 "http_method": "GET",
-                "summary": "Retrieve the user scores for a profile from CBS",
+                "summary": "",
                 "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "POST",
+                "summary": "",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+
+
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "scores",
+                "http_method": "GET",
+                "summary": "Retrieve the user scores for a game",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook, OPENi"
                     },
 
                 }
@@ -35,24 +127,19 @@ class GameResource(GenericResource):
             {
                 "name": "scores",
                 "http_method": "DELETE",
-                "summary": "DELETE the user scores for a profile from CBS",
+                "summary": "Delete scores for a Game",
                 "fields": {
-                    "user": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Current user"
-                    },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
+                        "description": "Facebook, OPENi"
                     },
-                    "id":{
+                    "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook"
+                        "description": "Registered and authenicated user"
                     }
-
                 }
             }
+
         ]

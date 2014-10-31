@@ -8,8 +8,100 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class RefundResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniRefund.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'Refund'
-        authentication = Authentication()
-        authorization = Authorization()
+        extra_actions = [
+            {
+                "name": "",
+                "http_method": "PUT",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "POST",
+                "summary": "",
+                "resource_type": "list",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+
+            {
+                "name": "",
+                "http_method": "GET",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+
+                }
+            },
+
+        ]

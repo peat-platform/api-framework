@@ -15,8 +15,6 @@ class CheckinResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()
         resource_name = 'Checkin'
-        authentication = Authentication()
-        authorization = Authorization()
 
         extra_actions = [
             {
@@ -27,11 +25,11 @@ class CheckinResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "available:Facebook"
+                        "description": "Facebook, Google"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 }
@@ -44,11 +42,11 @@ class CheckinResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "available:Foursquare"
+                        "description": "Foursquare"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 },
@@ -66,7 +64,7 @@ class CheckinResource(GenericResource):
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 },
@@ -80,11 +78,11 @@ class CheckinResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "The CBS you want to make a call to"
+                        "description": "OPENi"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 }
@@ -97,11 +95,11 @@ class CheckinResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "The CBS you want to make a call to"
+                        "description": "OPENi"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 }
@@ -114,11 +112,28 @@ class CheckinResource(GenericResource):
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "The CBS you want to make a call to"
+                        "description": "OPENi, Facebook"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "Delete a Checkin",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 }
@@ -136,33 +151,36 @@ class CheckinResource(GenericResource):
                     "text": {
                         "type": "string",
                         "required": False,
-                        "description": "Text of the Comment, (Facebook: message, Twitter: status)"
-                    },
-                    "attachment_id": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook: Attachment ID"
-                    },
-                    "attachment_url": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook: Attachment url"
-                    },
-                    "source": {
-                        "type": "string",
-                        "required": False,
-                        "description": "Facebook: Source"
+                        "description": "Text of the Comment"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "The CBS you want to make a call to"
+                        "description": "OPENi"
                     },
                     "user": {
                         "type": "string",
-                        "required": True,
+                        "required": False,
+                        "description": "Registered and authenticated user"
+                    },
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "PUT",
+                "summary": "Retrieve a list of cbs events",
+                 "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
                         "description": "Registered and authenicated user"
                     }
                 }
-            }
+            },
         ]

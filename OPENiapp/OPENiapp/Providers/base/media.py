@@ -172,7 +172,7 @@ class bcMedia:
         """ GET API_PATH/[VIDEO_ID] """
         return defaultMethodResponse
 
-    def pust_video(self, id, params):
+    def put_video(self, id, params):
         """ PUT API_PATH/[VIDEO_ID] """
         return defaultMethodResponse
 

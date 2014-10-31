@@ -12,6 +12,23 @@ from OPENiapp.APIS.OPENiAuthentication import Authentication
 class NotebookResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniNotebook.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'Notebook'
+        extra_actions = [
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "Delete a Notebook",
+                "fields": {
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "The CBS you want to make a call to"
+                    },
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    }
+                }
+            },
+        ]

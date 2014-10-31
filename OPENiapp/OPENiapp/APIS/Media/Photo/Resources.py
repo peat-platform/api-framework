@@ -21,12 +21,30 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook, Flickr, Foursquare, Instagram"
+                    }
+
+                }
+            },
+            {
+                "name": "",
+                "http_method": "PUT",
+                "summary": "",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Registered and authenicated user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "OPENi"
                     }
 
                 }
@@ -39,26 +57,25 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook, Flickr, Foursquare, Instagram"
+                        "description": "Facebook, Instagram"
                     }
 
                 }
             },
             {
-                "name": "Photos",
+                "name": "",
                 "http_method": "GET",
                 "summary": "Retrieve all user Photos from CBS",
-                "resource_type": "list",
                 "fields": {
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -77,12 +94,22 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
-                        "description": "Facebook, Instagram"
+                        "description": "Facebook"
+                    },
+                    "source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "url": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
                     },
 
                 }
@@ -95,13 +122,38 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook, Flickr, Instagram"
-                    }
+                    },
+                    "comment_text": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Flickr"
+                    },
+                    "attachment_id": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "attachment_url": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "message": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
+                    "url": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook"
+                    },
 
                 }
             },
@@ -113,7 +165,7 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -131,7 +183,7 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -149,7 +201,7 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",
@@ -167,7 +219,7 @@ class PhotoResource(GenericResource):
                     "user": {
                         "type": "string",
                         "required": False,
-                        "description": "Current user"
+                        "description": "Registered and authenicated user"
                     },
                     "cbs": {
                         "type": "string",

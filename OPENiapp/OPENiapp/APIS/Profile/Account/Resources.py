@@ -55,5 +55,23 @@ class AccountResource(GenericResource):
                     },
 
                 }
+            },
+            {
+                "name": "",
+                "http_method": "DELETE",
+                "summary": "Delete the user profile from CBS",
+                "fields": {
+                    "user": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Current user"
+                    },
+                    "cbs": {
+                        "type": "string",
+                        "required": False,
+                        "description": "Facebook, Foursquare, Google"
+                    },
+
+                }
             }
         ]
