@@ -35,14 +35,15 @@ class foProfiles(bcProfiles):
         data = self.get_fields(raw_data['user'], names, fields, alternatives)
 
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': self.check_if_exists(raw_data, 'paging.previous'),
-                         'next': self.check_if_exists(raw_data, 'paging.next')
-                        },
-                    'objects': [self.format_account_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_account_response(data)]
+        }
         
         return response
 

@@ -45,13 +45,15 @@ class cgLocation(bcLocation):
         alternatives.extend([''])
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'next': None
-                        },
-                    'objects': [self.format_place_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_place_response(data)]
+        }
         return response
 
     #   endregion Place Object

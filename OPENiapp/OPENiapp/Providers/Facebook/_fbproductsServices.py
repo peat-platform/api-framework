@@ -29,14 +29,15 @@ class fbProductsServices(bcProductsServices):
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': self.check_if_exists(raw_data, 'paging.previous'),
-                         'next': self.check_if_exists(raw_data, 'paging.next')
-                        },
-                    'objects': [self.format_application_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_application_response(data)]
+        }
         
         return response
 
@@ -59,14 +60,15 @@ class fbProductsServices(bcProductsServices):
         alternatives.extend(['', '', '', '', '', '', '', ''])
 
         response = {
-                    'meta':
-                        {
-                         'total_count': len(raw_datas['data']),
-                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                         'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_application_response(data))
@@ -142,14 +144,15 @@ class fbProductsServices(bcProductsServices):
         alternatives.extend(['', ''])
 
         response = {
-                    'meta':
-                        {
-                         'total_count': len(raw_datas['data']),
-                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                         'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_score_response(data))
@@ -171,14 +174,15 @@ class fbProductsServices(bcProductsServices):
         alternatives.extend(['', ''])
 
         response = {
-                    'meta':
-                        {
-                         'total_count': len(raw_datas['data']),
-                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                         'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_score_response(data))

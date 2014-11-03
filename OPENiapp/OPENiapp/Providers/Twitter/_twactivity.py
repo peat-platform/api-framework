@@ -33,14 +33,15 @@ class twActivity(bcActivity):
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_status_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_status_response(data)]
+        }
         return response
 
     def get_statuses(self):
@@ -61,14 +62,16 @@ class twActivity(bcActivity):
         alternatives.extend(['', ''])
 
         response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta':
+                {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas),
+            },
+            'objects': []
+        }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['data'].append(self.format_status_response(data))
@@ -109,14 +112,16 @@ class twActivity(bcActivity):
         alternatives.extend([''])
 
         response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta':
+                {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas)
+            },
+            'objects': []
+        }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_favorite_response(data))

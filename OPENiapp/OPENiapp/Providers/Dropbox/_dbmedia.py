@@ -68,13 +68,15 @@ class dbMedia(bcMedia):
             
             data = self.get_fields(raw_data, names, fields, alternatives)
             response = {
-                        'meta':
-                            {
-                             'total_count': 1,
-                             'next': None
-                            },
-                        'objects': [self.format_photo_response(data)]
-                        }
+                'meta': {
+                    'limit': self.check_if_exists(raw_datas, 'limit', None),
+                    'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                    'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                    'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                    'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                },
+                'objects': [self.format_photo_response(data)]
+            }
                      
             return { 'response': response }
         return "Not a Audio"
@@ -96,14 +98,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'audio', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
              
         response = {
-            'meta':
-                {
-                    'total_count': [],
-                    'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                    'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
               
         i = 0
         for raw_data in raw_datas['contents']:
@@ -163,15 +166,17 @@ class dbMedia(bcMedia):
             
             data = self.get_fields(raw_data, names, fields, alternatives)
             response = {
-                        'meta':
-                            {
-                             'total_count': 1,
-                             'next': None
-                            },
-                        'objects': [self.format_photo_response(data)]
-                        }
+                'meta': {
+                    'limit': self.check_if_exists(raw_datas, 'limit', None),
+                    'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                    'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                    'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                    'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                },
+                'objects': [self.format_photo_response(data)]
+            }
                      
-            return { 'response': response }
+            return response
         return "Not a File"
 
     def get_files(self):
@@ -191,14 +196,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'files', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
              
         response = {
-            'meta':
-                {
-                    'total_count': [],
-                    'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                    'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
               
         i = 0
         for raw_data in raw_datas['contents']:
@@ -255,13 +261,15 @@ class dbMedia(bcMedia):
             
             data = self.get_fields(raw_data, names, fields, alternatives)
             response = {
-                        'meta':
-                            {
-                             'total_count': 1,
-                             'next': None
-                            },
-                        'objects': [self.format_photo_response(data)]
-                        }
+                'meta': {
+                    'limit': self.check_if_exists(raw_datas, 'limit', None),
+                    'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                    'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                    'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                    'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                },
+                'objects': [self.format_photo_response(data)]
+            }
                      
             return { 'response': response }
         return "Not a Photo"
@@ -283,14 +291,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'photo', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
              
         response = {
-            'meta':
-                {
-                    'total_count': [],
-                    'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                    'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
               
         i = 0
         for raw_data in raw_datas['contents']:
@@ -346,13 +355,15 @@ class dbMedia(bcMedia):
             
             data = self.get_fields(raw_data, names, fields, alternatives)
             response = {
-                        'meta':
-                            {
-                             'total_count': 1,
-                             'next': None
-                            },
-                        'objects': [self.format_video_response(data)]
-                        }
+                'meta': {
+                    'limit': self.check_if_exists(raw_datas, 'limit', None),
+                    'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                    'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                    'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                    'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                },
+                'objects': [self.format_video_response(data)]
+            }
                      
             return { 'response': response }
         return "Not a Video"
@@ -374,14 +385,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'video', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
              
         response = {
-            'meta':
-                {
-                    'total_count': [],
-                    'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                    'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
               
         i = 0
         for raw_data in raw_datas['contents']:
@@ -436,14 +448,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'album', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
          
         response = {
-            'meta':
-                {
-                 'total_count': len(raw_datas['contents']),
-                 'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                 'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['contents'])
+            },
             'objects': []
-            }
+        }
           
         for raw_data in raw_datas['contents']:
             data = self.get_fields(raw_data, names, fields, alternatives)
@@ -478,14 +491,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'audio', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
          
         response = {
-            'meta':
-                {
-                 'total_count': [],
-                 'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                 'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
          
         i = 0 
         for raw_data in raw_datas['contents']:
@@ -521,14 +535,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'file', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
          
         response = {
-            'meta':
-                {
-                 'total_count': [],
-                 'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                 'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
          
         i = 0 
         for raw_data in raw_datas['contents']:
@@ -564,14 +579,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'photo', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
          
         response = {
-            'meta':
-                {
-                 'total_count': [],
-                 'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                 'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
          
         i = 0 
         for raw_data in raw_datas['contents']:
@@ -607,14 +623,15 @@ class dbMedia(bcMedia):
         alternatives = ['', 'video', 'dropbox', '', account['uid'], '', account['referral_link'], account['display_name'], '', '', '', '', '', '', '', '', '', '', '', '', '', '']
          
         response = {
-            'meta':
-                {
-                 'total_count': [],
-                 'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                 'next': self.check_if_exists(raw_datas, 'paging.next')
-                },
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
             'objects': []
-            }
+        }
          
         i = 0 
         for raw_data in raw_datas['contents']:

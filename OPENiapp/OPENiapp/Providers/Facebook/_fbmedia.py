@@ -58,14 +58,15 @@ class fbMedia(bcMedia):
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_photo_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_photo_response(data)]
+        }
 
         # Curate tag array from Facebook
         tag_array = []
@@ -96,14 +97,15 @@ class fbMedia(bcMedia):
         alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
-                    'meta':
-                        {
-                         'total_count': len(raw_datas['data']),
-                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                         'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                    'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
 
         for idx, raw_data in enumerate(raw_datas['data']):
             data = self.get_fields(raw_data, names, fields, alternatives)
@@ -156,14 +158,15 @@ class fbMedia(bcMedia):
         alternatives.extend(['', '', params['photo_id']])
 
         response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_comment_response(data))
@@ -202,14 +205,15 @@ class fbMedia(bcMedia):
         alternatives.extend([params['photo_id']])
 
         response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(format_likes_response(data))
@@ -252,14 +256,15 @@ class fbMedia(bcMedia):
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_video_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_video_response(data)]
+        }
 
         # Curate tag array from Facebook
         tag_array = []
@@ -302,14 +307,15 @@ class fbMedia(bcMedia):
 
         data = self.get_fields(raw_datas, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': []
+        }
 
         for idx, raw_data in enumerate(raw_datas['data']):
             data = self.get_fields(raw_data, names, fields, alternatives)
@@ -372,14 +378,15 @@ class fbMedia(bcMedia):
         alternatives.extend(['', '', id])
 
         response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_comment_response(data))
@@ -418,14 +425,15 @@ class fbMedia(bcMedia):
         alternatives.extend([id])
 
         response = {
-                    'meta':
-                        {
-                            'total_count': len(raw_datas['data']),
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_like_response(data))
@@ -459,14 +467,15 @@ class fbMedia(bcMedia):
 
         data = self.get_fields(raw_data, names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_folder_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_folder_response(data)]
+        }
         response['objects'][0]['objects'] = self.get_all_photos_for_album({'album_id': params['album_id']})
         return response
 
@@ -499,14 +508,15 @@ class fbMedia(bcMedia):
         alternatives = ['', 'photo', 'facebook', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
         response = {
-                    'meta':
-                        {
-                         'total_count': len(raw_datas['data']),
-                         'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                         'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': len(raw_datas['data'])
+            },
+            'objects': []
+        }
 
         for idx, raw_data in enumerate(raw_datas['data']):
             data = self.get_fields(raw_data, names, fields, alternatives)

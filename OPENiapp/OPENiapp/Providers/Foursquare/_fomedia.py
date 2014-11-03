@@ -32,14 +32,15 @@ class foMedia(bcMedia):
 
         data = self.get_fields(raw_data['photo'], names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_photo_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_photo_response(data)]
+        }
         
         return response
 
@@ -67,12 +68,15 @@ class foMedia(bcMedia):
         alternatives.extend(['', '', ''])
 
         response = {
-                    'meta': 
-                        {
-                        'total_count': self.check_if_exists(raw_datas, 'photos.count'),
-                        'next': self.check_if_exists(raw_datas, 'photos.next')
-                        },
-                    'objects' : [] }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'photos.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'photos.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'photos.count', 0),
+            },
+            'objects' : []
+        }
         for raw_data in raw_datas['photos']['items']:
             data = self.get_fields(raw_data, names, fields, alternatives)
             response['objects'].append(self.format_photo_response(data))

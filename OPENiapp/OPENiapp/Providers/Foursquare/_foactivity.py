@@ -33,14 +33,15 @@ class foActivity(bcActivity):
 
         data = self.get_fields(raw_data['event'], names, fields, alternatives)
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_event_response(data)]
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_event_response(data)]
+        }
         
         venue_id = self.check_if_exists(raw_data, 'event.venueId')
         if (venue_id != defJsonRes):

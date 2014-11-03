@@ -52,14 +52,16 @@ class ytMedia(bcMedia):
         data = self.get_fields(raw_data, names, fields, alternatives)
         
         response = {
-                    'meta':
-                        {
-                         'total_count': 1,
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': [self.format_video_response(data)]
-                    }
+            'meta':
+                {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+            },
+            'objects': [self.format_video_response(data)]
+        }
 
         # Curate tag array from Youtube
         #Only text-tags in youtube, no location, no time
@@ -117,14 +119,15 @@ class ytMedia(bcMedia):
         alternatives.extend([''])
         
         response = {
-                    'meta':
-                        {
-                         'total_count': [],
-                         'previous': defJsonRes,
-                         'next': defJsonRes
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+            },
+            'objects': []
+        }
     
         for playlist_item in playlistitems_list_response["items"]:
             metadata = self.connector.videos().list(id =playlist_item["snippet"]["resourceId"]["videoId"], part = "id, snippet, recordingDetails, fileDetails").execute()
@@ -236,14 +239,15 @@ class ytMedia(bcMedia):
         print raw_datas
 
         response = {
-                    'meta':
-                        {
-                            'total_count': raw_datas['statistics']['likeCount'],
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': raw_datas['statistics']['likeCount']
+            },
+            'objects': []
+        }
         
         return response
 
@@ -263,14 +267,15 @@ class ytMedia(bcMedia):
         print raw_datas
 
         response = {
-                    'meta':
-                        {
-                            'total_count': raw_datas['statistics']['dislikeCount'],
-                            'previous': self.check_if_exists(raw_datas, 'paging.previous'),
-                            'next': self.check_if_exists(raw_datas, 'paging.next')
-                        },
-                    'objects': []
-                    }
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': raw_datas['statistics']['dislikeCount']
+            },
+            'objects': []
+        }
         
         return response
 
