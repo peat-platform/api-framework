@@ -1,23 +1,24 @@
+# All Python compiled files
 *.pyc
-OPENiapp/.idea/*
-OPENiapp/.idea/
-OPENiapp/.idea
 
-api-framework.sln
-api-framework.v12.suo
-OPENiapp/OPENiapp.pyproj
-OPENiapp/OPENiapp.pyproj.user
+# Intellij Idea
+.idea/*
+
+# Visual Studio
+*.sln
+*.suo
+*.pyproj
+*.pyproj.user
 OPENiapp/web.config
 OPENiapp/bin/*
 OPENiapp/obj/*
 
-.idea/*
-
+# Database and log files
 *.db
 *.log
 
-OPENiapp/apiplatform.log
-
+# API keys for Youtube - Temporary
 OPENiapp/OPENiapp/Providers/Youtube/client_secrets.json
 
+# This should probably leave. Michael?
 checkio.py
