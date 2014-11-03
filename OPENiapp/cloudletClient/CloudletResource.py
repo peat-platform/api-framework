@@ -6,6 +6,7 @@ __author__ = 'mpetyx'
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
 from OPENiapp.models import Cloudlet
+from django.contrib.auth.models import User
 # from tastypie.resources import Resource, ModelResource
 # from tastypie import fields
 from tastypie.bundle import Bundle

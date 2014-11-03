@@ -145,7 +145,9 @@ api.register(SocialAccountResource())
 api.register(CBSResource())
 
 
-from .resources import DurationResource
+from .resources import DurationResource, PersonModelResource
 api.register(DurationResource())
+api.register(PersonModelResource())
+
 
 urlpatterns = api.urls
