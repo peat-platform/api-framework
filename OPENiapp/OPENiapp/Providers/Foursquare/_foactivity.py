@@ -16,7 +16,7 @@ class foActivity(bcActivity):
         # /event_id (ie /4e173d2cbd412187aabb3c04)
         raw_data = self.connector.events(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
         names.extend(['description', 'picture', 'title'])
@@ -39,26 +39,26 @@ class foActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_event_response(data)]
+                    'objects': [self.format_event_response(data)]
                     }
         
         venue_id = self.check_if_exists(raw_data, 'event.venueId')
         if (venue_id != defJsonRes):
             raw_data2 = self.connector.venues(venue_id)
-            response['data'][0]['place']['name'] = self.check_if_exists(raw_data2, 'venue.name', '')
-            response['data'][0]['place']['description'] = self.check_if_exists(raw_data2, 'venue.description', '')
-            response['data'][0]['place']['category'] = self.check_if_exists(raw_data2, 'venue.categories', '')
-            response['data'][0]['place']['picture'] = self.check_if_exists(raw_data2, 'venue.photos', '')
-            response['data'][0]['place']['address']['street'] = self.check_if_exists(raw_data2, 'venue.location.address', '')
-            response['data'][0]['place']['address']['number'] = self.check_if_exists(raw_data2, 'venue.location.number', '')
-            response['data'][0]['place']['address']['apartment'] = self.check_if_exists(raw_data2, 'venue.location.apartment', '')
-            response['data'][0]['place']['address']['city'] = self.check_if_exists(raw_data2, 'venue.location.city', '')
-            response['data'][0]['place']['address']['locality'] = self.check_if_exists(raw_data2, 'venue.location.locality', '')
-            response['data'][0]['place']['address']['country'] = self.check_if_exists(raw_data2, 'venue.location.country', '')
-            response['data'][0]['place']['address']['zip'] = self.check_if_exists(raw_data2, 'venue.location.postalCode', '')
-            response['data'][0]['place']['address']['latitude'] = self.check_if_exists(raw_data2, 'venue.location.lat', '')
-            response['data'][0]['place']['address']['longitude'] = self.check_if_exists(raw_data2, 'venue.location.lng', '')
-            response['data'][0]['place']['address']['height'] = self.check_if_exists(raw_data2, 'venue.location.height', '')
+            response['objects'][0]['place']['name'] = self.check_if_exists(raw_data2, 'venue.name', '')
+            response['objects'][0]['place']['description'] = self.check_if_exists(raw_data2, 'venue.description', '')
+            response['objects'][0]['place']['category'] = self.check_if_exists(raw_data2, 'venue.categories', '')
+            response['objects'][0]['place']['picture'] = self.check_if_exists(raw_data2, 'venue.photos', '')
+            response['objects'][0]['place']['address']['street'] = self.check_if_exists(raw_data2, 'venue.location.address', '')
+            response['objects'][0]['place']['address']['number'] = self.check_if_exists(raw_data2, 'venue.location.number', '')
+            response['objects'][0]['place']['address']['apartment'] = self.check_if_exists(raw_data2, 'venue.location.apartment', '')
+            response['objects'][0]['place']['address']['city'] = self.check_if_exists(raw_data2, 'venue.location.city', '')
+            response['objects'][0]['place']['address']['locality'] = self.check_if_exists(raw_data2, 'venue.location.locality', '')
+            response['objects'][0]['place']['address']['country'] = self.check_if_exists(raw_data2, 'venue.location.country', '')
+            response['objects'][0]['place']['address']['zip'] = self.check_if_exists(raw_data2, 'venue.location.postalCode', '')
+            response['objects'][0]['place']['address']['latitude'] = self.check_if_exists(raw_data2, 'venue.location.lat', '')
+            response['objects'][0]['place']['address']['longitude'] = self.check_if_exists(raw_data2, 'venue.location.lng', '')
+            response['objects'][0]['place']['address']['height'] = self.check_if_exists(raw_data2, 'venue.location.height', '')
 
         return response
 

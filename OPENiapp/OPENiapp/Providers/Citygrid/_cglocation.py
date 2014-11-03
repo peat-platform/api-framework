@@ -32,7 +32,7 @@ class cgLocation(bcLocation):
                                             i = self.check_if_exists(params ,'i', ''))
         raw_data = json.loads(raw_data)['locations'][0]
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
         names.extend(['text'])
 
@@ -50,7 +50,7 @@ class cgLocation(bcLocation):
                          'total_count': 1,
                          'next': None
                         },
-                    'data': [self.format_place_response(data)]
+                    'objects': [self.format_place_response(data)]
                     }
         return response
 

@@ -18,7 +18,7 @@ class fbProductsServices(bcProductsServices):
         # /application_id (ie /10153665526210315)
         raw_data = self.connector.get('/' + id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.object_type', 'from.url', 'from.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -35,7 +35,7 @@ class fbProductsServices(bcProductsServices):
                          'previous': self.check_if_exists(raw_data, 'paging.previous'),
                          'next': self.check_if_exists(raw_data, 'paging.next')
                         },
-                    'data': [self.format_application_response(data)]
+                    'objects': [self.format_application_response(data)]
                     }
         
         return response
@@ -49,7 +49,7 @@ class fbProductsServices(bcProductsServices):
         # /account_id/applications/developer (ie /675350314/applications/developer)
         raw_datas = self.connector.get('/' + id + '/applications/developer')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['application_title', 'application_description', 'application_version', 'application_icon', 'application_developer', 'adtype', 'adservices', 'adnetworks'])
         
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.object_type', 'from.url', 'from.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -65,14 +65,15 @@ class fbProductsServices(bcProductsServices):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_application_response(data))
+            response['objects'].append(self.format_application_response(data))
                 
         return response
     
+    # To-Do: Fix this!
     def put_application(self, id, params):
         """ POST API_PATH/[APP_ID] """
         # /application_id (ie /10153665526210315)
@@ -131,7 +132,7 @@ class fbProductsServices(bcProductsServices):
         # /account_id/scores (ie /675350314/scores)
         raw_datas = self.connector.get('/' + id + '/scores')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['value', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'user.id', '', '', 'user.name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -147,11 +148,11 @@ class fbProductsServices(bcProductsServices):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_score_response(data))
+            response['objects'].append(self.format_score_response(data))
                 
         return response
     
@@ -160,7 +161,7 @@ class fbProductsServices(bcProductsServices):
         # /app_id/scores (ie /722334637784491/score)
         raw_datas = self.connector.get('/' + id + '/score')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['value', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'user.id', '', '', 'user.name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
@@ -176,11 +177,11 @@ class fbProductsServices(bcProductsServices):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_score_response(data))
+            response['objects'].append(self.format_score_response(data))
                 
         return response
 

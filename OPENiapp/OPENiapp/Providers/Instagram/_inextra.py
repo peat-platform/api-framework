@@ -5,7 +5,7 @@ class inExtra():
         ''' GET API_PATH/ '''
         raw_data = self.connector.media_search(lat = params['lat'], lng = params['lng'])
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])

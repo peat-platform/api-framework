@@ -15,7 +15,7 @@ class foMedia(bcMedia):
         # /media/media-id (ie media/628147512937366504_917877895)
         raw_data = self.connector.photos(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -38,7 +38,7 @@ class foMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_photo_response(data)]
+                    'objects': [self.format_photo_response(data)]
                     }
         
         return response
@@ -51,7 +51,7 @@ class foMedia(bcMedia):
         # /users/user-id (ie users/917877895)
         raw_datas = self.connector.users.photos(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -72,10 +72,10 @@ class foMedia(bcMedia):
                         'total_count': self.check_if_exists(raw_datas, 'photos.count'),
                         'next': self.check_if_exists(raw_datas, 'photos.next')
                         },
-                    'data' : [] }
+                    'objects' : [] }
         for raw_data in raw_datas['photos']['items']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
+            response['objects'].append(self.format_photo_response(data))
 
         return response
 

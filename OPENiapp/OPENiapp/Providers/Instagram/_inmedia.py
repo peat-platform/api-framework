@@ -14,7 +14,7 @@ class inMedia(bcMedia):
         # /media/media-id (ie media/628147512937366504_917877895)
         raw_data = self.connector.media(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -37,7 +37,7 @@ class inMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_photo_response(data)]
+                    'objects': [self.format_photo_response(data)]
                     }
         
         return response
@@ -52,7 +52,7 @@ class inMedia(bcMedia):
         if (next == None):
             next = defJsonRes
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -74,12 +74,12 @@ class inMedia(bcMedia):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': next
                         },
-                    'data': []
+                    'objects': []
                     }
 
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
+            response['objects'].append(self.format_photo_response(data))
         
         return response
 
@@ -90,7 +90,7 @@ class inMedia(bcMedia):
         # /media/media-id/comments (ie media/628147512937366504_917877895/comments)
         raw_datas = self.connector.media_comments(id)
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.category', 'from.url', 'from.username', 'created_time', 'edited_time', 'deleted_time']
@@ -106,11 +106,11 @@ class inMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(format_comment_response(data))
+            response['objects'].append(format_comment_response(data))
         return response
     
     def post_photo_comments(self, id):
@@ -133,7 +133,7 @@ class inMedia(bcMedia):
         # /media/media-id/likes (ie media/628147512937366504_917877895/likes)
         raw_datas = self.connector.media_likes(id)
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'from.username', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -149,11 +149,11 @@ class inMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(format_likes_response(data))
+            response['objects'].append(format_likes_response(data))
         return response
 
     def delete_photo_likes(self, id):

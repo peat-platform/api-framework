@@ -22,7 +22,7 @@ class flMedia(bcMedia):
         photo = self.connector.Photo(id = id)
         raw_data = photo.getInfo()
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -45,7 +45,7 @@ class flMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_photo_response(data)]
+                    'objects': [self.format_photo_response(data)]
                     }
         return response
 
@@ -58,7 +58,7 @@ class flMedia(bcMedia):
         user = self.connector.Person.findByUserName(id)
         raw_datas = user.getPhotos()
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -80,12 +80,12 @@ class flMedia(bcMedia):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
 
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
+            response['objects'].append(self.format_photo_response(data))
 
         return response
 
@@ -97,7 +97,7 @@ class flMedia(bcMedia):
         photo = self.connector.Photo(id = id)
         raw_datas = photo.getComments()
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'permalink', 'author.id', 'author.category', 'author.url', 'author.username', 'datecreate', 'edited_time', 'deleted_time']
@@ -113,11 +113,11 @@ class flMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_comment_response(data))
+            response['objects'].append(self.format_comment_response(data))
         return response
 
     def post_photo_comments(self, id, params):

@@ -15,7 +15,7 @@ class foProfiles(bcProfiles):
         """ GET API_PATH/[ACCOUNT_ID] """
         raw_data = self.connector.users(id)
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['person_name', 'person_surname', 'person_middlename', 'person_birthdate'])
         names.extend(['wallet_cards', 'wallet_name', 'wallet_description',
                       'wallet_id', 'wallet_object_type', 'wallet_service', 'wallet_url', 'wallet_from_id', 'wallet_from_object_type', 'wallet_from_url', 'wallet_from_name', 'wallet_time_created_time', 'wallet_time_edited_time', 'wallet_time_deleted_time'])
@@ -41,7 +41,7 @@ class foProfiles(bcProfiles):
                          'previous': self.check_if_exists(raw_data, 'paging.previous'),
                          'next': self.check_if_exists(raw_data, 'paging.next')
                         },
-                    'data': [self.format_account_response(data)]
+                    'objects': [self.format_account_response(data)]
                     }
         
         return response

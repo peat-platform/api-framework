@@ -58,7 +58,7 @@ class dbMedia(bcMedia):
                        
         raw_data = metadata
         if ('audio' in raw_data['mime_type']):
-            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
             names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
      
             fields = ['rev', '', 'service', '', '', '', '', '', 'created_time', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -73,7 +73,7 @@ class dbMedia(bcMedia):
                              'total_count': 1,
                              'next': None
                             },
-                        'data': self.format_photo_response(data)
+                        'objects': [self.format_photo_response(data)]
                         }
                      
             return { 'response': response }
@@ -88,7 +88,7 @@ class dbMedia(bcMedia):
         account = self.connector.account_info()
                            
         raw_datas = metadata
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
        
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -102,7 +102,7 @@ class dbMedia(bcMedia):
                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                     'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
               
         i = 0
@@ -110,14 +110,14 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'audio' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data)) 
+                    response['objects'].append(self.format_photo_response(data)) 
                     i +=1
             else:
                 dir_datas = self.connector.metadata(raw_data['path'])
                 for dir_data in dir_datas['contents']:
                     if 'audio' in dir_data['mime_type']:
                         data = self.get_fields(dir_data, names, fields, alternatives)
-                        response['data'].append(self.format_photo_response(data))   
+                        response['objects'].append(self.format_photo_response(data))   
                         i +=1
                             
         response['meta']['total_count'] = i                        
@@ -153,7 +153,7 @@ class dbMedia(bcMedia):
         raw_data = metadata
         print raw_data['mime_type']
         if ('text' in raw_data['mime_type']):
-            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
             names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
      
             fields = ['rev', '', 'service', '', '', '', '', '', 'created_time', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -168,7 +168,7 @@ class dbMedia(bcMedia):
                              'total_count': 1,
                              'next': None
                             },
-                        'data': self.format_photo_response(data)
+                        'objects': [self.format_photo_response(data)]
                         }
                      
             return { 'response': response }
@@ -183,7 +183,7 @@ class dbMedia(bcMedia):
         account = self.connector.account_info()
                            
         raw_datas = metadata
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
        
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -197,7 +197,7 @@ class dbMedia(bcMedia):
                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                     'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
               
         i = 0
@@ -205,14 +205,14 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'text' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data)) 
+                    response['objects'].append(self.format_photo_response(data)) 
                     i +=1
             else:
                 dir_datas = self.connector.metadata(raw_data['path'])
                 for dir_data in dir_datas['contents']:
                     if 'text' in dir_data['mime_type']:
                         data = self.get_fields(dir_data, names, fields, alternatives)
-                        response['data'].append(self.format_photo_response(data))   
+                        response['objects'].append(self.format_photo_response(data))   
                         i +=1
                             
         response['meta']['total_count'] = i                         
@@ -245,7 +245,7 @@ class dbMedia(bcMedia):
                
         raw_data = metadata
         if ('image' in raw_data['mime_type']):
-            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
             names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
      
             fields = ['rev', '', 'service', '', '', '', '', '', 'created_time', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -260,7 +260,7 @@ class dbMedia(bcMedia):
                              'total_count': 1,
                              'next': None
                             },
-                        'data': self.format_photo_response(data)
+                        'objects': [self.format_photo_response(data)]
                         }
                      
             return { 'response': response }
@@ -275,7 +275,7 @@ class dbMedia(bcMedia):
         account = self.connector.account_info()
                            
         raw_datas = metadata
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
        
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -289,7 +289,7 @@ class dbMedia(bcMedia):
                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                     'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
               
         i = 0
@@ -297,14 +297,14 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'image' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data)) 
+                    response['objects'].append(self.format_photo_response(data)) 
                     i +=1
             else:
                 dir_datas = self.connector.metadata(raw_data['path'])
                 for dir_data in dir_datas['contents']:
                     if 'image' in dir_data['mime_type']:
                         data = self.get_fields(dir_data, names, fields, alternatives)
-                        response['data'].append(self.format_photo_response(data))   
+                        response['objects'].append(self.format_photo_response(data))   
                         i +=1
                             
         response['meta']['total_count'] = i                          
@@ -336,7 +336,7 @@ class dbMedia(bcMedia):
                        
         raw_data = metadata
         if ('video' in raw_data['mime_type']):
-            names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+            names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
             names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
      
             fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -351,7 +351,7 @@ class dbMedia(bcMedia):
                              'total_count': 1,
                              'next': None
                             },
-                        'data': self.format_video_response(data)
+                        'objects': [self.format_video_response(data)]
                         }
                      
             return { 'response': response }
@@ -366,7 +366,7 @@ class dbMedia(bcMedia):
         account = self.connector.account_info()
                            
         raw_datas = metadata
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
        
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -380,7 +380,7 @@ class dbMedia(bcMedia):
                     'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                     'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
               
         i = 0
@@ -388,14 +388,14 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'video' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data)) 
+                    response['objects'].append(self.format_photo_response(data)) 
                     i +=1
             else:
                 dir_datas = self.connector.metadata(raw_data['path'])
                 for dir_data in dir_datas['contents']:
                     if 'video' in dir_data['mime_type']:
                         data = self.get_fields(dir_data, names, fields, alternatives)
-                        response['data'].append(self.format_photo_response(data))   
+                        response['objects'].append(self.format_photo_response(data))   
                         i +=1
                             
         response['meta']['total_count'] = i                          
@@ -428,7 +428,7 @@ class dbMedia(bcMedia):
                        
         raw_datas = metadata
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
    
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -442,12 +442,12 @@ class dbMedia(bcMedia):
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
           
         for raw_data in raw_datas['contents']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
+            response['objects'].append(self.format_photo_response(data))
                               
         return response
 
@@ -470,7 +470,7 @@ class dbMedia(bcMedia):
                        
         raw_datas = metadata
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
    
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -484,7 +484,7 @@ class dbMedia(bcMedia):
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
          
         i = 0 
@@ -493,7 +493,7 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'audio' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data))
+                    response['objects'].append(self.format_photo_response(data))
                     i += 1
         
         response['meta']['total_count'] = i                      
@@ -513,7 +513,7 @@ class dbMedia(bcMedia):
                        
         raw_datas = metadata
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
    
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -527,7 +527,7 @@ class dbMedia(bcMedia):
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
          
         i = 0 
@@ -536,7 +536,7 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'text' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data))
+                    response['objects'].append(self.format_photo_response(data))
                     i += 1
         
         response['meta']['total_count'] = i                     
@@ -556,7 +556,7 @@ class dbMedia(bcMedia):
                        
         raw_datas = metadata
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
    
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -570,7 +570,7 @@ class dbMedia(bcMedia):
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
          
         i = 0 
@@ -579,7 +579,7 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'image' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data))
+                    response['objects'].append(self.format_photo_response(data))
                     i += 1
         
         response['meta']['total_count'] = i                       
@@ -599,7 +599,7 @@ class dbMedia(bcMedia):
                        
         raw_datas = metadata
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
    
         fields = ['rev', '', 'service', 'path', '', '', '', '', 'modified', 'client_mtime', '', 'path', '', 'mime_type', 'size', 'icon', '', '', '', '', '', '']
@@ -613,7 +613,7 @@ class dbMedia(bcMedia):
                  'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                  'next': self.check_if_exists(raw_datas, 'paging.next')
                 },
-            'data': []
+            'objects': []
             }
          
         i = 0 
@@ -622,7 +622,7 @@ class dbMedia(bcMedia):
             if not raw_data['is_dir']:
                 if 'video' in raw_data['mime_type']:
                     data = self.get_fields(raw_data, names, fields, alternatives)
-                    response['data'].append(self.format_photo_response(data))
+                    response['objects'].append(self.format_photo_response(data))
                     i += 1
         
         response['meta']['total_count'] = i                      

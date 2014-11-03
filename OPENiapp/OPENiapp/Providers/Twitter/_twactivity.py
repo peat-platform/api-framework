@@ -22,7 +22,7 @@ class twActivity(bcActivity):
         # /statuses/show/ (ie /statuses/show/483539224545984500)
         raw_data = self.connector.show_status(id = id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text'])
 
         fields = ['id', 'object_type', 'service', 'entities.urls[0].url', 'user.id', 'user.category', 'user.url', 'user.name', 'created_at', 'updated_time', 'time.deleted_time']
@@ -39,7 +39,7 @@ class twActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_status_response(data)]
+                    'objects': [self.format_status_response(data)]
                     }
         return response
 
@@ -51,7 +51,7 @@ class twActivity(bcActivity):
         # /statuses/user_timeline (ie statuses/user_timeline/10876852)
         raw_datas = self.connector.get_user_timeline(id = id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text'])
 
         fields = ['id', 'object_type', 'service', 'entities.urls[0].url', 'user.id', 'user.category', 'user.url', 'user.name', 'created_at', 'updated_time', 'time.deleted_time']
@@ -67,7 +67,7 @@ class twActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
@@ -99,7 +99,7 @@ class twActivity(bcActivity):
         # /favorites/list (ie favorites/list/10876852)
         raw_datas = self.connector.get_favorites(id = 'me')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
 
         fields = ['id', 'object_type', 'service', 'entities.urls[0].url', 'user.id', 'user.category', 'user.url', 'user.name', 'created_at', 'updated_time', 'time.deleted_time']
@@ -115,11 +115,11 @@ class twActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_favorite_response(data))
+            response['objects'].append(self.format_favorite_response(data))
         return response
 
     def post_status_favorites(self, id):

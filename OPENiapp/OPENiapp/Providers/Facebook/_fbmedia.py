@@ -40,7 +40,7 @@ class fbMedia(bcMedia):
         # /photo_id (ie /10153665526210315)
         raw_data = self.connector.get('/' + id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['tags', 'height', 'width'])
@@ -64,7 +64,7 @@ class fbMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_photo_response(data)]
+                    'objects': [self.format_photo_response(data)]
                     }
 
         # Curate tag array from Facebook
@@ -76,7 +76,7 @@ class fbMedia(bcMedia):
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-        response['data'][0]['tags'] = tag_array
+        response['objects'][0]['tags'] = tag_array
         
         return response
 
@@ -88,7 +88,7 @@ class fbMedia(bcMedia):
         # /account_id/photos (ie /675350314/photos)
         raw_datas = self.connector.get(id +'/photos')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longitude', 'place.location.height', 'tags.data', 'height', 'width']
@@ -102,12 +102,12 @@ class fbMedia(bcMedia):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
 
         for idx, raw_data in enumerate(raw_datas['data']):
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
+            response['objects'].append(self.format_photo_response(data))
 
             # Curate tag array from Facebook
             tag_array = []
@@ -118,7 +118,7 @@ class fbMedia(bcMedia):
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-            response['data'][idx]['tags'] = tag_array
+            response['objects'][idx]['tags'] = tag_array
         
         return response
 
@@ -146,7 +146,7 @@ class fbMedia(bcMedia):
         # /photo_id/comments (ie /10153665526210315/comments)
         raw_datas = self.connector.get('/' + id + '/comments')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.category', 'from.url', 'from.name', 'created_time', 'edited_time', 'deleted_time']
@@ -162,11 +162,11 @@ class fbMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_comment_response(data))
+            response['objects'].append(self.format_comment_response(data))
         return response
     
     def post_photo_comments(self, id, params):
@@ -192,7 +192,7 @@ class fbMedia(bcMedia):
         # /photo_id/likes (ie /10153665526210315/likes)
         raw_datas = self.connector.get('/' + id + '/likes')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -208,11 +208,11 @@ class fbMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(format_likes_response(data))
+            response['objects'].append(format_likes_response(data))
         return response
     
     def delete_photo_likes(self, id):
@@ -232,7 +232,7 @@ class fbMedia(bcMedia):
         # /video_id (ie /1708014064955)
         raw_data = self.connector.get('/' + id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
@@ -258,7 +258,7 @@ class fbMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_video_response(data)]
+                    'objects': [self.format_video_response(data)]
                     }
 
         # Curate tag array from Facebook
@@ -270,7 +270,7 @@ class fbMedia(bcMedia):
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-        response['data'][0]['tags'] = tag_array
+        response['objects'][0]['tags'] = tag_array
         
         return response
 
@@ -282,7 +282,7 @@ class fbMedia(bcMedia):
         # account_id/videos (ie /675350314/videos)
         raw_datas = self.connector.get('/' + id + '/videos')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
@@ -308,12 +308,12 @@ class fbMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': []
+                    'objects': []
                     }
 
         for idx, raw_data in enumerate(raw_datas['data']):
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_video_response(data))
+            response['objects'].append(self.format_video_response(data))
 
             # Curate tag array from Facebook
             tag_array = []
@@ -324,7 +324,7 @@ class fbMedia(bcMedia):
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-            response['data'][idx]['tags'] = tag_array
+            response['objects'][idx]['tags'] = tag_array
         
         return response
 
@@ -362,7 +362,7 @@ class fbMedia(bcMedia):
         # /video_id/comments (ie /1708014064955/comments)
         raw_datas = self.connector.get('/' + id + '/comments')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.category', 'from.url', 'from.name', 'created_time', 'edited_time', 'deleted_time']
@@ -378,11 +378,11 @@ class fbMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_comment_response(data))
+            response['objects'].append(self.format_comment_response(data))
         return response
 
     def post_video_comments(self, id, params):
@@ -408,7 +408,7 @@ class fbMedia(bcMedia):
         # /video_id/likes (ie /1708014064955/likes)
         raw_datas = self.connector.get('/' + id + '/likes')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -424,11 +424,11 @@ class fbMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_like_response(data))
+            response['objects'].append(self.format_like_response(data))
         return response
 
     def delete_video_likes(self, id):
@@ -450,7 +450,7 @@ class fbMedia(bcMedia):
         raw_data = self.connector.get('/' + id)
         raw_data2 = self.connector.get('/' + id + '/photos')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'data'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'data']
@@ -465,9 +465,9 @@ class fbMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_folder_response(data)]
+                    'objects': [self.format_folder_response(data)]
                     }
-        response['data'][0]['data'] = self.get_all_photos_for_album({'album_id': params['album_id']})
+        response['objects'][0]['objects'] = self.get_all_photos_for_album({'album_id': params['album_id']})
         return response
 
     def post_folders(self, params):
@@ -491,7 +491,7 @@ class fbMedia(bcMedia):
         # /album_id/photos (ie /10150259489830315/photos)
         raw_datas = self.connector.get(id +'/photos')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon', 'location_latitude', 'location_longitude', 'location_height', 'tags', 'height', 'width'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', '', '', 'from.name', 'created_time', 'updated_time', 'deleted_time', 'name', 'description', 'format', 'size', 'icon', 'place.location.latitude', 'place.location.longitude', 'place.location.height', 'tags.data', 'height', 'width']
@@ -505,12 +505,12 @@ class fbMedia(bcMedia):
                          'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                          'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
 
         for idx, raw_data in enumerate(raw_datas['data']):
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_photo_response(data))
+            response['objects'].append(self.format_photo_response(data))
 
             # Curate tag array from Facebook
             tag_array = []
@@ -521,7 +521,7 @@ class fbMedia(bcMedia):
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-            response['data'][idx]['tags'] = tag_array
+            response['objects'][idx]['tags'] = tag_array
         
         return response
         

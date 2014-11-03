@@ -39,7 +39,7 @@ class fbActivity(bcActivity):
         # It must be a post_id and from there we get the place if it exists
         raw_data = self.connector.get(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
         names.extend(['text'])
 
@@ -59,16 +59,16 @@ class fbActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_checkin_response(data)]
+                    'objects': [self.format_checkin_response(data)]
                     }
 
         place_id = self.check_if_exists(raw_data, 'place.id')
         if (place_id != defJsonRes):
             raw_data2 = self.connector.get(place_id)
-            response['data'][0]['place']['category'] = self.check_if_exists(raw_data2, 'category')
-            response['data'][0]['place']['description'] = self.check_if_exists(raw_data2, 'description')
-            response['data'][0]['place']['address']['street'] = self.check_if_exists(raw_data2, 'location.street')
-            response['data'][0]['place']['address']['zip'] = self.check_if_exists(raw_data2, 'location.zip')
+            response['objects'][0]['place']['category'] = self.check_if_exists(raw_data2, 'category')
+            response['objects'][0]['place']['description'] = self.check_if_exists(raw_data2, 'description')
+            response['objects'][0]['place']['address']['street'] = self.check_if_exists(raw_data2, 'location.street')
+            response['objects'][0]['place']['address']['zip'] = self.check_if_exists(raw_data2, 'location.zip')
 
         return response
     
@@ -87,7 +87,7 @@ class fbActivity(bcActivity):
         # /event_id (ie /577733618968497)
         raw_data = self.connector.get(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
         names.extend(['description', 'picture', 'title'])
@@ -110,7 +110,7 @@ class fbActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_event_response(data)]
+                    'objects': [self.format_event_response(data)]
                     }
         return response
 
@@ -122,7 +122,7 @@ class fbActivity(bcActivity):
         # /account_id/events (ie /675350314/events)
         raw_datas = self.connector.get('/' + id + '/events')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
         names.extend(['description', 'picture', 'title'])
@@ -140,11 +140,11 @@ class fbActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_event_response(data))
+            response['objects'].append(self.format_event_response(data))
         return response
     
     #   region Connections
@@ -161,7 +161,7 @@ class fbActivity(bcActivity):
         # /status_id (ie /10154016839520315)
         raw_data = self.connector.get('/' + id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.category', 'from.url', 'from.name', 'time.created_time', 'updated_time', 'time.deleted_time']
@@ -178,7 +178,7 @@ class fbActivity(bcActivity):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_status_response(data)]
+                    'objects': [self.format_status_response(data)]
                     }
         return response
 
@@ -190,7 +190,7 @@ class fbActivity(bcActivity):
         # /account_id/statuses (ie /675350314/statuses)
         raw_datas = self.connector.get('/' + id + '/statuses')
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text'])
 
         fields = ['id', 'object_type', 'service', 'link', 'from.id', 'from.category', 'from.url', 'from.name', 'time.created_time', 'updated_time', 'time.deleted_time']
@@ -206,11 +206,11 @@ class fbActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_status_response(data))
+            response['objects'].append(self.format_status_response(data))
         return response
     
     def post_statuses(self, params):
@@ -251,7 +251,7 @@ class fbActivity(bcActivity):
         # /status_id/comments (ie /10154016839520315/comments)
         raw_datas = self.connector.get('/' + id + '/comments')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -267,11 +267,11 @@ class fbActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_comment_response(data))
+            response['objects'].append(self.format_comment_response(data))
         return response
 
     def post_status_comments(self, id, params):
@@ -298,7 +298,7 @@ class fbActivity(bcActivity):
         # /status_id/likes (ie /10154016839520315/likes)
         raw_datas = self.connector.get('/' + id + '/likes')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -314,11 +314,11 @@ class fbActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_like_response(data))
+            response['objects'].append(self.format_like_response(data))
         return response
 
     def delete_status_likes(self, id):
@@ -348,7 +348,7 @@ class fbActivity(bcActivity):
         # /checkin_id/comments (ie /675350314_10154201196440315/comments)
         raw_datas = self.connector.get('/' + id + '/comments')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['title', 'text', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -364,11 +364,11 @@ class fbActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_comment_response(data))
+            response['objects'].append(self.format_comment_response(data))
         return response
 
     #   endregion Comment Object
@@ -380,7 +380,7 @@ class fbActivity(bcActivity):
         # /event_id/attending (ie /577733618968497/attending)
         raw_datas = self.connector.get('/' + id + '/attending')
 
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['rsvp', 'target_id'])
 
         fields = ['id', 'object_type', 'service', 'link', 'id', 'category', 'url', 'name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
@@ -396,11 +396,11 @@ class fbActivity(bcActivity):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         for raw_data in raw_datas['data']:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_rsvp_response(data))
+            response['objects'].append(self.format_rsvp_response(data))
         return response
 
     def post_event_rsvp(self, id, params):

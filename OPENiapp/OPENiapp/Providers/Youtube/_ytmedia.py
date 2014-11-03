@@ -31,7 +31,7 @@ class ytMedia(bcMedia):
         metadata = self.connector.videos().list(id = id, part = "id, snippet, recordingDetails, fileDetails").execute()
         raw_data = metadata['items'][0]
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
@@ -58,7 +58,7 @@ class ytMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': [self.format_video_response(data)]
+                    'objects': [self.format_video_response(data)]
                     }
 
         # Curate tag array from Youtube
@@ -71,7 +71,7 @@ class ytMedia(bcMedia):
                     tag_alternatives = ['', '', '', '', '', '', '']
                     tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                     tag_array.append(format_tags(tag_data))
-        response['data'][0]['tags'] = tag_array
+        response['objects'][0]['tags'] = tag_array
         
         return response
 
@@ -98,7 +98,7 @@ class ytMedia(bcMedia):
         
         i=0
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['file_title', 'file_description', 'file_format', 'file_size', 'file_icon'])
         names.extend(['location_latitude', 'location_longitude', 'location_height'])
         names.extend(['duration_starts_time', 'duration_ends_time'])
@@ -123,7 +123,7 @@ class ytMedia(bcMedia):
                          'previous': defJsonRes,
                          'next': defJsonRes
                         },
-                    'data': []
+                    'objects': []
                     }
     
         for playlist_item in playlistitems_list_response["items"]:
@@ -132,7 +132,7 @@ class ytMedia(bcMedia):
   
             for raw_data in metadata.get("items", []):
                 data = self.get_fields(raw_datas, names, fields, alternatives)
-                response['data'].append(self.format_video_response(data))
+                response['objects'].append(self.format_video_response(data))
                 i +=1
                 print response
 
@@ -144,7 +144,7 @@ class ytMedia(bcMedia):
                         tag_alternatives = ['', '', '', '', '', '', '']
                         tag_data = self.get_fields(tag, tag_names, tag_fields, tag_alternatives)
                         tag_array.append(format_tags(tag_data))
-                response['data'][0]['tags'] = tag_array  
+                response['objects'][0]['tags'] = tag_array  
                 
             response['meta']['total_count'] = i   
 
@@ -228,6 +228,7 @@ class ytMedia(bcMedia):
         """ POST API_PATH/[VIDEO_ID]/likes """
         return self.connector.videos().rate(id=id, rating="like").execute()
 
+    # To-Do: Does this return anything?
     def get_video_likes(self, id):
         """ GET API_PATH/[VIDEO_ID]/likes """
         metadata = self.connector.videos().list(id = id, part = "statistics").execute()
@@ -241,7 +242,7 @@ class ytMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         
         return response
@@ -253,7 +254,8 @@ class ytMedia(bcMedia):
     def post_video_dislikes(self, id):
         """ POST API_PATH/[VIDEO_ID]/dislikes """
         return self.connector.videos().rate(id = id, rating="dislike").execute()
-
+    
+    # To-Do: Does this return anything?
     def get_video_dislikes(self, id):
         """ GET API_PATH/[VIDEO_ID]/dislikes """
         metadata = self.connector.videos().list(id = id, part = "statistics").execute()
@@ -267,7 +269,7 @@ class ytMedia(bcMedia):
                             'previous': self.check_if_exists(raw_datas, 'paging.previous'),
                             'next': self.check_if_exists(raw_datas, 'paging.next')
                         },
-                    'data': []
+                    'objects': []
                     }
         
         return response

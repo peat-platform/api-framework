@@ -19,7 +19,7 @@ def format_generic(data, prepend = ''):
                 "id": data[prepend + 'id'],
                 "object_type": data[prepend + 'object_type'],
                 "service": data[prepend + 'service'],
-                "url": data[prepend + 'url'],
+                "resource_uri": data[prepend + 'resource_uri'],
                 "from": format_from(data),
                 "time": format_time(data)
             }
@@ -125,7 +125,7 @@ def format_from(data, prepend = ''):
     return {
                 "id": data[prepend + 'from_id'],
                 "object_type": data[prepend + 'from_object_type'],
-                "url": data[prepend + 'from_url'],
+                "resource_uri": data[prepend + 'from_resource_uri'],
                 "name": data[prepend + 'from_name']
             }
 

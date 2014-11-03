@@ -23,7 +23,7 @@ class goLocation(bcLocation):
         #raw_data = self.connector.get_place(params['place_id'])
         raw_data = self.connector.get_place(id)
         
-        names = ['id', 'object_type', 'service', 'url', 'from_id', 'from_object_type', 'from_url', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
         names.extend(['text'])
 
@@ -42,17 +42,17 @@ class goLocation(bcLocation):
                          'total_count': 1,
                          'next': None
                         },
-                    'data': [self.format_place_response(data)]
+                    'objects': [self.format_place_response(data)]
                     }
 
         address_components = check_if_exists(raw_data, 'details.address_components')
-        response['data'][0]['place']['address']['street'] = self.get_address_by_type(address_components, 'route')
-        response['data'][0]['place']['address']['number'] = self.get_address_by_type(address_components, 'street_number')
-        response['data'][0]['place']['address']['apartment'] = self.get_address_by_type(address_components, '')
-        response['data'][0]['place']['address']['city'] = self.get_address_by_type(address_components, '')
-        response['data'][0]['place']['address']['locality'] = self.get_address_by_type(address_components, 'locality')
-        response['data'][0]['place']['address']['country'] = self.get_address_by_type(address_components, 'country')
-        response['data'][0]['place']['address']['zip'] = self.get_address_by_type(address_components, 'postal_code')
+        response['objects'][0]['place']['address']['street'] = self.get_address_by_type(address_components, 'route')
+        response['objects'][0]['place']['address']['number'] = self.get_address_by_type(address_components, 'street_number')
+        response['objects'][0]['place']['address']['apartment'] = self.get_address_by_type(address_components, '')
+        response['objects'][0]['place']['address']['city'] = self.get_address_by_type(address_components, '')
+        response['objects'][0]['place']['address']['locality'] = self.get_address_by_type(address_components, 'locality')
+        response['objects'][0]['place']['address']['country'] = self.get_address_by_type(address_components, 'country')
+        response['objects'][0]['place']['address']['zip'] = self.get_address_by_type(address_components, 'postal_code')
 
         return response
 
