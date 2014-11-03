@@ -64,8 +64,38 @@ class foActivity(bcActivity):
         return response
 
     def get_checkins(self):
-        """ GET API_PATH/[ACCOUNT_ID] """
-        return self.connector.users.checkins()
+        """ GET API_PATH/CHECKIN """
+        # / (ie /)
+        raw_datas = self.connector.users.checkins()
+        
+        names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
+        names.extend(['place_name', 'place_description', 'place_category', 'place_picture', 'place_address_street', 'place_address_number', 'place_address_apartment', 'place_address_city', 'place_address_locality', 'place_address_country', 'place_address_zip', 'place_location_latitude', 'place_location_longitude', 'place_location_height'])
+        names.extend(['text'])
+
+        fields = ['id', 'type', 'service', 'url', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'createdAt', 'time.edited_time', 'time.deleted_time']
+        fields.extend(['venue.name', '', 'venue.categories', 'photos', 'venue.location.address', '', '', 'venue.location.city', 'venue.location.state', 'venue.location.country', 'venue.location.posalCode', 'venue.location.lat', 'venue.location.lng', ''])
+        fields.extend(['shout'])
+
+        alternatives = ['', 'checkin', 'foursquare', '', '', '', '', '', '', '', '']
+        alternatives.extend(['', '', '', '', '', '', '', '', '', '', '', '', '', ''])
+        alternatives.extend([''])
+
+        data = self.get_fields(raw_datas['checkins'], names, fields, alternatives)
+        response = {
+            'meta': {
+                'limit': self.check_if_exists(raw_datas, 'limit', None),
+                'next': self.check_if_exists(raw_datas, 'paging.next', None),
+                'offset': self.check_if_exists(raw_datas, 'offset', 0),
+                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_datas, 'data.checkins.count', None),
+            },
+            'objects': []
+        }
+        for raw_data in raw_datas['checkins']['items']:
+            data = self.get_fields(raw_data, names, fields, alternatives)
+            response['objects'].append(self.format_checkin_response(data))
+
+        return response
     
     #   region Connections
 
