@@ -14,22 +14,26 @@ class cgLocation(bcLocation):
     #   region Place Object
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Place%20Mapping/
 
-    def get_place(self, params):
+    def get_place(self, id):
         """ GET API_PATH/[PLACE_ID] """
         # Returns a detailed instance of Citygrid
         #https://api.citygridmedia.com/content/places/v2/detail?id=10100230&id_type=cs&placement=search_page&client_ip=123.4.56.78&publisher=test&format=json
-        raw_data = self.connector.placesdetail(id = self.check_if_exists(params ,'id', ''),
-                                            id_type = self.check_if_exists(params ,'id_type', ''),
-                                            phone = self.check_if_exists(params ,'phone', ''),
-                                            publishercode = self.check_if_exists(params ,'publisher', ''),
-                                            customer_only = self.check_if_exists(params ,'customer_only', ''),
-                                            all_results = self.check_if_exists(params, 'all_results', ''),
-                                            review_count = self.check_if_exists(params ,'review_count', ''),
-                                            placement = self.check_if_exists(params ,'placement', ''),
-                                            #client_ip = params['client_ip'],
-                                            format = self.check_if_exists(params ,'format', ''),
-                                            callback = self.check_if_exists(params ,'callback', ''),
-                                            i = self.check_if_exists(params ,'i', ''))
+        #raw_data = self.connector.placesdetail(id = self.check_if_exists(params ,'id', ''),
+        #                                    id_type = self.check_if_exists(params ,'id_type', 'cg'),
+        #                                    phone = self.check_if_exists(params ,'phone', ''),
+        #                                    publishercode = self.check_if_exists(params ,'publisher', ''),
+        #                                    customer_only = self.check_if_exists(params ,'customer_only', ''),
+        #                                    all_results = self.check_if_exists(params, 'all_results', ''),
+        #                                    review_count = self.check_if_exists(params ,'review_count', ''),
+        #                                    placement = self.check_if_exists(params ,'placement', ''),
+        #                                    #client_ip = params['client_ip'],
+        #                                    format = self.check_if_exists(params ,'format', ''),
+        #                                    callback = self.check_if_exists(params ,'callback', ''),
+        #                                    i = self.check_if_exists(params ,'i', ''))
+
+        raw_data = self.connector.placesdetail(id = id,
+                                            id_type = 'cg')
+
         raw_data = json.loads(raw_data)['locations'][0]
         
         names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
