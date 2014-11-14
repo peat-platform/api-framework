@@ -16,6 +16,9 @@ class CloudletClient:
             self.create_user()
         self.auth()
 
+    def change_server(self, server):
+        self.__server = server
+
     def create_user(self):
 
         body = {
@@ -86,21 +89,16 @@ class CloudletClient:
 
 
     def delete(self, id):
-        r = requests.delete(url=self.__server+":443/api/v1" + "/" + str(id))
+
+        if not self.__token:
+            self.auth()
+
+        r = requests.delete(url=self.__server+":443/api/v1/objects/" + str(self.__cloudlet_id)+"/"+str(id))
 
         return {"status code": r.status_code, "body": r.text, "json response": r.json()}
 
 
     def post_object(self, object):
-
-        # sample_object = {
-        #     "@openi_type": "t_0e09a80a6411bb7203e1d4e3bd1fc85f-321",
-        #     "@data": {
-        #     "name" : "clark",
-        #     "service" : "krypton",
-        #     "email":"clark@kent.com"
-        #     }
-        # }
 
         if not self.__cloudlet_id:
             self.retrieve_cloudlet_id()
@@ -128,6 +126,15 @@ class CloudletClient:
 
         return {"status code": r.status_code, "body": r.text, "json response": r.json()}
 
+    def get_object_by_type(self, type):
+        if not self.__cloudlet_id:
+            self.retrieve_cloudlet_id()
+
+        print self.__server+":443/api/v1" + "/objects/" + str(self.__cloudlet_id) + "?type=" + type
+        r = requests.get(url=self.__server+":443/api/v1" + "/objects/" + str(self.__cloudlet_id) + "?type=" + type, verify=False)
+
+        return {"status code": r.status_code}
+
 if __name__ == '__main__':
 
 
@@ -137,6 +144,7 @@ if __name__ == '__main__':
 
     client = CloudletClient("https://demo1.openi-ict.eu", "dev","1234")
     client.auth()
+    client.change_server("https://demo2.openi-ict.eu")
     print client.retrieve_cloudlet_id()['cloudlet_id']
     # print client.get_object_list()
 
@@ -144,27 +152,26 @@ if __name__ == '__main__':
 
     print client.get_object_by_id(sample_object_id)
 
-    sample_object = {
-        "@openi_type": "t_0e09a80a6411bb7203e1d4e3bd1fc85f-321",
-        "@data": {
-            "name": "michael",
-            "service": "vril",
-            "email": "michael@mpetyx.com"
-        }
-    }
+    # sample_object = {
+    #     "@openi_type": "t_0e09a80a6411bb7203e1d4e3bd1fc85f-321",
+    #     "@data": {
+    #         "name": "michael",
+    #         "service": "vril",
+    #         "email": "michael@mpetyx.com"
+    #     }
+    # }
     
     sample_object = {
-    "@openi_type": "t_41ec83943cce68940203efc943ffda38-1112",
+    "@openi_type": "t_7c13ee95f5c64b925424e4070083873e-699",
     "@data": {
-        "picture": "michael",
-        "context": "lol@gmail.com",
-        "From": "openi",
-	"description": "nothing to say",
-	"service": "openi again",
-	"title":  "sample",
-	"object_type": "Badge",
-	"time": "tomorrow"
+        "icon": "michael2",
+        "description": "new stuff",
+        "title": "sample2"
     }
     }
-    
+
     print client.post_object(sample_object)
+
+    # # Return all the badge objects
+    # print client.get_object_by_type("t_7c13ee95f5c64b925424e4070083873e-699")
+    # print client.delete("032799af-251f-4f48-c368-32a435955baf")

@@ -1,9 +1,5 @@
 __author__ = 'mpetyx'
 
-# We need a generic object to shove data in/get data from.
-# Cloudlet generally just tosses around dictionaries, so we'll lightly
-# wrap that.
-
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
 from OPENiapp.models import Cloudlet
 from django.contrib.auth.models import User
@@ -32,8 +28,17 @@ class CloudletObject(object):
     class _meta:
         pass
 
+def search_cloudlet_types(type):
+
+    return "t_7c13ee95f5c64b925424e4070083873e-699"
+
 
 class CloudletResource(GenericResource):
+
+    def cloudlet_client(self, server=None, username=None, password=None):
+
+        self.client = CloudletClient("https://demo1.openi-ict.eu", "dev","1234")
+        self.client.auth()
 
     def _client(self,bundle, username, password):
         current_user = User.objects.get(pk = bundle.request.user.id)
@@ -42,12 +47,9 @@ class CloudletResource(GenericResource):
 
     def _bucket(self):
         client = self._client()
-        # Note that we're hard-coding the bucket to use. Fine for
-        # example purposes, but you'll want to abstract this.
         return client.bucket('messages')
 
-    # The following methods will need overriding regardless of your
-    # data source.
+
     def detail_uri_kwargs(self, bundle_or_obj):
         kwargs = {}
 
@@ -66,9 +68,17 @@ class CloudletResource(GenericResource):
         results = []
 
         # Bringing the results from Object list and serializing it into json objects based on schema
-        temp = dict({'uuid':"michael",'title':2, 'description':4, 'icon':2})
+        temp = dict({'uuid':"michael",'title':2, 'description':4, 'icon':2, "id":1987})
         # Appending each one to the results
-        results.append(CloudletObject(initial=temp))
+
+        # TODO remove when code is more stable
+        self.cloudlet_client()
+        self.client.change_server("https://demo2.openi-ict.eu")
+
+        current_type = search_cloudlet_types(self.Meta.resource_name)
+
+        for temp in self.client.get_object_by_type(type="t_7c13ee95f5c64b925424e4070083873e-699")['json response']['result']:
+            results.append(CloudletObject(initial=temp['@data']))
 
         return results
 
@@ -77,14 +87,34 @@ class CloudletResource(GenericResource):
         return self.get_object_list(bundle.request)
 
     def obj_get(self, bundle, **kwargs):
-        bucket = self._bucket()
-        message = bucket.get(kwargs['pk'])
-        return CloudletObject(initial=message.get_data())
+
+        self.cloudlet_client()
+
+        id = kwargs['pk']
+
+        self.client.change_server("https://demo2.openi-ict.eu")
+
+        # TODO i could filter here from the obj_get_list
+        temp = self.client.get_object_by_id(id)['json response']['result']['@data']
+
+        return CloudletObject(initial=temp)
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj = CloudletObject(initial=kwargs)
         bundle = self.full_hydrate(bundle)
         print bundle.obj.to_dict()
+
+        current_type = search_cloudlet_types(self.Meta.resource_name)
+
+        to_be_created = {
+        "@openi_type": current_type,
+        "@data": bundle.obj.to_dict()
+            }
+        self.cloudlet_client()
+        self.client.change_server("https://demo2.openi-ict.eu")
+
+        self.client.post_object(to_be_created)
+
         # bucket = self._bucket()
         # new_message = bucket.new(bundle.obj.uuid, data=bundle.obj.to_dict())
         # new_message.store()
@@ -101,9 +131,12 @@ class CloudletResource(GenericResource):
             obj.delete()
 
     def obj_delete(self, bundle, **kwargs):
-        bucket = self._bucket()
-        obj = bucket.get(kwargs['pk'])
-        obj.delete()
+        self.cloudlet_client()
+
+        id = kwargs['pk']
+
+        self.client.change_server("https://demo2.openi-ict.eu")
+        self.client.delete(id)
 
     def rollback(self, bundles):
         pass
