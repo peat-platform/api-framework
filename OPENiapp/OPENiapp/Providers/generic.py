@@ -73,6 +73,8 @@ class execution:
             return method_to_call(self.id, self.params)
         elif (self.id != ""):
             return method_to_call(self.id)
+        elif (self.params != ""):
+            return method_to_call(self.params)
         else:
             return method_to_call()
         #return method_to_call(self.data)

@@ -155,7 +155,7 @@ class fbMedia(bcMedia):
         fields.extend(['title', 'message', 'target_id'])
 
         alternatives = ['', 'comment', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend(['', '', params['photo_id']])
+        alternatives.extend(['', '', id])
 
         response = {
             'meta': {
@@ -202,7 +202,7 @@ class fbMedia(bcMedia):
         fields.extend(['target_id'])
 
         alternatives = ['', 'like', 'facebook', '', '', '', '', '', '', '', '']
-        alternatives.extend([params['photo_id']])
+        alternatives.extend([id])
 
         response = {
             'meta': {

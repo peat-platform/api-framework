@@ -20,19 +20,23 @@ class ContextAwareResource(ModelResource):
 
     # TODO remove this only to openigenericresource
     def cbs_handling(self, request, **kwargs):
-        try:
-            resource_name = kwargs['resource_name']
-        except:
-            # To-Do: Make a proper error message.
-            return [{"error": "Resource Name is not valid. Please refer to the documentation"}]
-        try:
-            id = kwargs['id']
-        except:
-            id =""
-        try:
-            connection = kwargs['connection']
-        except:
-            connection = ""
+
+        pathSplit = request.path.split('/')
+
+        pathSplitLength = len(pathSplit)
+        version = pathSplit[1]
+        resource_name = pathSplit[2].lower()
+        id = ""
+        connection = ""
+        if pathSplitLength>3:
+            id = pathSplit[3]
+            if pathSplitLength>4:
+                connection = pathSplit[4].lower()
+
+        params = ""
+        for each in request.REQUEST.dicts[1]:
+            if each != 'user' and each != 'api_key' and each != 'cbs':
+                params = request.REQUEST.dicts[1]
 
         # Try to parse the parameters of the call
         try:
@@ -49,13 +53,12 @@ class ContextAwareResource(ModelResource):
             return [{"CBS": "Only Cloudlet Objects were retrieved. No additional CBS were selected."}]
 
         # Try to parse the parameters of the call
-        try:
-            params = ast.literal_eval(request.GET.get("params"))
-        except:
-            params = ""
+        #try:
+        #    params = ast.literal_eval(request.GET.get("params"))
+        #except:
+        #    params = ""
 
         request_method = request.META['REQUEST_METHOD'].lower()
-        resource_name = resource_name.lower()
         method = request_method + '_' + resource_name
         # If there is a connection in the url then add it to the method
         if connection != "":
@@ -79,7 +82,7 @@ class ContextAwareResource(ModelResource):
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
-            return self.create_response(bundle.request, cbs_return)
+            #return self.create_response(bundle.request, cbs_return)
         except:
             pass
 
@@ -101,7 +104,7 @@ class ContextAwareResource(ModelResource):
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
-            return self.create_response(bundle.request, cbs_return)
+            #return self.create_response(bundle.request, cbs_return)
         except:
             pass
 
@@ -122,7 +125,7 @@ class ContextAwareResource(ModelResource):
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
             cbs_return = self.cbs_handling(bundle.request,**kwargs)
-            return self.create_response(bundle.request, cbs_return)
+            #return self.create_response(bundle.request, cbs_return)
         except:
             pass
 
