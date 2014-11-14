@@ -2,6 +2,7 @@ __author__ = 'mpetyx'
 
 from tastypie.resources import ModelResource
 from OPENiapp.APIS.models import *
+from tastypie.authorization import Authorization
 
 
 class PersonModelResource(ModelResource):
@@ -128,6 +129,7 @@ class LocationResource(ModelResource):
     class Meta:
         queryset = LocationModel.objects.all()
         resource_name = "Location"
+        authorization = Authorization()
 
 
 # class OpeniNoteResource(ModelResource):
