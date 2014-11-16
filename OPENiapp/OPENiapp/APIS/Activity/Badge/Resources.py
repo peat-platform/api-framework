@@ -18,10 +18,10 @@ class BadgeResource(CloudletResource): #GenericResource):
         # queryset = OpeniBadge.objects.all()
         object_class = OpeniBadge
         resource_name = 'Badge'
-        excludes = ['id']
+        #excludes = ['id']
         extra_actions = [
         #     {
-        #         "name": "",
+        #         "name": "",   
         #         "http_method": "PUT",
         #         "summary": "",
         #         "fields": {
@@ -109,7 +109,7 @@ class BadgeResource(CloudletResource): #GenericResource):
                         "type": "string",
                         "required": False,
                         "description": "OPENi"
-                    },
+                    }
 
                 }
             },
