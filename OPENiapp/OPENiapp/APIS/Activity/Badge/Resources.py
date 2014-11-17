@@ -21,7 +21,7 @@ class BadgeResource(CloudletResource): #GenericResource):
         #excludes = ['id']
         extra_actions = [
         #     {
-        #         "name": "",   
+        #         "name": "",
         #         "http_method": "PUT",
         #         "summary": "",
         #         "fields": {

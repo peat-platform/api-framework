@@ -33,7 +33,7 @@ class CloudletObject(object):
 
 class CloudletResource(GenericResource):
 
-    def __init__(self):
+    def cloudlet_client(self):
         self.client = CloudletClient()
 
 
@@ -62,6 +62,7 @@ class CloudletResource(GenericResource):
         auth_token = request.META['HTTP_AUTHORIZATION']
         results    = []
 
+        self.cloudlet_client()
         resp = self.client.get_objects_by_type(host=host, auth_token=auth_token, type=self.Meta.resource_name)
         data = json.loads(resp.text)
 
@@ -95,6 +96,7 @@ class CloudletResource(GenericResource):
 
 
         # TODO i could filter here from the obj_get_list
+        self.cloudlet_client()
         cloudletObj = self.client.get_object_by_id(host=host, auth_token=auth_token, id=id)
 
         print cloudletObj['body']
@@ -111,6 +113,7 @@ class CloudletResource(GenericResource):
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         bundle.obj = CloudletObject(initial=kwargs)
 
+        self.cloudlet_client()
         current_type = self.client.getTypeId(typeId=self.Meta.resource_name)
 
         to_be_created = {
@@ -118,6 +121,7 @@ class CloudletResource(GenericResource):
             "@data"       : bundle.data
         }
 
+        self.cloudlet_client()
         resp = self.client.post_object(host=host, auth_token=auth_token, object=to_be_created)
 
         print resp
@@ -141,6 +145,7 @@ class CloudletResource(GenericResource):
 
         id = kwargs['pk']
 
+        self.cloudlet_client()
         self.client.delete(id)
 
 
