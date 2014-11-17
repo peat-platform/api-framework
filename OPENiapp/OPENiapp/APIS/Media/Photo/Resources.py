@@ -1,11 +1,15 @@
 __author__ = 'mpetyx'
 
 from .models import OpeniPhoto
-
+from OPENiapp.APIS.Secondary.Tag.Resources import TagResource
+from OPENiapp.APIS.resources import LocationResource
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from tastypie import fields
 
 
 class PhotoResource(GenericResource):
+    Location = fields.ForeignKey(LocationResource, 'Location', null=True, blank=True)
+    Tag = fields.ForeignKey(TagResource, 'Tag', null=True, blank=True)
 
     class Meta(GenericMeta):
         queryset = OpeniPhoto.objects.all()
