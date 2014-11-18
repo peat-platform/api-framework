@@ -35,7 +35,7 @@ class ContextAwareResource(ModelResource):
 
         params = ""
         for each in request.REQUEST.dicts[1]:
-            if each != 'user' and each != 'api_key' and each != 'cbs':
+            if each != 'user' and each != 'api_key' and each != 'cbs' and each != 'limit' and each != 'offset':
                 params = request.REQUEST.dicts[1]
 
         # Try to parse the parameters of the call
