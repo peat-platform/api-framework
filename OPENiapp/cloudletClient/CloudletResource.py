@@ -1,8 +1,6 @@
 __author__ = 'mpetyx'
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
-# from tastypie.resources import Resource, ModelResource
-# from tastypie import fields
 from tastypie.bundle import Bundle
 import json
 import re
