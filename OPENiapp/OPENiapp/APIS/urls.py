@@ -145,12 +145,25 @@ api.register(SocialAccountResource())
 api.register(CBSResource())
 
 
-from .resources import DurationResource, PersonModelResource, FromResource, TimeResource, LocationResource
+from .resources import DurationResource, PersonModelResource, FromResource, TimeResource, LocationResource, \
+    AddressResource, BaseSizeResource, TagsResource, BaseApplicationResource, BaseFileResource, BaseOrganizationResource, \
+    BasePlaceResource, BaseProductResource, BaseServiceResource
+
 api.register(DurationResource())
 api.register(PersonModelResource())
 api.register(FromResource())
 api.register(TimeResource())
 api.register(LocationResource())
+api.register(AddressResource())
+api.register(BaseSizeResource())
+api.register(TagsResource())
+api.register(BaseApplicationResource())
+api.register(BaseFileResource())
+api.register(BaseOrganizationResource())
+api.register(BasePlaceResource())
+api.register(BaseProductResource())
+api.register(BaseServiceResource())
+
 
 
 

@@ -3,13 +3,15 @@ __author__ = 'mpetyx'
 
 from tastypie.authorization import DjangoAuthorization
 from .models import OpeniPlace
-
+from tastypie import fields
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.resources import BasePlaceResource
 
 
 class PlaceResource(GenericResource):
+    Place = fields.ForeignKey(BasePlaceResource, 'Place', null=True, blank=True)
     class Meta(GenericMeta):
         queryset = OpeniPlace.objects.all()
         resource_name = 'Place'

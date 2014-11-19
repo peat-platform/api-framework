@@ -6,5 +6,5 @@ from OPENiapp.APIS.models import *
 
 class OpeniPage(GenericModel):
     # id is missing because it is the default
-    File = models.ForeignKey(FileModel, blank=True, null=True)
+    BaseFile = models.ForeignKey(BaseFileModel, blank=True, null=True)
     data = models.TextField()

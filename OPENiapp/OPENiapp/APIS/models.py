@@ -58,7 +58,7 @@ class ApplicationModel(models.Model):
     icon = models.TextField()
     developer = models.TextField()
 
-class FileModel(models.Model):
+class BaseFileModel(models.Model):
     title = models.TextField()
     description = models.TextField()
     format = models.TextField()
