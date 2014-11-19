@@ -1,15 +1,15 @@
 __author__ = 'mpetyx'
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
-from OPENiapp.models import Cloudlet
-from django.contrib.auth.models import User
 # from tastypie.resources import Resource, ModelResource
 # from tastypie import fields
 from tastypie.bundle import Bundle
 import json
 import re
+import logging
 
 from .client import CloudletClient
+
 
 class CloudletObject(object):
     def __init__(self, initial=None):
@@ -32,7 +32,6 @@ class CloudletObject(object):
 
 
 class CloudletResource(GenericResource):
-
     def cloudlet_client(self):
         self.client = CloudletClient()
 
@@ -58,18 +57,29 @@ class CloudletResource(GenericResource):
 
         print "get all"
 
-        host       = "https://" + request.META['HTTP_HOST']
+        host = """host       = "https://" + request.META['HTTP_HOST']"""
+        host = "https://demo2.openi-ict.eu"
         auth_token = request.META['HTTP_AUTHORIZATION']
-        results    = []
+        results = []
 
         self.cloudlet_client()
         resp = self.client.get_objects_by_type(host=host, auth_token=auth_token, type=self.Meta.resource_name)
-        data = json.loads(resp.text)
+        data = resp.json()
 
         for temp in data['result']:
-            results.append(CloudletObject(initial=temp['@data']))
-
-        print results
+            result = temp["@data"]
+            logging.error(type(result))
+            Time = {
+                "created_time": "1-1-1111",
+          "deleted_time": "string",
+          "id": "integer",
+          "edited_time": "string",
+            "resource_uri": "string"
+            }
+            result["Time"] = CloudletObject(Time) #temp["_date_created"]
+            result['object_type'] = str(self.Meta.resource_name)
+            result['url'] = temp["@location"]
+            results.append(CloudletObject(initial=result))
 
         return results
 
@@ -77,7 +87,8 @@ class CloudletResource(GenericResource):
     def obj_get_list(self, bundle, **kwargs):
         # Filtering disabled for brevity...
 
-        matchObjectId = re.search( r'0[a-f,0-9]{7}-[a-f,0-9]{4}-4[a-f,0-9]{3}-[a-f,0-9]{4}-[a-f,0-9]{12}', bundle.request.path, re.M|re.I)
+        matchObjectId = re.search(r'0[a-f,0-9]{7}-[a-f,0-9]{4}-4[a-f,0-9]{3}-[a-f,0-9]{4}-[a-f,0-9]{12}',
+                                  bundle.request.path, re.M | re.I)
 
         if matchObjectId:
             return self.obj_get(bundle, **kwargs)
@@ -90,9 +101,9 @@ class CloudletResource(GenericResource):
         print "get by id"
         print kwargs
 
-        host       = "https://" + bundle.request.META['HTTP_HOST']
+        host = "https://" + bundle.request.META['HTTP_HOST']
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
-        id         = kwargs['id']
+        id = kwargs['id']
 
 
         # TODO i could filter here from the obj_get_list
@@ -109,7 +120,8 @@ class CloudletResource(GenericResource):
 
         #bundle       = self.full_hydrate(bundle)
 
-        host       = "https://" + bundle.request.META['HTTP_HOST']
+        host = "https://" + bundle.request.META['HTTP_HOST']
+        host = "https://demo2.openi-ict.eu"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         bundle.obj = CloudletObject(initial=kwargs)
 
@@ -117,8 +129,8 @@ class CloudletResource(GenericResource):
         current_type = self.client.getTypeId(typeId=self.Meta.resource_name)
 
         to_be_created = {
-            "@openi_type" : current_type,
-            "@data"       : bundle.data
+            "@openi_type": current_type,
+            "@data": bundle.data
         }
 
         self.cloudlet_client()
