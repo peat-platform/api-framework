@@ -1,7 +1,9 @@
 from django.db import models
-from OPENiapp.APIS.models import *
 from django.contrib.auth.models import User as OpeniUser
+
+from OPENiapp.APIS.models import *
 from OPENiapp.APIS.Products_and_Services.Wallet.models import OpeniWallet
+
 
 class OpeniAccount(GenericModel):
     Person = models.ForeignKey(PersonModel, blank=True, null=True)

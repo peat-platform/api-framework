@@ -1,9 +1,10 @@
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniDislike
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class DislikeResource(GenericResource):
+
+class DislikeResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniDislike.objects.all()
         resource_name = 'Dislike'

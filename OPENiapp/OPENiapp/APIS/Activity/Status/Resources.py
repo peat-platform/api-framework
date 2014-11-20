@@ -1,14 +1,12 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniStatus
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class StatusResource(GenericResource):
+
+class StatusResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniStatus.objects.all()
         resource_name = 'Status'
@@ -286,9 +284,9 @@ class StatusResource(GenericResource):
         ]
 
 
-        
 
-    #def prepend_urls(self):
-    #    return [
-    #        url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/status%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="status")
-    #        ]
+
+        #def prepend_urls(self):
+        #    return [
+        #        url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/status%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="status")
+        #        ]

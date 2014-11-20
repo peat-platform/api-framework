@@ -1,6 +1,7 @@
 from django.db import models
 from OPENiapp.APIS.models import *
 
+
 class OpeniEvent(GenericModel):
     # id is missing because it is the default
     Place = models.ForeignKey(PlaceModel)

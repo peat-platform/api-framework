@@ -9,6 +9,7 @@ class NoAuthorization(Authorization):
 
     Only allows ``GET`` requests.
     """
+
     def read_list(self, object_list, bundle):
         return object_list
 

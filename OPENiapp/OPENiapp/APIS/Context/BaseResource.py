@@ -1,22 +1,22 @@
+import ast
+
 from django.db import transaction
 from tastypie import fields
 from tastypie.exceptions import BadRequest
 from tastypie.resources import ModelResource
-from OPENiapp.APIS.Context.models import OpeniContext
-
-import logging
-import ast
-from OPENiapp.Providers.generic import execution
-
-from allauth.socialaccount.models import SocialToken
-
 from django.contrib.auth.models import User
+
+from OPENiapp.APIS.Context.models import OpeniContext
+from OPENiapp.Providers.generic import execution
 
 
 __author__ = 'amertis'
+
+
 class ContextAwareResource(ModelResource):
     from OPENiapp.APIS.Context.Resources import ContextResource
-    context = fields.ToOneField(ContextResource, 'context',full=True)
+
+    context = fields.ToOneField(ContextResource, 'context', full=True)
 
     # TODO remove this only to openigenericresource
     def cbs_handling(self, request, **kwargs):
@@ -28,9 +28,9 @@ class ContextAwareResource(ModelResource):
         resource_name = pathSplit[2].lower()
         id = ""
         connection = ""
-        if pathSplitLength>3:
+        if pathSplitLength > 3:
             id = pathSplit[3]
-            if pathSplitLength>4:
+            if pathSplitLength > 4:
                 connection = pathSplit[4].lower()
 
         params = ""
@@ -81,7 +81,7 @@ class ContextAwareResource(ModelResource):
         try:
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
-            cbs_return = self.cbs_handling(bundle.request,**kwargs)
+            cbs_return = self.cbs_handling(bundle.request, **kwargs)
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
@@ -99,11 +99,11 @@ class ContextAwareResource(ModelResource):
 
     @transaction.atomic
     def obj_update(self, bundle, **kwargs):
-        
+
         try:
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
-            cbs_return = self.cbs_handling(bundle.request,**kwargs)
+            cbs_return = self.cbs_handling(bundle.request, **kwargs)
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
@@ -116,7 +116,8 @@ class ContextAwareResource(ModelResource):
         bundle.obj.context.save()
         bundle.obj.save()
         return bundle
-    # def obj_delete(self, bundle, **kwargs):
+
+        # def obj_delete(self, bundle, **kwargs):
     #     return bundle
     @transaction.atomic
     def obj_delete(self, bundle, **kwargs):
@@ -124,7 +125,7 @@ class ContextAwareResource(ModelResource):
         try:
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
-            cbs_return = self.cbs_handling(bundle.request,**kwargs)
+            cbs_return = self.cbs_handling(bundle.request, **kwargs)
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
@@ -133,7 +134,7 @@ class ContextAwareResource(ModelResource):
             raise BadRequest("no pk parameter found")
         try:
             pk = int(kwargs['pk'])
-        except ValueError,e:
+        except ValueError, e:
             raise BadRequest("invalid pk parameter")
         bundle = self.full_hydrate(bundle)
         type(bundle.obj).objects.filter(id=pk).delete()

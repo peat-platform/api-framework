@@ -1,13 +1,12 @@
 __author__ = 'mpetyx'
 
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniPage
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class PageResource(GenericResource):
+
+class PageResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniPage.objects.all()
         resource_name = 'Page'

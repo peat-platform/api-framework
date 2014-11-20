@@ -1,12 +1,12 @@
 __author__ = 'mpetyx'
 
-
 from .models import OpeniBadge
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from cloudletClient.CloudletResource import CloudletResource
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class BadgeResource(CloudletResource): #GenericResource):
+
+class BadgeResource(OpeniResource):
     # uuid = fields.CharField(attribute='uuid')
     # title = fields.CharField(attribute='title')
     # description = fields.CharField(attribute='description')

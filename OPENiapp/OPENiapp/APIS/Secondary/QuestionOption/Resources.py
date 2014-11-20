@@ -1,11 +1,10 @@
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniQuestionOption
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class QuestionOptionResource(GenericResource):
+
+class QuestionOptionResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniQuestionOption.objects.all()
         resource_name = 'QuestionOption'

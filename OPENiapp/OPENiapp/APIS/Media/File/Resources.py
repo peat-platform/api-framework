@@ -1,20 +1,21 @@
 __author__ = 'mpetyx'
 
-from tastypie.authorization import DjangoAuthorization
-from .models import OpeniFile
 from tastypie import fields
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from .models import OpeniFile
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 from OPENiapp.APIS.Secondary.Tag.Resources import TagResource
 from OPENiapp.APIS.resources import DurationResource, BaseFileResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-class FileResource(GenericResource):
+class FileResource(OpeniResource):
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
     Tag = fields.ForeignKey(TagResource, 'Tag', null=True, blank=True)
     BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile')
+
     class Meta(GenericMeta):
         queryset = OpeniFile.objects.all()
         list_allowed_methods = ['get', 'post']

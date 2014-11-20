@@ -1,14 +1,16 @@
 __author__ = 'mpetyx'
 
-from .models import OpeniPhoto
-from OPENiapp.APIS.resources import LocationResource
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.resources import BaseFileResource
-from OPENiapp.APIS.resources import TagsResource
 from tastypie import fields
 
+from .models import OpeniPhoto
+from OPENiapp.APIS.resources import LocationResource
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.resources import BaseFileResource
+from OPENiapp.APIS.resources import TagsResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class PhotoResource(GenericResource):
+
+class PhotoResource(OpeniResource):
     Location = fields.ForeignKey(LocationResource, 'Location', null=True, blank=True)
     BaseTag = fields.ForeignKey(TagsResource, 'BaseTag', null=True, blank=True)
     BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile')

@@ -1,11 +1,12 @@
-from tastypie.authorization import DjangoAuthorization
-from OPENiapp.APIS.resources import DurationResource, AddressResource
-from .models import OpeniShipping
-
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
 from tastypie import fields
 
-class ShippingResource(GenericResource):
+from OPENiapp.APIS.resources import DurationResource, AddressResource
+from .models import OpeniShipping
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
+
+
+class ShippingResource(OpeniResource):
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
     Address = fields.ForeignKey(AddressResource, 'Address', null=True, blank=True)
     # target_id = fields.ForeignKey(OpeniOrderResource, 'Referenced Order uri')

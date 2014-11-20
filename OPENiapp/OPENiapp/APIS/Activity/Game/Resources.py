@@ -1,20 +1,19 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniGame
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-class GameResource(GenericResource):
+class GameResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniGame.objects.all()
         resource_name = 'Game'
 
         extra_actions = [
             {
-            "name": "",
+                "name": "",
                 "http_method": "PUT",
                 "summary": "",
                 "fields": {

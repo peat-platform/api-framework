@@ -1,15 +1,16 @@
 __author__ = 'mpetyx'
 
-from tastypie.authorization import DjangoAuthorization
-from .models import OpeniFolder
 from tastypie import fields
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
-from OPENiapp.APIS.resources import BaseFileResource
 
-class FolderResource(GenericResource):
+from .models import OpeniFolder
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.resources import BaseFileResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
+
+
+class FolderResource(OpeniResource):
     BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile')
+
     class Meta(GenericMeta):
         queryset = OpeniFolder.objects.all()
         resource_name = 'Folder'

@@ -1,11 +1,10 @@
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniOffer
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class OfferResource(GenericResource):
+
+class OfferResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniOffer.objects.all()
         resource_name = 'Offer'

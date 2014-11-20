@@ -1,8 +1,7 @@
 __author__ = 'mpetyx'
 
-
 from django.db import models
-from OPENiapp.APIS.models import GenericModel,AddressModel
+from OPENiapp.APIS.models import GenericModel, AddressModel
 
 
 class OpeniCard(GenericModel):

@@ -1,19 +1,16 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
-from .models import OpeniNotebook
-
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
-from OPENiapp.APIS.Activity.Note.Resources import NoteResource
 from tastypie import fields
 
+from .models import OpeniNotebook
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.Activity.Note.Resources import NoteResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-class NotebookResource(GenericResource):
+class NotebookResource(OpeniResource):
     Notes = fields.ForeignKey(NoteResource, 'Notes', null=True, blank=True)
+
     class Meta(GenericMeta):
         queryset = OpeniNotebook.objects.all()
         resource_name = 'Notebook'

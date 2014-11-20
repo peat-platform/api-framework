@@ -1,16 +1,13 @@
 __author__ = 'mpetyx'
 
-from OPENiapp.APIS.Context.BaseResource import ContextAwareResource
-
 from django.conf.urls import url
 from tastypie.utils import trailing_slash
+from tastypie import fields
+
+from OPENiapp.APIS.Context.BaseResource import ContextAwareResource
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
-
-from tastypie import fields
 from OPENiapp.APIS.Context.Resources import ContextResource
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
-
 from OPENiapp.APIS.resources import *
 
 
@@ -20,7 +17,6 @@ class GenericResource(ContextAwareResource):
     Time = fields.ForeignKey(TimeResource, 'Time', null=True, blank=True) # ,related_name='Context'
 
     def request_method(self, bundle):
-
         return bundle.request.method()
 
     def dehydrate(self, bundle):
@@ -29,15 +25,16 @@ class GenericResource(ContextAwareResource):
 
 
     def get_list(self, request, **kwargs):
-
         cbs_data = self.cbs_handling(request=request, **kwargs)
-        
+
         # Default actions down here, for get_list (that is if there is no fb or other CBS request!
-        base_bundle    = self.build_bundle(request=request)
-        objects        = self.obj_get_list(bundle=base_bundle, **self.remove_api_resource_names(kwargs))
+        base_bundle = self.build_bundle(request=request)
+        objects = self.obj_get_list(bundle=base_bundle, **self.remove_api_resource_names(kwargs))
         sorted_objects = self.apply_sorting(objects, options=request.GET)
 
-        paginator        = self._meta.paginator_class(request.GET, sorted_objects, resource_uri=self.get_resource_uri(), limit=self._meta.limit, max_limit=self._meta.max_limit, collection_name=self._meta.collection_name)
+        paginator = self._meta.paginator_class(request.GET, sorted_objects, resource_uri=self.get_resource_uri(),
+                                               limit=self._meta.limit, max_limit=self._meta.max_limit,
+                                               collection_name=self._meta.collection_name)
         to_be_serialized = paginator.page()
 
         # Dehydrate the bundles in preparation for serialization.
@@ -54,9 +51,12 @@ class GenericResource(ContextAwareResource):
 
     def prepend_urls(self):
         return [
-            url(r"^(?P<resource_name>%s)/(?P<id>\S+)/(?P<connection>\S+)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="connections"),
-            url(r"^(?P<resource_name>%s)/(?P<id>\S+)%s$" % (self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="id")
+            url(r"^(?P<resource_name>%s)/(?P<id>\S+)/(?P<connection>\S+)%s$" % (
+            self._meta.resource_name, trailing_slash()), self.wrap_view('get_list'), name="connections"),
+            url(r"^(?P<resource_name>%s)/(?P<id>\S+)%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_list'), name="id")
         ]
+
 
 class GenericMeta:
     always_return_data = True
@@ -66,7 +66,11 @@ class GenericMeta:
     authorization = Authorization()
     excludes = ['id']
 
-
     filtering = {
-            'id': ['exact']
-        }
+        'id': ['exact']
+    }
+
+    # class OpeniResource(CloudletResource):
+    #
+    #     def __init__(self):
+    #         pass

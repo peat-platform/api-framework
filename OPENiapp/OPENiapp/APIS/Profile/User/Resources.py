@@ -1,16 +1,13 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
 # from .models import OpeniUser
 from django.contrib.auth.models import User as OpeniUser
 
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
 
-class UserResource(GenericResource):
+class UserResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniUser.objects.all()
         resource_name = 'User'

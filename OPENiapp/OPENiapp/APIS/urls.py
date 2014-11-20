@@ -35,6 +35,7 @@ api.register(GameResource())
 
 # Context
 from .Context.Resources import ContextResource
+
 api.register(ContextResource())
 
 
@@ -144,7 +145,6 @@ api.register(SocialTokenResource())
 api.register(SocialAccountResource())
 api.register(CBSResource())
 
-
 from .resources import DurationResource, PersonModelResource, FromResource, TimeResource, LocationResource, \
     AddressResource, BaseSizeResource, TagsResource, BaseApplicationResource, BaseFileResource, BaseOrganizationResource, \
     BasePlaceResource, BaseProductResource, BaseServiceResource
@@ -163,8 +163,5 @@ api.register(BaseOrganizationResource())
 api.register(BasePlaceResource())
 api.register(BaseProductResource())
 api.register(BaseServiceResource())
-
-
-
 
 urlpatterns = api.urls

@@ -2,15 +2,17 @@ from OPENiapp.APIS.resources import DurationResource, LocationResource
 
 __author__ = 'mpetyx'
 
-
 from tastypie import fields
 from .models import OpeniWorkout
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class WorkoutResource(GenericResource):
+
+class WorkoutResource(OpeniResource):
     Location = fields.ForeignKey(LocationResource, 'Location', null=True, blank=True)
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
+
     class Meta(GenericMeta):
         queryset = OpeniWorkout.objects.all()
         resource_name = 'Workout'

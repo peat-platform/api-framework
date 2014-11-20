@@ -1,11 +1,10 @@
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniFriendship
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class FriendshipResource(GenericResource):
+
+class FriendshipResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniFriendship.objects.all()
         resource_name = 'Friendship'

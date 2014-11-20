@@ -7,4 +7,5 @@ from .models import OpeniContext
 class ContextAdmin(admin.ModelAdmin):
     pass
 
+
 admin.site.register(OpeniContext, ContextAdmin)

@@ -1,14 +1,16 @@
 __author__ = 'mpetyx'
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 from OPENiapp.APIS.OPENiAuthorization import Authorization
 # from OPENiapp.APIS.OPENiAuthentication import Authentication
 
 from tastypie.authentication import ApiKeyAuthentication
 
 from OPENiapp.models import RegisteredApplication
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class RegisteredApplicationResource(GenericResource):
+
+class RegisteredApplicationResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = RegisteredApplication.objects.all()
         list_allowed_methods = ['get', 'post']

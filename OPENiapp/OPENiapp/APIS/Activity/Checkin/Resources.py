@@ -2,16 +2,16 @@ from tastypie import fields
 
 __author__ = 'mpetyx'
 
-
 from .models import OpeniCheckin
 from OPENiapp.APIS.Location.Place.Resources import PlaceResource
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 from cloudletClient.CloudletResource import CloudletResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-
-class CheckinResource(CloudletResource):
+class CheckinResource(OpeniResource):
     Place = fields.ForeignKey(PlaceResource, 'Place', null=True, blank=True)
+
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()
         resource_name = 'Checkin'
@@ -170,7 +170,7 @@ class CheckinResource(CloudletResource):
                 "name": "",
                 "http_method": "PUT",
                 "summary": "Retrieve a list of cbs events",
-                 "fields": {
+                "fields": {
                     "cbs": {
                         "type": "string",
                         "required": False,

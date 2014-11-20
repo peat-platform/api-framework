@@ -1,4 +1,3 @@
-from django.db import models
 from OPENiapp.APIS.Context.models import OpeniContextAwareModel
 
 

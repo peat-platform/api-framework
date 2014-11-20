@@ -1,15 +1,16 @@
+from tastypie import fields
+
 from OPENiapp.APIS.Location.Place.Resources import PlaceResource
 from OPENiapp.APIS.resources import DurationResource
 from .models import OpeniEvent
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from cloudletClient.CloudletResource import CloudletResource
 
-from tastypie import fields
-
-class EventResource(CloudletResource):
+class EventResource(OpeniResource):
     Place = fields.ForeignKey(PlaceResource, 'Place', null=True, blank=True)
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
+
     class Meta(GenericMeta):
         queryset = OpeniEvent.objects.all()
         resource_name = 'Event'

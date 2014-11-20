@@ -1,15 +1,12 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniNote
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-class NoteResource(GenericResource):
+class NoteResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniNote.objects.all()
         resource_name = 'Note'
@@ -111,8 +108,8 @@ class NoteResource(GenericResource):
                 "name": "comments",
                 "http_method": "GET",
                 "summary": "Retrieve comments for a single openi note by id",
-                 "fields": {
-                     "cbs": {
+                "fields": {
+                    "cbs": {
                         "type": "string",
                         "required": False,
                         "description": "OPENi"
@@ -128,8 +125,8 @@ class NoteResource(GenericResource):
                 "name": "comments",
                 "http_method": "POST",
                 "summary": "Create comment for a single openi note by id",
-                 "fields": {
-                     "cbs": {
+                "fields": {
+                    "cbs": {
                         "type": "string",
                         "required": False,
                         "description": "OPENi"

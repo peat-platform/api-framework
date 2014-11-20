@@ -3,9 +3,10 @@ from OPENiapp.APIS.models import LocationModel, TagsModel, GenericModel, BaseFil
 __author__ = 'mpetyx'
 
 from django.db import models
-from OPENiapp.APIS.models import *
 
-__all__ = ["OpeniPhoto",]
+__all__ = ["OpeniPhoto", ]
+
+
 class OpeniPhoto(GenericModel):
     # id is missing because it is the default
     BaseFile = models.ForeignKey(BaseFileModel)

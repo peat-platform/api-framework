@@ -1,6 +1,3 @@
-from django.db import models
-from OPENiapp.APIS.models import *
-
 # from OPENiapp.APIS.Profile.Account.models import OpeniAccount
 #
 # class OpeniUser(GenericModel):

@@ -1,18 +1,15 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
 from .models import OpeniApplication
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
-class ApplicationResource(GenericResource):
+
+class ApplicationResource(OpeniResource):
     class Meta(GenericMeta):
         queryset = OpeniApplication.objects.all()
         resource_name = 'Application'
-
 
         extra_actions = [
             {
@@ -106,147 +103,147 @@ class ApplicationResource(GenericResource):
                         "required": False,
                         "description": "Facebook, OPENi"
                     },
-                    "auth_dialog_data_help_url":{
+                    "auth_dialog_data_help_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_dialog_headline":{
+                    "auth_dialog_headline": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_dialog_perms_explanation":{
+                    "auth_dialog_perms_explanation": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_referral_default_activity_privacy":{
+                    "auth_referral_default_activity_privacy": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_referral_enabled":{
+                    "auth_referral_enabled": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_referral_extended_perms":{
+                    "auth_referral_extended_perms": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_referral_friend_perms":{
+                    "auth_referral_friend_perms": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_referral_user_perms":{
+                    "auth_referral_user_perms": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "auth_referral_response_type":{
+                    "auth_referral_response_type": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "canvas_fluid_height":{
+                    "canvas_fluid_height": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "canvas_fluid_width":{
+                    "canvas_fluid_width": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "canvas_url":{
+                    "canvas_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "contact_email":{
+                    "contact_email": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "deauth_callback_url":{
+                    "deauth_callback_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "migrations":{
+                    "migrations": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "mobile_web_url":{
+                    "mobile_web_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "namespace":{
+                    "namespace": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "page_tab_default_name":{
+                    "page_tab_default_name": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "page_tab_url":{
+                    "page_tab_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "privacy_policy_url":{
+                    "privacy_policy_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "restrictions":{
+                    "restrictions": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "secure_canvas_url":{
+                    "secure_canvas_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "secure_page_tab_url":{
+                    "secure_page_tab_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "server_ip_whitelist":{
+                    "server_ip_whitelist": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "social_discovery":{
+                    "social_discovery": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "terms_of_service_url":{
+                    "terms_of_service_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "user_support_email":{
+                    "user_support_email": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "user_support_url":{
+                    "user_support_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"
                     },
-                    "website_url":{
+                    "website_url": {
                         "type": "string",
                         "required": False,
                         "description": "Facebook"

@@ -1,7 +1,7 @@
 __author__ = 'alvertisjo'
-from OPENiapp.APIS.models import GenericModel
-
 from django.db import models
+
+from OPENiapp.APIS.models import GenericModel
 from OPENiapp.APIS.models import *
 
 

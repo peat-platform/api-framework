@@ -1,17 +1,16 @@
 __author__ = 'mpetyx'
 
-
-from tastypie.authorization import DjangoAuthorization
-from .models import OpeniPlace
 from tastypie import fields
-from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+
+from .models import OpeniPlace
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 from OPENiapp.APIS.resources import BasePlaceResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-class PlaceResource(GenericResource):
+class PlaceResource(OpeniResource):
     Place = fields.ForeignKey(BasePlaceResource, 'Place', null=True, blank=True)
+
     class Meta(GenericMeta):
         queryset = OpeniPlace.objects.all()
         resource_name = 'Place'
@@ -22,7 +21,7 @@ class PlaceResource(GenericResource):
                 "http_method": "GET",
                 #"resource_type": "list", # view
                 "summary": "Retrieve a list of Places over CBS",
-                "nickname":"Sample Naming",
+                "nickname": "Sample Naming",
                 "fields": {
                     "user": {
                         "type": "string",
