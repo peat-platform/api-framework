@@ -35,11 +35,11 @@ class goProfiles(bcProfiles):
 
         response = {
             'meta': {
-                'limit': self.check_if_exists(raw_datas, 'limit', None),
-                'next': self.check_if_exists(raw_datas, 'paging.next', None),
-                'offset': self.check_if_exists(raw_datas, 'offset', 0),
-                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
-                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                'limit': self.check_if_exists(raw_data, 'limit', None),
+                'next': self.check_if_exists(raw_data, 'paging.next', None),
+                'offset': self.check_if_exists(raw_data, 'offset', 0),
+                'previous': self.check_if_exists(raw_data, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_data, 'total_count', 1)
             },
             'objects': [self.format_account_response(data)]
         }

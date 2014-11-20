@@ -33,11 +33,11 @@ class foMedia(bcMedia):
         data = self.get_fields(raw_data['photo'], names, fields, alternatives)
         response = {
             'meta': {
-                'limit': self.check_if_exists(raw_datas, 'limit', None),
-                'next': self.check_if_exists(raw_datas, 'paging.next', None),
-                'offset': self.check_if_exists(raw_datas, 'offset', 0),
-                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
-                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                'limit': self.check_if_exists(raw_data, 'limit', None),
+                'next': self.check_if_exists(raw_data, 'paging.next', None),
+                'offset': self.check_if_exists(raw_data, 'offset', 0),
+                'previous': self.check_if_exists(raw_data, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_data, 'total_count', 1)
             },
             'objects': [self.format_photo_response(data)]
         }
@@ -73,7 +73,7 @@ class foMedia(bcMedia):
                 'next': self.check_if_exists(raw_datas, 'photos.next', None),
                 'offset': self.check_if_exists(raw_datas, 'offset', 0),
                 'previous': self.check_if_exists(raw_datas, 'photos.previous', None),
-                'total_count': self.check_if_exists(raw_datas, 'photos.count', 0),
+                'total_count': len(raw_datas['photos']['items'])
             },
             'objects' : []
         }

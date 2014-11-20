@@ -54,11 +54,11 @@ class ytMedia(bcMedia):
         response = {
             'meta':
                 {
-                'limit': self.check_if_exists(raw_datas, 'limit', None),
-                'next': self.check_if_exists(raw_datas, 'paging.next', None),
-                'offset': self.check_if_exists(raw_datas, 'offset', 0),
-                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
-                'total_count': self.check_if_exists(raw_datas, 'total_count', 1)
+                'limit': self.check_if_exists(raw_data, 'limit', None),
+                'next': self.check_if_exists(raw_data, 'paging.next', None),
+                'offset': self.check_if_exists(raw_data, 'offset', 0),
+                'previous': self.check_if_exists(raw_data, 'paging.previous', None),
+                'total_count': self.check_if_exists(raw_data, 'total_count', 1)
             },
             'objects': [self.format_video_response(data)]
         }
@@ -120,11 +120,11 @@ class ytMedia(bcMedia):
         
         response = {
             'meta': {
-                'limit': self.check_if_exists(raw_datas, 'limit', None),
-                'next': self.check_if_exists(raw_datas, 'paging.next', None),
-                'offset': self.check_if_exists(raw_datas, 'offset', 0),
-                'previous': self.check_if_exists(raw_datas, 'paging.previous', None),
-                'total_count': self.check_if_exists(raw_datas, 'total_count', 0)
+                'limit': self.check_if_exists(playlistitems_list_response, 'limit', None),
+                'next': self.check_if_exists(playlistitems_list_response, 'paging.next', None),
+                'offset': self.check_if_exists(playlistitems_list_response, 'offset', 0),
+                'previous': self.check_if_exists(playlistitems_list_response, 'paging.previous', None),
+                'total_count': len(playlistitems_list_response['items'])
             },
             'objects': []
         }
