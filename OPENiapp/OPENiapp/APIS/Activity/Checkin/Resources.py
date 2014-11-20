@@ -6,11 +6,11 @@ __author__ = 'mpetyx'
 from .models import OpeniCheckin
 from OPENiapp.APIS.Location.Place.Resources import PlaceResource
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from cloudletClient.CloudletResource import CloudletResource
 
 
-class CheckinResource(GenericResource):
+
+class CheckinResource(CloudletResource):
     Place = fields.ForeignKey(PlaceResource, 'Place', null=True, blank=True)
     class Meta(GenericMeta):
         queryset = OpeniCheckin.objects.all()

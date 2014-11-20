@@ -3,18 +3,17 @@ from OPENiapp.APIS.resources import DurationResource
 from .models import OpeniEvent
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource, GenericMeta
-from OPENiapp.APIS.OPENiAuthorization import Authorization
-from OPENiapp.APIS.OPENiAuthentication import Authentication
+from cloudletClient.CloudletResource import CloudletResource
+
 from tastypie import fields
 
-class EventResource(GenericResource):
+class EventResource(CloudletResource):
     Place = fields.ForeignKey(PlaceResource, 'Place', null=True, blank=True)
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
     class Meta(GenericMeta):
         queryset = OpeniEvent.objects.all()
         resource_name = 'Event'
-        authentication = Authentication()
-        authorization = Authorization()
+
         extra_actions = [
             {
                 "name": "",

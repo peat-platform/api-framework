@@ -100,6 +100,7 @@ class CloudletResource(GenericResource):
         print kwargs
 
         host = "https://" + bundle.request.META['HTTP_HOST']
+        host = "https://demo2.openi-ict.eu"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         id = kwargs['id']
 
@@ -108,10 +109,21 @@ class CloudletResource(GenericResource):
         self.cloudlet_client()
         cloudletObj = self.client.get_object_by_id(host=host, auth_token=auth_token, id=id)
 
-        print cloudletObj['body']
-        print json.loads(cloudletObj['body'])['@data']
+        temp =  json.loads(cloudletObj['body'])
 
-        return CloudletObject(initial=json.loads(cloudletObj['body'])['@data'])
+        result = temp["@data"]
+        Time = {
+                "created_time": "1-1-1111",
+          "deleted_time": "string",
+          "id": "integer",
+          "edited_time": "string",
+            "resource_uri": "string"
+            }
+        result["Time"] = CloudletObject(Time) #temp["_date_created"]
+        result['object_type'] = str(self.Meta.resource_name)
+        result['url'] = temp["@location"]
+
+        return [CloudletObject(initial=result)]
 
 
     def obj_create(self, bundle, **kwargs):
@@ -133,8 +145,6 @@ class CloudletResource(GenericResource):
 
         self.cloudlet_client()
         resp = self.client.post_object(host=host, auth_token=auth_token, object=to_be_created)
-
-        print resp
 
         return bundle
 

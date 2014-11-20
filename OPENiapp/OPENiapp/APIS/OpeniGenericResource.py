@@ -64,6 +64,7 @@ class GenericMeta:
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()
     authorization = Authorization()
+    excludes = ['id']
 
 
     filtering = {
