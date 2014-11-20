@@ -22,7 +22,11 @@ class bcProfiles:
         return response
     
     #def get_an_account(self, params):
-    def get_account(self):
+    def get_accounts(self):
+        """ GET API_PATH/ """
+        return defaultMethodResponse
+    
+    def get_account(self, id):
         """ GET API_PATH/[ACCOUNT_ID] """
         return defaultMethodResponse
 
