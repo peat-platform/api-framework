@@ -110,6 +110,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'OPENiapp.urls'
 TASTYPIE_SWAGGER_API_MODULE = 'OPENiapp.APIS.urls.api'
+TASTYPIE_DEFAULT_FORMATS = ['json']
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'OPENiapp.wsgi.application'
