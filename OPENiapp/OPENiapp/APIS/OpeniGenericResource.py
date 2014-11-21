@@ -14,7 +14,7 @@ from OPENiapp.APIS.resources import *
 class GenericResource(ContextAwareResource):
     context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True) # ,related_name='Context'
     From = fields.ForeignKey(FromResource, 'From', null=True, blank=True) # ,related_name='Context'
-    Time = fields.ForeignKey(TimeResource, 'Time', null=True, blank=True) # ,related_name='Context'
+    # Time = fields.ForeignKey(TimeResource, 'Time', null=True, blank=True) # ,related_name='Context'
 
     def request_method(self, bundle):
         return bundle.request.method()
@@ -26,9 +26,12 @@ class GenericResource(ContextAwareResource):
     def get_resource_uri(self, bundle_or_obj=None, url_name='api_dispatch_list'):
         import json
         # print json.dumps(bundle_or_obj.data['url'])
-        id = bundle_or_obj.data['url'].replace("https://demo2.openi-ict.eu/api/v1/objects/","")
-        id = id.split("/")[1]
-        return "/v.04/"+self.Meta.resource_name+"/"+id
+        if "get" in bundle_or_obj.request.method.lower():
+            id = bundle_or_obj.data['url'].replace("https://demo2.openi-ict.eu/api/v1/objects/","")
+            id = id.split("/")[1]
+            return "/v.04/"+self.Meta.resource_name+"/"+id
+        else:
+            return "Empty"
 
 
     def get_list(self, request, **kwargs):
