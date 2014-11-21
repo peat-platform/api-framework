@@ -57,8 +57,6 @@ class GenericResource(ContextAwareResource):
         to_be_serialized[self._meta.collection_name] = bundles
         to_be_serialized = self.alter_list_data_to_serialize(request, to_be_serialized)
         #cbs_data.append(to_be_serialized)
-        print "aaaa"
-
         resp = {"cbs" : cbs_data, "cloudlet":to_be_serialized}
 
         print resp
