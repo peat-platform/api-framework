@@ -23,6 +23,13 @@ class GenericResource(ContextAwareResource):
         bundle.data['service'] = "OPENi Cloudlet"
         return bundle
 
+    def get_resource_uri(self, bundle_or_obj=None, url_name='api_dispatch_list'):
+        import json
+        # print json.dumps(bundle_or_obj.data['url'])
+        id = bundle_or_obj.data['url'].replace("https://demo2.openi-ict.eu/api/v1/objects/","")
+        id = id.split("/")[1]
+        return "/v.04/"+self.Meta.resource_name+"/"+id
+
 
     def get_list(self, request, **kwargs):
         cbs_data = self.cbs_handling(request=request, **kwargs)
@@ -32,7 +39,7 @@ class GenericResource(ContextAwareResource):
         objects = self.obj_get_list(bundle=base_bundle, **self.remove_api_resource_names(kwargs))
         sorted_objects = self.apply_sorting(objects, options=request.GET)
 
-        paginator = self._meta.paginator_class(request.GET, sorted_objects, resource_uri=self.get_resource_uri(),
+        paginator = self._meta.paginator_class(request.GET, sorted_objects, #resource_uri=self.get_resource_uri(),
                                                limit=self._meta.limit, max_limit=self._meta.max_limit,
                                                collection_name=self._meta.collection_name)
         to_be_serialized = paginator.page()
@@ -65,6 +72,7 @@ class GenericMeta:
     authentication = Authentication()
     authorization = Authorization()
     excludes = ['id']
+    # include_resource_uri = False
 
     filtering = {
         'id': ['exact']
