@@ -8,7 +8,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class PageResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniPage.objects.all()
+        object_class = OpeniPage
         resource_name = 'Page'
         extra_actions = [
             {

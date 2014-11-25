@@ -9,10 +9,10 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
 class FolderResource(OpeniResource):
-    BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile')
+    BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile', null=True, blank=True)
 
     class Meta(GenericMeta):
-        queryset = OpeniFolder.objects.all()
+        object_class =OpeniFolder
         resource_name = 'Folder'
 
         extra_actions = [

@@ -10,14 +10,5 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class PlaylistResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniPlaylist.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
+        object_class = OpeniPlaylist
         resource_name = 'Playlist'
-        authentication = Authentication()
-        authorization = Authorization()
-        # filtering = {
-        #     'slug': ALL,
-        #     'user': ALL_WITH_RELATIONS,
-        #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-        # }

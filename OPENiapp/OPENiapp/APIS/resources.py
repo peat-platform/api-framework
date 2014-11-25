@@ -4,6 +4,7 @@ from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 from OPENiapp.APIS.models import TagsModel, AddressModel, PersonModel, FromModel, TimeModel, DurationModel, \
     LocationModel, OrganizationModel, BaseFileModel, ApplicationModel, SizeModel, PlaceModel, ServiceModel, ProductModel
+# from OPENIResource import OpeniResource
 
 
 class PersonModelResource(ModelResource):

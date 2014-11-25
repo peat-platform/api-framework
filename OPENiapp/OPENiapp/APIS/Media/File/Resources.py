@@ -14,17 +14,8 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 class FileResource(OpeniResource):
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
     Tag = fields.ForeignKey(TagResource, 'Tag', null=True, blank=True)
-    BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile')
+    BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile', null=True, blank=True)
 
     class Meta(GenericMeta):
-        queryset = OpeniFile.objects.all()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post', 'put', 'delete']
+        object_class = OpeniFile
         resource_name = 'File'
-        authentication = Authentication()
-        authorization = Authorization()
-        # filtering = {
-        #     'slug': ALL,
-        #     'user': ALL_WITH_RELATIONS,
-        #     'created': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
-        # }

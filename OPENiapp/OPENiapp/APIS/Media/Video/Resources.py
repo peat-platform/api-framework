@@ -12,10 +12,10 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 class VideoResource(OpeniResource):
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
     BaseTag = fields.ForeignKey(TagsResource, 'BaseTag', null=True, blank=True)
-    BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile')
+    BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile', null=True, blank=True)
 
     class Meta(GenericMeta):
-        queryset = OpeniVideo.objects.all()
+        object_class = OpeniVideo
         resource_name = 'Video'
 
         extra_actions = [
