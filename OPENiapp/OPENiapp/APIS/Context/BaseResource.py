@@ -81,7 +81,7 @@ class ContextAwareResource(ModelResource):
         try:
             if not bundle.request.GET.get("cbs"):
                 raise AttributeError
-            cbs_return = self.cbs_handling(bundle.request, **kwargs)
+                cbs_return = self.cbs_handling(bundle.request, **kwargs)
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
