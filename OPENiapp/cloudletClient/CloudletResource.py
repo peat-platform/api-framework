@@ -65,20 +65,23 @@ class CloudletResource(GenericResource):
         print resp
         data = resp.json()
 
-        for temp in data['result']:
-            result = temp["@data"]
-            logging.error(type(result))
-            Time = {
-                "created_time": "1-1-1111",
-          "deleted_time": "string",
-          "id": "integer",
-          "edited_time": "string",
-            "resource_uri": "string"
-            }
-            result["Time"] = CloudletObject(Time) #temp["_date_created"]
-            result['object_type'] = str(self.Meta.resource_name)
-            result['url'] = temp["@location"]
-            results.append(CloudletObject(initial=result))
+        try:
+            for temp in data['result']:
+                result = temp["@data"]
+                logging.error(type(result))
+                Time = {
+                    "created_time": "1-1-1111",
+              "deleted_time": "string",
+              "id": "integer",
+              "edited_time": "string",
+                "resource_uri": "string"
+                }
+                result["Time"] = CloudletObject(Time) #temp["_date_created"]
+                result['object_type'] = str(self.Meta.resource_name)
+                result['url'] = temp["@location"]
+                results.append(CloudletObject(initial=result))
+        except:
+            results = []
 
         return results
 
