@@ -74,7 +74,7 @@ class twActivity(bcActivity):
         }
         for raw_data in raw_datas:
             data = self.get_fields(raw_data, names, fields, alternatives)
-            response['data'].append(self.format_status_response(data))
+            response['objects'].append(self.format_status_response(data))
         return response
 
     def post_statuses(self, params):
