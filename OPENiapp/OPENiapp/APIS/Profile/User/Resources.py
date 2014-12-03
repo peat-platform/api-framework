@@ -3,11 +3,11 @@ __author__ = 'mpetyx'
 # from .models import OpeniUser
 from django.contrib.auth.models import User as OpeniUser
 
-from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta, GenericResource
 from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
-class UserResource(OpeniResource):
+class UserResource(GenericResource):
     class Meta(GenericMeta):
         queryset = OpeniUser.objects.all()
         resource_name = 'User'
