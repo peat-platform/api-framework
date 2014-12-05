@@ -79,9 +79,10 @@ class ContextAwareResource(ModelResource):
         bundle = self.full_hydrate(bundle)
 
         try:
-            if not bundle.request.GET.get("cbs"):
-                raise AttributeError
+            if bundle.request.GET.get("cbs"):
                 cbs_return = self.cbs_handling(bundle.request, **kwargs)
+            #else:
+            #    raise AttributeError
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
@@ -101,9 +102,10 @@ class ContextAwareResource(ModelResource):
     def obj_update(self, bundle, **kwargs):
 
         try:
-            if not bundle.request.GET.get("cbs"):
-                raise AttributeError
-            cbs_return = self.cbs_handling(bundle.request, **kwargs)
+            if bundle.request.GET.get("cbs"):
+                cbs_return = self.cbs_handling(bundle.request, **kwargs)
+            #else:
+            #    raise AttributeError
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
@@ -123,9 +125,10 @@ class ContextAwareResource(ModelResource):
     def obj_delete(self, bundle, **kwargs):
 
         try:
-            if not bundle.request.GET.get("cbs"):
-                raise AttributeError
-            cbs_return = self.cbs_handling(bundle.request, **kwargs)
+            if bundle.request.GET.get("cbs"):
+                cbs_return = self.cbs_handling(bundle.request, **kwargs)
+            #else:
+            #    raise AttributeError
             #return self.create_response(bundle.request, cbs_return)
         except:
             pass
