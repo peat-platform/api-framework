@@ -56,7 +56,7 @@ class CloudletResource(GenericResource):
         print "get all"
 
         host       = "https://" + request.META['HTTP_HOST']
-        host = "https://demo2.openi-ict.eu"
+        host = "https://193.1.188.41"
         auth_token = request.META['HTTP_AUTHORIZATION']
         results = []
 
@@ -101,7 +101,7 @@ class CloudletResource(GenericResource):
     def obj_get(self, bundle, **kwargs):
 
         host = "https://" + bundle.request.META['HTTP_HOST']
-        host = "https://demo2.openi-ict.eu"
+        host = "https://193.1.188.41"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         id = kwargs['id']
 
@@ -132,7 +132,7 @@ class CloudletResource(GenericResource):
         #bundle       = self.full_hydrate(bundle)
 
         host = "https://" + bundle.request.META['HTTP_HOST']
-        host = "https://demo2.openi-ict.eu"
+        host = "https://193.1.188.41"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         bundle.obj = CloudletObject(initial=kwargs)
 
