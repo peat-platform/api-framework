@@ -4,7 +4,6 @@ __author__ = 'mpetyx'
 
 from django.db import models
 
-__all__ = ["OpeniPhoto", ]
 
 
 class OpeniPhoto(GenericModel):

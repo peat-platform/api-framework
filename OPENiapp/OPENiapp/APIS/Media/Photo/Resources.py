@@ -12,11 +12,12 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class PhotoResource(OpeniResource):
     Location = fields.ForeignKey(LocationResource, 'Location', null=True, blank=True)
-    BaseTag = fields.ForeignKey(TagsResource, 'BaseTag', null=True, blank=True)
+    Tags = fields.ForeignKey(TagsResource, 'Tags', null=True, blank=True)
     BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile', null=True, blank=True)
 
     class Meta(GenericMeta):
         object_class = OpeniPhoto
+        queryset = OpeniPhoto.objects.all()
         resource_name = 'Photo'
 
         extra_actions = [
