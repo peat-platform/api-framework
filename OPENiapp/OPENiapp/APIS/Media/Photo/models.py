@@ -9,7 +9,7 @@ __all__ = ["OpeniPhoto", ]
 
 class OpeniPhoto(GenericModel):
     # id is missing because it is the default
-    # BaseFile = models.ForeignKey(BaseFileModel)
+    BaseFile = models.ForeignKey(BaseFileModel, blank=True, null=True)
     Location = models.ForeignKey(LocationModel, blank=True, null=True)
     Tags = models.ForeignKey(TagsModel, blank=True, null=True)
     width = models.TextField()
