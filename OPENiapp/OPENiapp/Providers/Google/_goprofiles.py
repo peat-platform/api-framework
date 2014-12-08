@@ -16,14 +16,14 @@ class goProfiles(bcProfiles):
 
         names = ['id', 'object_type', 'service', 'resource_uri', 'from_id', 'from_object_type', 'from_resource_uri', 'from_name', 'time_created_time', 'time_edited_time', 'time_deleted_time']
         names.extend(['person_name', 'person_surname', 'person_middlename', 'person_birthdate'])
-        names.extend(['wallet_cards', 'wallet_name', 'wallet_description',
-                      'wallet_id', 'wallet_object_type', 'wallet_service', 'wallet_url', 'wallet_from_id', 'wallet_from_object_type', 'wallet_from_url', 'wallet_from_name', 'wallet_time_created_time', 'wallet_time_edited_time', 'wallet_time_deleted_time'])
+        # names.extend(['wallet_cards', 'wallet_name', 'wallet_description',
+        #               'wallet_id', 'wallet_object_type', 'wallet_service', 'wallet_url', 'wallet_from_id', 'wallet_from_object_type', 'wallet_from_url', 'wallet_from_name', 'wallet_time_created_time', 'wallet_time_edited_time', 'wallet_time_deleted_time'])
         names.extend(['user', 'username', 'email', 'password', 'validated', 'active'])
 
         fields = ['id', 'object_type', 'service', 'link', 'owner.id', 'owner.category', 'owner.url', 'owner.name', 'time.created_time', 'time.edited_time', 'time.deleted_time']
         fields.extend(['person_name', 'person_surname', 'person_middlename', 'person_birthdate'])
-        fields.extend(['wallet_cards', 'wallet_name', 'wallet_description',
-                      'wallet_id', 'wallet_object_type', 'wallet_service', 'wallet_url', 'wallet_from_id', 'wallet_from_object_type', 'wallet_from_url', 'wallet_from_name', 'wallet_time_created_time', 'wallet_time_edited_time', 'wallet_time_deleted_time'])
+        # fields.extend(['wallet_cards', 'wallet_name', 'wallet_description',
+        #               'wallet_id', 'wallet_object_type', 'wallet_service', 'wallet_url', 'wallet_from_id', 'wallet_from_object_type', 'wallet_from_url', 'wallet_from_name', 'wallet_time_created_time', 'wallet_time_edited_time', 'wallet_time_deleted_time'])
         fields.extend(['user', 'name', 'email', 'password', 'validated', 'active'])
 
         alternatives = ['', 'account', 'google', '', '', '', '', '', '', '', '']
