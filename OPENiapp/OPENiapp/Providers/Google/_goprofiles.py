@@ -9,7 +9,7 @@ class goProfiles(bcProfiles):
     #   region Profiles API
     #   As described here: https://opensourceprojects.eu/p/openi/wiki/Profiles%20API/
 
-    def get_account(self):
+    def get_accounts(self):
         """ GET API_PATH/[EVENT_ID] """
         user = SocialAccount.objects.filter(provider="google")[0].user
         raw_data = SocialAccount.objects.filter(user=user)[0].extra_data
