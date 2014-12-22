@@ -2,7 +2,7 @@ from tastypie.authorization import Authorization
 from tastypie.exceptions import Unauthorized
 
 __author__ = 'amertis'
-#todo: remove this and add proper Authorization/Authentication to resources
+# todo: remove this and add proper Authorization/Authentication to resources
 class NoAuthorization(Authorization):
     """
     Default Authentication class for ``Resource`` objects.

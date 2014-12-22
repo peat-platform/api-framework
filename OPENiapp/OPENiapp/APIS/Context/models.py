@@ -18,6 +18,14 @@ class OpeniContext(models.Model):
     location_latitude = models.TextField(null=True)
     location_longitude = models.TextField(null=True)
     location_height = models.TextField(null=True)
+    # todo: add these in all the other context categories
+    location_dynamic_creation_date = models.TextField(null=True)
+    location_dynamic_ted = models.TextField(null=True)
+    location_dynamic_uncertainty_weight = models.TextField(null=True)
+    location_dynamic_information_source = models.TextField(null=True)
+    location_dynamic_mechanism_obtained = models.TextField(null=True)
+    location_dynamic_information_methodology = models.TextField(null=True)
+
     #
     address_street = models.TextField(null=True)
     address_number = models.TextField(null=True)

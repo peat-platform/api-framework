@@ -45,11 +45,11 @@ def convert_to_simplefields(clz, data):
 
 
 properties = {
-    "location": ["latitude", "longitude", "height"],
+    "location": ["latitude", "longitude", "height", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "time": ["created", "edited", "deleted"],
     "duration": ["time_started", "time_ended"],
     "address": ["street", "number", "apartment", "city", "locality", "country", "zip"],
-    "current_location": ["latitude", "longitude", "height"],
+    "current_location": ["latitude", "longitude", "height", "time"],
     "rating": ["value"],
     "mood": ["value"],
     "device": ["wireless_network_type", "wireless_channel_quality", "accelerometers", "cell_log", "sms_log", "call_log",
@@ -249,6 +249,36 @@ class ContextResource(ModelResource):
                         "description": "longitude of the location"
                     },
                     "height": {
+                        "type": "string",
+                        "required": False,
+                        "description": "height of the location"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "latitude of the location"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "longitude of the location"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "height of the location"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "latitude of the location"
+                    },
+                    "dynamic_mechinsm_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "longitude of the location"
+                    },
+                    "dynamic_information_methodology": {
                         "type": "string",
                         "required": False,
                         "description": "height of the location"
