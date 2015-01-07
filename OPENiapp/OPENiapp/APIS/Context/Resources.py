@@ -46,21 +46,21 @@ def convert_to_simplefields(clz, data):
 
 properties = {
     "location": ["latitude", "longitude", "height", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "time": ["created", "edited", "deleted"],
-    "duration": ["time_started", "time_ended"],
-    "address": ["street", "number", "apartment", "city", "locality", "country", "zip"],
-    "current_location": ["latitude", "longitude", "height", "time"],
-    "rating": ["value"],
-    "mood": ["value"],
+    "time": ["created", "edited", "deleted", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "duration": ["time_started", "time_ended", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "address": ["street", "number", "apartment", "city", "locality", "country", "zip", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "current_location": ["latitude", "longitude", "height", "time","dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "rating": ["value", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "mood": ["value", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "device": ["wireless_network_type", "wireless_channel_quality", "accelerometers", "cell_log", "sms_log", "call_log",
-               "running_applications", "installed_applications", "screen_state", "battery_status"],
+               "running_applications", "installed_applications", "screen_state", "battery_status", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "application": ["background_color", "format", "font", "color", "background", "text", "box", "classification",
-                    "text_copy"],
+                    "text_copy", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "personalization": ["age_range", "country", "postal_code", "region", "town", "roaming", "opt_out", "carrier",
                         "handset", "user_ids", "device_id", "application_id", "device_type", "device_os", "gender",
                         "has_children", "ethnicity", "income", "household_size", "education", "interests",
                         "customer_tag",
-                        "users_language"]
+                        "users_language", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"]
 }
 
 
@@ -256,32 +256,32 @@ class ContextResource(ModelResource):
                     "dynamic_creation_date": {
                         "type": "string",
                         "required": False,
-                        "description": "latitude of the location"
+                        "description": "dynamic creation date of the location"
                     },
                     "dynamic_ted": {
                         "type": "string",
                         "required": False,
-                        "description": "longitude of the location"
+                        "description": "dynamic TED of the location"
                     },
                     "dynamic_uncertainty_weight": {
                         "type": "string",
                         "required": False,
-                        "description": "height of the location"
+                        "description": "dynamic uncertainty weight of the location"
                     },
                     "dynamic_information_source": {
                         "type": "string",
                         "required": False,
-                        "description": "latitude of the location"
+                        "description": "dynamic information source of the location"
                     },
-                    "dynamic_mechinsm_obtained": {
+                    "dynamic_mechanism_obtained": {
                         "type": "string",
                         "required": False,
-                        "description": "longitude of the location"
+                        "description": "dynamic mechanism of the location"
                     },
                     "dynamic_information_methodology": {
                         "type": "string",
                         "required": False,
-                        "description": "height of the location"
+                        "description": "dynamic information methodology of the location"
                     },
                 }
             },
@@ -312,6 +312,36 @@ class ContextResource(ModelResource):
                         "required": False,
                         "description": "time of object update"
                     },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of tine"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of time"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of time"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of time"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of time"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of time"
+                    },
                 }
             },
             {
@@ -335,6 +365,36 @@ class ContextResource(ModelResource):
                         "type": "string",
                         "required": False,
                         "description": "the time the object ended"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the duration"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the duration"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the duration"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the duration"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the duration"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the duration"
                     },
                 }
             },
@@ -385,6 +445,36 @@ class ContextResource(ModelResource):
                         "required": False,
                         "description": "the context location zip code"
                     },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the address"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the address"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the address"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the address"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the address"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the address"
+                    },
                 }
             },
             {
@@ -414,6 +504,36 @@ class ContextResource(ModelResource):
                         "required": False,
                         "description": "height of the current location"
                     },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the current location"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the current location"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the current location"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the current location"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the current location"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the current location"
+                    },
                 }
             },
             {
@@ -433,6 +553,36 @@ class ContextResource(ModelResource):
                         "required": False,
                         "description": "value of rating"
                     },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the rating"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the rating"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the rating"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the rating"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the rating"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the rating"
+                    },
                 }
             },
             {
@@ -451,6 +601,36 @@ class ContextResource(ModelResource):
                         "type": "string",
                         "required": False,
                         "description": "value of mood"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the mood"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the mood"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the mood"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the mood"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the mood"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the mood"
                     },
                 }
             },
@@ -505,6 +685,36 @@ class ContextResource(ModelResource):
                         "type": "string",
                         "required": False,
                         "description": "the battery status (e.g. low, medium, full)"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the device"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the device"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the device"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the device"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the device"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the device"
                     },
                 }
             },
@@ -564,6 +774,36 @@ class ContextResource(ModelResource):
                         "type": "string",
                         "required": False,
                         "description": "application's text copy"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the app"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the app"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the app"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the app"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the app"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the app"
                     },
                 }
             },
@@ -695,6 +935,36 @@ class ContextResource(ModelResource):
                         "required": False,
                         "description": "language iso code"
                     },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the personalization"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the personalization"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the personalization"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the personalization"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the personalization"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the personalization"
+                    },
                 }
             },
             {
@@ -731,6 +1001,36 @@ class ContextResource(ModelResource):
                         "required": True,
                         "description": "data value"
                     },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the device"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the device"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the device"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the device"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the device"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the device"
+                    },
                 }
             },
             {
@@ -742,6 +1042,36 @@ class ContextResource(ModelResource):
                         "type": "array",
                         "required": True,
                         "description": "data value"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the device"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the device"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the device"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the device"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the device"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the device"
                     },
                 }
             },
@@ -776,7 +1106,7 @@ class ContextResource(ModelResource):
                 "fields": {
                     "group_id": {
                         "type": "string",
-                        "requred": True,
+                        "required": True,
                         "description": "group id"
                     }
                 }
@@ -800,7 +1130,7 @@ class ContextResource(ModelResource):
                 "fields": {
                     "group_id": {
                         "type": "string",
-                        "requred": True,
+                        "required": True,
                         "description": "group id"
                     },
                     "data": {
@@ -817,7 +1147,7 @@ class ContextResource(ModelResource):
                 "fields": {
                     "group_id": {
                         "type": "string",
-                        "requred": True,
+                        "required": True,
                         "description": "group id"
                     }
                 }
@@ -835,7 +1165,7 @@ class ContextResource(ModelResource):
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/address%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="address"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/current_location%s$" % (
-            self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="current_location"),
+                self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="current_location"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/rating%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="rating"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/mood%s$" % (self._meta.resource_name, trailing_slash()),
@@ -849,7 +1179,7 @@ class ContextResource(ModelResource):
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location_visits%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="location_visits"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location_visits_item%s$" % (
-            self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="location_visits_item"),
+                self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="location_visits_item"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="groups"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups_item%s$" % (self._meta.resource_name, trailing_slash()),

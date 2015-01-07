@@ -13,6 +13,19 @@ class OpeniContext(models.Model):
     time_deleted = models.TextField(null=True)
     duration_time_started = models.TextField(null=True)
     duration_time_ended = models.TextField(null=True)
+    duration_dynamic_creation_date = models.TextField(null=True)
+    duration_dynamic_ted = models.TextField(null=True)
+    duration_dynamic_uncertainty_weight = models.TextField(null=True)
+    duration_dynamic_information_source = models.TextField(null=True)
+    duration_dynamic_mechanism_obtained = models.TextField(null=True)
+    duration_dynamic_information_methodology = models.TextField(null=True)
+
+    time_dynamic_creation_date = models.TextField(null=True)
+    time_dynamic_ted = models.TextField(null=True)
+    time_dynamic_uncertainty_weight = models.TextField(null=True)
+    time_dynamic_information_source = models.TextField(null=True)
+    time_dynamic_mechanism_obtained = models.TextField(null=True)
+    time_dynamic_information_methodology = models.TextField(null=True)
 
     #     #the docs say location includes: coordinates,physical address, free-form location name
     location_latitude = models.TextField(null=True)
@@ -34,15 +47,40 @@ class OpeniContext(models.Model):
     address_locality = models.TextField(null=True)
     address_country = models.TextField(null=True)
     address_zip = models.TextField(null=True)
+    address_dynamic_creation_date = models.TextField(null=True)
+    address_dynamic_ted = models.TextField(null=True)
+    address_dynamic_uncertainty_weight = models.TextField(null=True)
+    address_dynamic_information_source = models.TextField(null=True)
+    address_dynamic_mechanism_obtained = models.TextField(null=True)
+    address_dynamic_information_methodology = models.TextField(null=True)
 
     current_location_latitude = models.TextField(null=True)
     current_location_longitude = models.TextField(null=True)
     current_location_height = models.TextField(null=True)
+    current_location_dynamic_creation_date = models.TextField(null=True)
+    current_location_dynamic_ted = models.TextField(null=True)
+    current_location_dynamic_uncertainty_weight = models.TextField(null=True)
+    current_location_dynamic_information_source = models.TextField(null=True)
+    current_location_dynamic_mechanism_obtained = models.TextField(null=True)
+    current_location_dynamic_information_methodology = models.TextField(null=True)
     #     #use date
     current_location_time = models.TextField(null=True)
     rating_value = models.TextField(null=True)
-    #     #happy,sad
+    rating_dynamic_creation_date = models.TextField(null=True)
+    rating_dynamic_ted = models.TextField(null=True)
+    rating_dynamic_uncertainty_weight = models.TextField(null=True)
+    rating_dynamic_information_source = models.TextField(null=True)
+    rating_dynamic_mechanism_obtained = models.TextField(null=True)
+    rating_dynamic_information_methodology = models.TextField(null=True)
+
+#     #happy,sad
     mood_value = models.TextField(null=True)
+    mood_dynamic_creation_date = models.TextField(null=True)
+    mood_dynamic_ted = models.TextField(null=True)
+    mood_dynamic_uncertainty_weight = models.TextField(null=True)
+    mood_dynamic_information_source = models.TextField(null=True)
+    mood_dynamic_mechanism_obtained = models.TextField(null=True)
+    mood_dynamic_information_methodology = models.TextField(null=True)
     #     #3G,LTE
     device_wireless_network_type = models.TextField(null=True)
     #     #good,bad,excellent
@@ -65,6 +103,13 @@ class OpeniContext(models.Model):
     device_screen_state = models.TextField(null=True)
     #     # low,medium,full
     device_battery_status = models.TextField(null=True)
+    device_dynamic_creation_date = models.TextField(null=True)
+    device_dynamic_ted = models.TextField(null=True)
+    device_dynamic_uncertainty_weight = models.TextField(null=True)
+    device_dynamic_information_source = models.TextField(null=True)
+    device_dynamic_mechanism_obtained = models.TextField(null=True)
+    device_dynamic_information_methodology = models.TextField(null=True)
+
     #
     #     #red,'#fbfbfb' from W3C
     application_background_color = models.TextField(null=True)
@@ -77,6 +122,13 @@ class OpeniContext(models.Model):
     application_box = models.TextField(null=True)
     application_classification = models.TextField(null=True)
     application_text_copy = models.TextField(null=True)
+    application_dynamic_creation_date = models.TextField(null=True)
+    application_dynamic_ted = models.TextField(null=True)
+    application_dynamic_uncertainty_weight = models.TextField(null=True)
+    application_dynamic_information_source = models.TextField(null=True)
+    application_dynamic_mechanism_obtained = models.TextField(null=True)
+    application_dynamic_information_methodology = models.TextField(null=True)
+
     #
     #
     personalization_age_range = models.TextField(null=True)
@@ -118,6 +170,12 @@ class OpeniContext(models.Model):
     personalization_customer_tag = models.TextField(null=True)
     #     #Greek,English iso code
     personalization_users_language = models.TextField(null=True)
+    personalization_dynamic_creation_date = models.TextField(null=True)
+    personalization_dynamic_ted = models.TextField(null=True)
+    personalization_dynamic_uncertainty_weight = models.TextField(null=True)
+    personalization_dynamic_information_source = models.TextField(null=True)
+    personalization_dynamic_mechanism_obtained = models.TextField(null=True)
+    personalization_dynamic_information_methodology = models.TextField(null=True)
 
     class Meta:
         app_label = "OPENiapp"
@@ -128,6 +186,13 @@ class Group(models.Model):
     group_name = models.TextField(null=True)
     group_type = models.TextField(null=True)
     context = models.ForeignKey(OpeniContext)
+    # group_dynamic_creation_date = models.TextField(null=True)
+    # group_dynamic_ted = models.TextField(null=True)
+    # group_dynamic_uncertainty_weight = models.TextField(null=True)
+    # group_dynamic_information_source = models.TextField(null=True)
+    # group_dynamic_mechanism_obtained = models.TextField(null=True)
+    # group_dynamic_information_methodology = models.TextField(null=True)
+
 
     class Meta:
         app_label = "OPENiapp"
@@ -142,9 +207,30 @@ class GroupFriend(models.Model):
     person_time_person_added = models.TextField(null=True)
     person_target_id = models.TextField(null=True)
     group = models.ForeignKey(Group)
+    person_visits_dynamic_creation_date = models.TextField(null=True)
+    person_visits_dynamic_ted = models.TextField(null=True)
+    person_visits_dynamic_uncertainty_weight = models.TextField(null=True)
+    person_visits_dynamic_information_source = models.TextField(null=True)
+    person_visits_dynamic_mechanism_obtained = models.TextField(null=True)
+    person_visits_dynamic_information_methodology = models.TextField(null=True)
 
-    class Meta:
+
+class Meta:
         app_label = "OPENiapp"
+
+# class Community(models.Model):
+#     community_id = models.TextField(null=True)
+#     community_object_type = models.TextField(null=True)
+#     community_url = models.TextField(null=True)
+#     community_service = models.TextField(null=True)
+#     community_to_id = models.TextField(null=True)
+#     community_time_community_added = models.TextField(null=True)
+#     community_target_id = models.TextField(null=True)
+#     group = models.ForeignKey(Group)
+#
+#     class Meta:
+#         app_label = "OPENiapp"
+#
 
 
 class LocationVisit(models.Model):
@@ -154,6 +240,13 @@ class LocationVisit(models.Model):
     location_visits_visit = models.TextField(null=True)
     location_visits_comment = models.TextField(null=True)
     context = models.ForeignKey(OpeniContext)
+    location_visits_dynamic_creation_date = models.TextField(null=True)
+    location_visits_dynamic_ted = models.TextField(null=True)
+    location_visits_dynamic_uncertainty_weight = models.TextField(null=True)
+    location_visits_dynamic_information_source = models.TextField(null=True)
+    location_visits_dynamic_mechanism_obtained = models.TextField(null=True)
+    location_visits_dynamic_information_methodology = models.TextField(null=True)
+
 
     class Meta:
         app_label = "OPENiapp"
