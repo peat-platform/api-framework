@@ -2,7 +2,7 @@ __author__ = 'amertis'
 from django.db import models
 
 
-__all__ = ["OpeniContext", "Group", "GroupFriend", "LocationVisit", "OpeniContextAwareModel", ]
+__all__ = ["OpeniContext", "Group", "GroupFriend", "LocationVisit","Community" "OpeniContextAwareModel", ]
 
 
 class OpeniContext(models.Model):
@@ -186,12 +186,12 @@ class Group(models.Model):
     group_name = models.TextField(null=True)
     group_type = models.TextField(null=True)
     context = models.ForeignKey(OpeniContext)
-    # group_dynamic_creation_date = models.TextField(null=True)
-    # group_dynamic_ted = models.TextField(null=True)
-    # group_dynamic_uncertainty_weight = models.TextField(null=True)
-    # group_dynamic_information_source = models.TextField(null=True)
-    # group_dynamic_mechanism_obtained = models.TextField(null=True)
-    # group_dynamic_information_methodology = models.TextField(null=True)
+    group_dynamic_creation_date = models.TextField(null=True)
+    group_dynamic_ted = models.TextField(null=True)
+    group_dynamic_uncertainty_weight = models.TextField(null=True)
+    group_dynamic_information_source = models.TextField(null=True)
+    group_dynamic_mechanism_obtained = models.TextField(null=True)
+    group_dynamic_information_methodology = models.TextField(null=True)
 
 
     class Meta:
@@ -207,30 +207,30 @@ class GroupFriend(models.Model):
     person_time_person_added = models.TextField(null=True)
     person_target_id = models.TextField(null=True)
     group = models.ForeignKey(Group)
-    person_visits_dynamic_creation_date = models.TextField(null=True)
-    person_visits_dynamic_ted = models.TextField(null=True)
-    person_visits_dynamic_uncertainty_weight = models.TextField(null=True)
-    person_visits_dynamic_information_source = models.TextField(null=True)
-    person_visits_dynamic_mechanism_obtained = models.TextField(null=True)
-    person_visits_dynamic_information_methodology = models.TextField(null=True)
+    person_dynamic_creation_date = models.TextField(null=True)
+    person_dynamic_ted = models.TextField(null=True)
+    person_dynamic_uncertainty_weight = models.TextField(null=True)
+    person_dynamic_information_source = models.TextField(null=True)
+    person_dynamic_mechanism_obtained = models.TextField(null=True)
+    person_dynamic_information_methodology = models.TextField(null=True)
 
 
 class Meta:
         app_label = "OPENiapp"
 
-# class Community(models.Model):
-#     community_id = models.TextField(null=True)
-#     community_object_type = models.TextField(null=True)
-#     community_url = models.TextField(null=True)
-#     community_service = models.TextField(null=True)
-#     community_to_id = models.TextField(null=True)
-#     community_time_community_added = models.TextField(null=True)
-#     community_target_id = models.TextField(null=True)
-#     group = models.ForeignKey(Group)
-#
-#     class Meta:
-#         app_label = "OPENiapp"
-#
+class Community(models.Model):
+    community_id = models.TextField(null=True)
+    community_object_type = models.TextField(null=True)
+    community_url = models.TextField(null=True)
+    community_service = models.TextField(null=True)
+    community_to_id = models.TextField(null=True)
+    community_time_community_added = models.TextField(null=True)
+    community_target_id = models.TextField(null=True)
+    group = models.ForeignKey(Group)
+
+    class Meta:
+        app_label = "OPENiapp"
+
 
 
 class LocationVisit(models.Model):
