@@ -313,6 +313,13 @@ class ContextResource(ModelResource):
                 }
             },
             {
+                "name": "dynamic_time",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
+                }
+            },
+            {
                 "name": "time",
                 "http_method": "PUT",
                 "summary": "Update context time of an object",
@@ -372,6 +379,13 @@ class ContextResource(ModelResource):
                 }
             },
             {
+                "name": "dynamic_duration",
+                "http_method": "GET",
+                "summary": "Retrieve dynamic context duration of an object",
+                "fields": {
+                }
+            },
+            {
                 "name": "duration",
                 "http_method": "PUT",
                 "summary": "Update context duration of an object",
@@ -422,6 +436,13 @@ class ContextResource(ModelResource):
                 "name": "address",
                 "http_method": "GET",
                 "summary": "Retrieve context location address",
+                "fields": {
+                }
+            },
+            {
+                "name": "dynamic_address",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
                 "fields": {
                 }
             },
@@ -505,6 +526,13 @@ class ContextResource(ModelResource):
                 }
             },
             {
+                "name": "dynamic_current_location",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
+                }
+            },
+            {
                 "name": "current_location",
                 "http_method": "PUT",
                 "summary": "Update context current location",
@@ -564,6 +592,13 @@ class ContextResource(ModelResource):
                 }
             },
             {
+                "name": "dynamic_rating",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
+                }
+            },
+            {
                 "name": "rating",
                 "http_method": "PUT",
                 "summary": "Update context object rating",
@@ -613,6 +648,13 @@ class ContextResource(ModelResource):
                 }
             },
             {
+                "name": "dynamic_mood",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
+                }
+            },
+            {
                 "name": "mood",
                 "http_method": "PUT",
                 "summary": "Update context object mood",
@@ -658,6 +700,13 @@ class ContextResource(ModelResource):
                 "name": "device",
                 "http_method": "GET",
                 "summary": "Retrieve context object device",
+                "fields": {
+                }
+            },
+            {
+                "name": "dynamic_device",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
                 "fields": {
                 }
             },
@@ -742,6 +791,13 @@ class ContextResource(ModelResource):
                 "name": "application",
                 "http_method": "GET",
                 "summary": "Retrieve context object application",
+                "fields": {
+                }
+            },
+            {
+                "name": "dynamic_application",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
                 "fields": {
                 }
             },
@@ -833,6 +889,13 @@ class ContextResource(ModelResource):
                 "summary": "Retrieve context object personalization",
                 "fields": {
 
+                }
+            },
+            {
+                "name": "dynamic_personalization",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
                 }
             },
             {
@@ -1000,6 +1063,13 @@ class ContextResource(ModelResource):
                 }
             },
             {
+                "name": "dynamic_location_visits",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
+                }
+            },
+            {
                 "name": "location_visits_item",
                 "http_method": "GET",
                 "summary": "Retrieve context location visits object",
@@ -1058,6 +1128,7 @@ class ContextResource(ModelResource):
                 "summary": "Retrieve context groups",
                 "fields": {}
             },
+
             {
                 "name": "groups",
                 "http_method": "PUT",
@@ -1074,6 +1145,13 @@ class ContextResource(ModelResource):
                         "required": True,
                         "description": "group id"
                     }
+                }
+            },
+            {
+                "name": "dynamic_groups_item",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
                 }
             },
             {
@@ -1121,6 +1199,13 @@ class ContextResource(ModelResource):
                 "name": "community",
                 "http_method": "GET",
                 "summary": "Retrieve community",
+                "fields": {
+                }
+            },
+            {
+                "name": "dynamic_community",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
                 "fields": {
                 }
             },
@@ -1176,32 +1261,57 @@ class ContextResource(ModelResource):
                 self.wrap_view('get_property'), name="dynamic_location"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/time%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="time"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_time%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_time"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/duration%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="duration"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_duration%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_duration"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/address%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="address"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_address%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_address"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/current_location%s$" % (
                 self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="current_location"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_current_location%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_current_location"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/rating%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="rating"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_rating%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_rating"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/mood%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="mood"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_mood%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_mood"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/device%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="device"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_device%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_device"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/application%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="application"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_application%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_application"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/personalization%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="personalization"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_personalization%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_personalization"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location_visits%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="location_visits"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_location_visits%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_location_visits"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location_visits_item%s$" % (
                 self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="location_visits_item"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/community%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="community"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_community%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_community"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="groups"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups_item%s$" % (self._meta.resource_name, trailing_slash()),
-                self.wrap_view('get_property'), name="groups_item")
+                self.wrap_view('get_property'), name="groups_item"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_groups_item%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_groups_item"),
+
 
         ]
 
