@@ -9,7 +9,7 @@ from tastypie.exceptions import BadRequest
 from tastypie.resources import Resource, ModelResource
 from tastypie.utils import trailing_slash
 
-from .models import OpeniContext, LocationVisit, GroupFriend, Group, Community
+from .models import OpeniContext, LocationVisit, GroupFriend, Group
 
 __author__ = 'amertis'
 
@@ -60,7 +60,9 @@ properties = {
                         "handset", "user_ids", "device_id", "application_id", "device_type", "device_os", "gender",
                         "has_children", "ethnicity", "income", "household_size", "education", "interests",
                         "customer_tag",
-                        "users_language", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"]
+                        "users_language", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "community": ["list", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+
 }
 
 
@@ -148,61 +150,6 @@ class LocationVisitResource(Resource):
                 lv_dict = convert_to_simplefields(LocationVisit, o)
                 json_list.append(lv_dict)
             base_bundle.data["location_visits"] = json_list
-        return self.create_response(request, base_bundle)
-
-class CommunityResource(Resource):
-    def save_item(self, request, **kwargs):
-        new_community = json.loads(request.GET['data'])
-        db_fields = convert_to_dbfields(Community, new_community)
-        try:
-            lv = Community(**db_fields)
-        except:
-            raise BadRequest("invalid fields in json request")
-        lv.context_id = int(kwargs['pk'])
-        lv.save()
-        return self.create_response(request, {})
-
-    def update_item(self, request, **kwargs):
-        if 'community_id' not in request.GET:
-            raise BadRequest("community_id missing")
-        updated_community = json.loads(request.GET['data'])
-        updated_db_fields = convert_to_dbfields(Community, updated_community)
-        communities = Community.objects.filter(id=int(request.GET['community_id']))
-        if len(communities) > 0:
-            db_fields = get_fields(Community)
-            for db_field in db_fields:
-                if db_field in updated_db_fields:
-                    communities[0].__dict__[db_field] = updated_db_fields[db_field]
-            communities[0].save()
-        else:
-            raise BadRequest("community not found")
-        return self.create_response(request, {})
-
-    def delete_item(self, request, **kwargs):
-        Community.objects.filter(id=(request.GET['community_id'])).delete()
-        return self.create_response(request, {})
-
-    def get_item(self, request, **kwargs):
-        if 'community_id' not in request.GET:
-            raise BadRequest("community_id missing")
-        base_bundle = self.build_bundle(request=request)
-        db_fields = get_fields(LocationVisit)
-        objects = Community.objects.filter(context_id=1).values(*db_fields)
-        if len(objects) > 0:
-            lv_dict = convert_to_simplefields(Community, objects[0])
-            base_bundle.data["community"] = lv_dict
-        return self.create_response(request, base_bundle)
-
-    def get_list(self, request, **kwargs):
-        db_fields = get_fields(LocationVisit)
-        base_bundle = self.build_bundle(request=request)
-        objects = Community.objects.filter(context_id=kwargs['pk']).values(*db_fields)
-        json_list = []
-        if len(objects) > 0:
-            for o in objects:
-                lv_dict = convert_to_simplefields(LocationVisit, o)
-                json_list.append(lv_dict)
-            base_bundle.data["community"] = json_list
         return self.create_response(request, base_bundle)
 
 
@@ -1083,66 +1030,6 @@ class ContextResource(ModelResource):
                 }
             },
             {
-                "name": "community",
-                "http_method": "GET",
-                "summary": "Retrieve context location visits",
-                "fields": {
-                }
-            },
-            {
-                "name": "community_item",
-                "http_method": "GET",
-                "summary": "Retrieve context location visits object",
-                "fields": {
-                    "community_id": {
-                        "type": "string",
-                        "required": True,
-                        "description": "context location visits id"
-                    },
-                    }
-            },
-            {
-                "name": "community_item",
-                "http_method": "PUT",
-                "summary": "Update Context visit location",
-                "fields": {
-                    "community_id": {
-                        "type": "string",
-                        "required": True,
-                        "description": "context location visits id"
-                    },
-                    "data": {
-                        "type": "array",
-                        "required": True,
-                        "description": "data value"
-                    }
-                }
-            },
-            {
-                "name": "community_item",
-                "http_method": "POST",
-                "summary": "create Context visit location",
-                "fields": {
-                    "data": {
-                        "type": "array",
-                        "required": True,
-                        "description": "data value"
-                    },
-                    }
-            },
-            {
-                "name": "community_item",
-                "http_method": "DELETE",
-                "summary": "delete context location visits object",
-                "fields": {
-                    "community_id": {
-                        "type": "string",
-                        "required": True,
-                        "description": "context location visits id"
-                    },
-                    }
-            },
-            {
                 "name": "groups",
                 "http_method": "GET",
                 "summary": "Retrieve context groups",
@@ -1207,6 +1094,55 @@ class ContextResource(ModelResource):
                     }
                 }
             },
+            {
+                "name": "community",
+                "http_method": "GET",
+                "summary": "Retrieve community",
+                "fields": {
+                }
+            },
+            {
+                "name": "community",
+                "http_method": "PUT",
+                "summary": "Update community",
+                "fields": {
+                    "list": {
+                        "type": "string",
+                        "required": False,
+                        "description": "value of mood"
+                    },
+                    "dynamic_creation_date": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic creation date of the community"
+                    },
+                    "dynamic_ted": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic TED of the community"
+                    },
+                    "dynamic_uncertainty_weight": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic uncertainty weight of the community"
+                    },
+                    "dynamic_information_source": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information source of the community"
+                    },
+                    "dynamic_mechanism_obtained": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic mechanism of the community"
+                    },
+                    "dynamic_information_methodology": {
+                        "type": "string",
+                        "required": False,
+                        "description": "dynamic information methodology of the community"
+                    },
+                    }
+            },
         ]
 
     def prepend_urls(self):
@@ -1237,8 +1173,6 @@ class ContextResource(ModelResource):
                 self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="location_visits_item"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/community%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="community"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/community_item%s$" % (
-                self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="community_item"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="groups"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups_item%s$" % (self._meta.resource_name, trailing_slash()),
@@ -1332,6 +1266,7 @@ class ContextResource(ModelResource):
                     return groups_resource.delete_item(request, **kwargs)
                 elif request.method == 'PUT':
                     return groups_resource.update_item(request, **kwargs)
+
 
         kwargs["api_method"] = api_method
         child_resource = ContextPropertyResource()

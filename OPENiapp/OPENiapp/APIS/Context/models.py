@@ -177,6 +177,15 @@ class OpeniContext(models.Model):
     personalization_dynamic_mechanism_obtained = models.TextField(null=True)
     personalization_dynamic_information_methodology = models.TextField(null=True)
 
+    #     community
+    community_list = models.TextField(null=True)
+    community_dynamic_creation_date = models.TextField(null=True)
+    community_dynamic_ted = models.TextField(null=True)
+    community_dynamic_uncertainty_weight = models.TextField(null=True)
+    community_dynamic_information_source = models.TextField(null=True)
+    community_dynamic_mechanism_obtained = models.TextField(null=True)
+    community_dynamic_information_methodology = models.TextField(null=True)
+
     class Meta:
         app_label = "OPENiapp"
 
@@ -220,13 +229,8 @@ class Meta:
 
 class Community(models.Model):
     community_id = models.TextField(null=True)
-    community_object_type = models.TextField(null=True)
-    community_url = models.TextField(null=True)
-    community_service = models.TextField(null=True)
-    community_to_id = models.TextField(null=True)
-    community_time_community_added = models.TextField(null=True)
-    community_target_id = models.TextField(null=True)
-    group = models.ForeignKey(Group)
+    community_name = models.TextField(null=True)
+    community_list = models.TextField(null=True)
 
     class Meta:
         app_label = "OPENiapp"
