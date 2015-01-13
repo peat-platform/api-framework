@@ -278,7 +278,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_location",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of location of an object",
                 "fields": {
                 }
             },
@@ -344,7 +344,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_time",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve Retrieve dynamic metadata of time of an object",
                 "fields": {
                 }
             },
@@ -471,7 +471,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_address",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve Retrieve dynamic metadata of address of an object",
                 "fields": {
                 }
             },
@@ -557,7 +557,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_current_location",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of current location of an object",
                 "fields": {
                 }
             },
@@ -623,7 +623,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_rating",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of rating of an object",
                 "fields": {
                 }
             },
@@ -679,7 +679,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_mood",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of mood of an object",
                 "fields": {
                 }
             },
@@ -735,7 +735,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_device",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of device of an object",
                 "fields": {
                 }
             },
@@ -826,7 +826,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_application",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of application of an object",
                 "fields": {
                 }
             },
@@ -923,7 +923,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_personalization",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of personalization of an object",
                 "fields": {
                 }
             },
@@ -1094,7 +1094,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_location_visits",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of location visits of an object",
                 "fields": {
                 }
             },
@@ -1179,7 +1179,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_groups_item",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of a group item of an object",
                 "fields": {
                 }
             },
@@ -1234,7 +1234,7 @@ class ContextResource(ModelResource):
             {
                 "name": "dynamic_community",
                 "http_method": "GET",
-                "summary": "Retrieve context location of an object",
+                "summary": "Retrieve dynamic metadata of community of an object",
                 "fields": {
                 }
             },
