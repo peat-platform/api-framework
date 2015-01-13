@@ -11,6 +11,13 @@ class OpeniContext(models.Model):
     time_created = models.TextField(null=True)
     time_edited = models.TextField(null=True)
     time_deleted = models.TextField(null=True)
+    time_dynamic_creation_date = models.TextField(null=True)
+    time_dynamic_ted = models.TextField(null=True)
+    time_dynamic_uncertainty_weight = models.TextField(null=True)
+    time_dynamic_information_source = models.TextField(null=True)
+    time_dynamic_mechanism_obtained = models.TextField(null=True)
+    time_dynamic_information_methodology = models.TextField(null=True)
+
     duration_time_started = models.TextField(null=True)
     duration_time_ended = models.TextField(null=True)
     duration_dynamic_creation_date = models.TextField(null=True)
@@ -20,12 +27,7 @@ class OpeniContext(models.Model):
     duration_dynamic_mechanism_obtained = models.TextField(null=True)
     duration_dynamic_information_methodology = models.TextField(null=True)
 
-    time_dynamic_creation_date = models.TextField(null=True)
-    time_dynamic_ted = models.TextField(null=True)
-    time_dynamic_uncertainty_weight = models.TextField(null=True)
-    time_dynamic_information_source = models.TextField(null=True)
-    time_dynamic_mechanism_obtained = models.TextField(null=True)
-    time_dynamic_information_methodology = models.TextField(null=True)
+
 
     #     #the docs say location includes: coordinates,physical address, free-form location name
     location_latitude = models.TextField(null=True)
