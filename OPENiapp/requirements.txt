@@ -1,4 +1,4 @@
-Django==1.7.1
+Django==1.6
 wsgiref==0.1.2
 gunicorn==0.17.2
 #django-allauth

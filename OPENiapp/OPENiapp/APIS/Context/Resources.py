@@ -2,7 +2,7 @@ import json
 import re
 
 from django.conf.urls import url
-from django.db import transaction
+# from django.db import transaction
 from django.utils.datastructures import MultiValueDictKeyError
 from tastypie import fields
 from tastypie.exceptions import BadRequest
@@ -74,6 +74,17 @@ class ContextPropertyResource(Resource):
     def get_list(self, request, **kwargs):
         base_bundle = self.build_bundle(request=request)
         db_fields = [get_db_field(kwargs['api_method'], x) for x in properties[kwargs['api_method']]]
+        property_value = OpeniContext.objects.filter(objectid=kwargs['pk']).values(*db_fields)
+        if len(property_value) > 0:
+            base_bundle.data[kwargs['api_method']] = property_value[0]
+        return self.create_response(request, base_bundle)
+
+    def get_dynamic_list(self, request, **kwargs):
+        base_bundle = self.build_bundle(request=request)
+        dynamic_properties = ["dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+                              "dynamic_information_source", "dynamic_mechanism_obtained",
+                              "dynamic_information_methodology"]
+        db_fields = [get_db_field(kwargs['api_method'].replace("dynamic_", "", 1), x) for x in dynamic_properties]
         property_value = OpeniContext.objects.filter(objectid=kwargs['pk']).values(*db_fields)
         if len(property_value) > 0:
             base_bundle.data[kwargs['api_method']] = property_value[0]
@@ -197,22 +208,22 @@ class GroupResource(Resource):
                 GroupFriend.objects.bulk_create(group_friends)
         return self.create_response(request, base_bundle)
 
-
     def save_item(self, request, **kwargs):
         new_group = json.loads(request.GET['data'])
-        new_group_friends = new_group['group_friends']
-        del new_group['group_friends']
+        new_group_friends = new_group.get('group_friends')
+        if new_group_friends is not None:
+            del new_group['group_friends']
         group = Group(**new_group)
         group.context_id = int(kwargs['pk'])
         group.save()
         group_friends = []
-        for new_group_friend in new_group_friends:
-            group_friend = GroupFriend(**new_group_friend)
-            group_friend.group_id = group.id
-            group_friends.append(group_friend)
-        GroupFriend.objects.bulk_create(group_friends)
+        if new_group_friends is not None:
+            for new_group_friend in new_group_friends:
+                group_friend = GroupFriend(**new_group_friend)
+                group_friend.group_id = group.id
+                group_friends.append(group_friend)
+            GroupFriend.objects.bulk_create(group_friends)
         return self.create_response(request, {})
-
 
     def delete_item(self, request, **kwargs):
         Group.objects.filter(id=int(request.GET['group_id'])).delete()
@@ -224,12 +235,19 @@ class ContextResource(ModelResource):
     class Meta:
         queryset = OpeniContext.objects.all().prefetch_related("group_set", "locationvisit_set")
         location = fields.DictField()
-        list_allowed_methods = ['get']
+        list_allowed_methods = ['get', 'post', 'put']
         resource_name = "Context"
 
         extra_actions = [
             {
                 "name": "location",
+                "http_method": "GET",
+                "summary": "Retrieve context location of an object",
+                "fields": {
+                }
+            },
+            {
+                "name": "dynamic_location",
                 "http_method": "GET",
                 "summary": "Retrieve context location of an object",
                 "fields": {
@@ -974,6 +992,11 @@ class ContextResource(ModelResource):
                 "http_method": "GET",
                 "summary": "Retrieve context location visits",
                 "fields": {
+                    "location_visits_id": {
+                        "type": "string",
+                        "required": True,
+                        "description": "context location visits id"
+                    },
                 }
             },
             {
@@ -1149,6 +1172,8 @@ class ContextResource(ModelResource):
         return [
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="location"),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_location%s$" % (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('get_property'), name="dynamic_location"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/time%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="time"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/duration%s$" % (self._meta.resource_name, trailing_slash()),
@@ -1270,6 +1295,8 @@ class ContextResource(ModelResource):
 
         kwargs["api_method"] = api_method
         child_resource = ContextPropertyResource()
+        if "dynamic" in api_method:
+            return child_resource.get_dynamic_list(request, **kwargs)
         if request.method == 'GET':
             return child_resource.get_list(request, **kwargs)
         elif request.method == 'PUT':
