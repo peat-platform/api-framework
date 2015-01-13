@@ -136,6 +136,20 @@ class LocationVisitResource(Resource):
             raise BadRequest("location visit not found")
         return self.create_response(request, {})
 
+    def get_dynamic_list(self, request, **kwargs):
+        db_fields = ["location_visits_dynamic_creation_date", "location_visits_dynamic_ted", "location_visits_dynamic_uncertainty_weight",
+                     "location_visits_dynamic_information_source", "location_visits_dynamic_mechanism_obtained",
+                     "location_visits_dynamic_information_methodology"]
+        base_bundle = self.build_bundle(request=request)
+        objects = LocationVisit.objects.filter(context_id=kwargs['pk']).values(*db_fields)
+        json_list = []
+        if len(objects) > 0:
+            for o in objects:
+                lv_dict = convert_to_simplefields(LocationVisit, o)
+                json_list.append(lv_dict)
+            base_bundle.data["location_visits"] = json_list
+        return self.create_response(request, base_bundle)
+
     def delete_item(self, request, **kwargs):
         LocationVisit.objects.filter(id=(request.GET['location_visits_id'])).delete()
         return self.create_response(request, {})
@@ -185,6 +199,21 @@ class GroupResource(Resource):
             group_dict = model_to_dict(groups[0])
             group_dict['group_friends'] = ValuesQuerySetToDict(groups[0].groupfriend_set.values())
             base_bundle.data['group'] = group_dict
+        return self.create_response(request, base_bundle)
+
+
+    def get_dynamic_list(self, request, **kwargs):
+        db_fields = ["group_dynamic_creation_date", "group_dynamic_ted", "group_dynamic_uncertainty_weight",
+                                  "group_dynamic_information_source", "group_dynamic_mechanism_obtained",
+                                  "group_dynamic_information_methodology"]
+        base_bundle = self.build_bundle(request=request)
+        objects = Group.objects.filter(context_id=kwargs['pk']).values(*db_fields)
+        json_list = []
+        if len(objects) > 0:
+            for o in objects:
+                lv_dict = convert_to_simplefields(LocationVisit, o)
+                json_list.append(lv_dict)
+            base_bundle.data["group"] = json_list
         return self.create_response(request, base_bundle)
 
     def update_item(self, request, **kwargs):
@@ -1393,6 +1422,7 @@ class ContextResource(ModelResource):
                     return groups_resource.update(request, **kwargs)
             elif api_method == "groups_item":
                 groups_resource = GroupResource()
+
                 if request.method == 'GET':
                     return groups_resource.get_group_item(request, **kwargs)
                 elif request.method == 'POST':
@@ -1406,6 +1436,10 @@ class ContextResource(ModelResource):
         kwargs["api_method"] = api_method
         child_resource = ContextPropertyResource()
         if "dynamic" in api_method:
+            if "location_visits" in api_method:
+                child_resource = LocationVisitResource()
+            elif "groups_item"  in api_method:
+                child_resource = GroupResource()
             return child_resource.get_dynamic_list(request, **kwargs)
         if request.method == 'GET':
             return child_resource.get_list(request, **kwargs)

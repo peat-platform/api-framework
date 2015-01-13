@@ -229,15 +229,6 @@ class GroupFriend(models.Model):
 class Meta:
         app_label = "OPENiapp"
 
-class Community(models.Model):
-    community_id = models.TextField(null=True)
-    community_name = models.TextField(null=True)
-    community_list = models.TextField(null=True)
-
-    class Meta:
-        app_label = "OPENiapp"
-
-
 
 class LocationVisit(models.Model):
     location_visits_latitude = models.TextField(null=True)
