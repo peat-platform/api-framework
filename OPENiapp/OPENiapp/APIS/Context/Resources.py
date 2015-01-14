@@ -124,10 +124,132 @@ class ContextPropertyResource(Resource):
         context = OpeniContext()
         context.id = int(kwargs['pk'])
         context = populate(context, kwargs['api_method'], request)
+        context = self.populate_dynamic_attributes(context)
         db_fields = [get_db_field(kwargs['api_method'], x) for x in properties[kwargs['api_method']]]
         context.save(update_fields=db_fields)
         return self.create_response(request, {})
 
+    def populate_dynamic_attributes(self, context_bundle):
+        for var in properties:
+            is_empty = True
+            ted = var+"_dynamic_ted"
+            method = var+"_dynamic_information_methodology"
+            source = var+"_dynamic_information_source"
+            mechanism = var+"_dynamic_mechanism_obtained"
+            creation_date = var+"_dynamic_creation_date"
+
+            for cat_attr in properties[var]:
+                if getattr(context_bundle, var+"_"+cat_attr) is not None:
+                    is_empty = False
+                    if "time" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "MT")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Direct")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "System")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Static")
+                    elif "duration" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "MT")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Direct")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "System")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Derived")
+                    elif "location" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "ST")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Direct")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "System")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Sensed")
+                    elif "address" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "LT")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Indirect")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "Application")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Static")
+                    elif "current_location" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "ST")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Indirect")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "System")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Sensed")
+                    elif "rating" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "ST")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Indirect")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "Application")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Derived")
+                    elif "mood" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "ST")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Indirect")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "Application")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Derived")
+                    elif "device" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "F")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Direct")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "System")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Static")
+                    elif "application" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "F")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Direct")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "Application")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Static")
+                    elif "personalization" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "ST")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Indirect")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "Application")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Derived")
+                    elif "community" == var:
+                        if getattr(context_bundle, ted) is None:
+                            setattr(context_bundle, ted, "MT")
+                        if getattr(context_bundle, method) is None:
+                            setattr(context_bundle, method, "Indirect")
+                        if getattr(context_bundle, source) is None:
+                            setattr(context_bundle, source, "Application")
+                        if getattr(context_bundle, mechanism) is None:
+                            setattr(context_bundle, mechanism, "Derived")
+
+                    break
+            if is_empty:
+                setattr(context_bundle, var+"_dynamic_uncertainty_weight", Uncertainty.calculate_uncertainty(Uncertainty(), True, "", "", "", ""))
+            else:
+                setattr(context_bundle, var+"_dynamic_uncertainty_weight", Uncertainty.calculate_uncertainty(Uncertainty(), False,
+                                                                                                      getattr(context_bundle, ted), getattr(context_bundle, source),
+                                                                                                      getattr(context_bundle, mechanism), getattr(context_bundle, method)))
+            setattr(context_bundle, creation_date, datetime.now())
+        return context_bundle
 
 class Uncertainty():
     def calculate_uncertainty(self, empty, dynamic_ted, dynamic_information_source, dynamic_mechanism_obtained,
