@@ -284,16 +284,22 @@ class Uncertainty():
                 uncertainty += mech_med_rand * 50
             elif dynamic_mechanism_obtained == 'Derived':
                 uncertainty += mech_high_rand * 50
+            else:
+                uncertainty += 50;
 
             if dynamic_information_source == 'System':
                 uncertainty += source_low_rand * 25
             elif dynamic_information_source == 'Application':
                 uncertainty += source_high_rand * 25
+            else:
+                uncertainty += 25
 
             if dynamic_information_methodology == 'Direct':
                 uncertainty += method_low_rand * 20
             elif dynamic_information_methodology == 'Indirect':
                 uncertainty += method_high_rand * 20
+            else:
+                uncertainty += 20
 
             if dynamic_ted == 'F':
                 uncertainty += ted_low_rand * 5
@@ -303,6 +309,8 @@ class Uncertainty():
                 uncertainty += ted_med_high_rand * 5
             elif dynamic_ted == 'ST':
                 uncertainty += ted_high_rand * 5
+            else:
+                uncertainty += 5
 
             if uncertainty == 0:
                 return float(100)
