@@ -8,7 +8,7 @@ from tastypie import fields
 from tastypie.exceptions import BadRequest
 from tastypie.resources import Resource, ModelResource
 from tastypie.utils import trailing_slash
-
+from datetime import datetime
 from .models import OpeniContext, LocationVisit, GroupFriend, Group
 
 __author__ = 'amertis'
@@ -32,7 +32,7 @@ def convert_to_dbfields(clz, data):
     prefix = re.sub('(?!^)([A-Z]+)', r'_\1', clz.__name__).lower() + 's_'
     # tmp_dict = []
     # for s in data:
-    #     tmp_dict.append(s.items())
+    # tmp_dict.append(s.items())
     return dict(map(lambda (key, value): (prefix + str(key), value), data.items()))
 
 
@@ -48,23 +48,38 @@ def convert_to_simplefields(clz, data):
 
 
 properties = {
-    "location": ["latitude", "longitude", "height", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "time": ["created", "edited", "deleted", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "duration": ["time_started", "time_ended", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "address": ["street", "number", "apartment", "city", "locality", "country", "zip", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "current_location": ["latitude", "longitude", "height", "time","dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "rating": ["value", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "mood": ["value", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "location": ["latitude", "longitude", "height", "dynamic_creation_date", "dynamic_ted",
+                 "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained",
+                 "dynamic_information_methodology"],
+    "time": ["created", "edited", "deleted", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+             "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "duration": ["time_started", "time_ended", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+                 "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "address": ["street", "number", "apartment", "city", "locality", "country", "zip", "dynamic_creation_date",
+                "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained",
+                "dynamic_information_methodology"],
+    "current_location": ["latitude", "longitude", "height", "time", "dynamic_creation_date", "dynamic_ted",
+                         "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained",
+                         "dynamic_information_methodology"],
+    "rating": ["value", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+               "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "mood": ["value", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+             "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "device": ["wireless_network_type", "wireless_channel_quality", "accelerometers", "cell_log", "sms_log", "call_log",
-               "running_applications", "installed_applications", "screen_state", "battery_status", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+               "running_applications", "installed_applications", "screen_state", "battery_status",
+               "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source",
+               "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "application": ["background_color", "format", "font", "color", "background", "text", "box", "classification",
-                    "text_copy", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+                    "text_copy", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+                    "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "personalization": ["age_range", "country", "postal_code", "region", "town", "roaming", "opt_out", "carrier",
                         "handset", "user_ids", "device_id", "application_id", "device_type", "device_os", "gender",
                         "has_children", "ethnicity", "income", "household_size", "education", "interests",
                         "customer_tag",
-                        "users_language", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-    "community": ["list", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+                        "users_language", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+                        "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
+    "community": ["list", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight",
+                  "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     # group
     # GroupFriend
     # Community
@@ -114,6 +129,64 @@ class ContextPropertyResource(Resource):
         return self.create_response(request, {})
 
 
+class Uncertainty:
+    def calculate_uncertainty(self, empty, dynamic_ted, dynamic_information_source, dynamic_mechanism_obtained,
+                              dynamic_information_methodology):
+
+        from random import randint
+        import math
+
+        mech_low_rand = float(randint(0, 30))/100
+        mech_med_rand = float(randint(30, 60))/100
+        mech_high_rand = float(randint(60, 100))/100
+
+        source_low_rand = float(randint(0, 35))/100
+        source_high_rand = float(randint(35, 100))/100
+
+        method_low_rand = float(randint(0, 30))/100
+        method_high_rand = float(randint(30, 100))/100
+
+        ted_low_rand = float(randint(0, 25))/100
+        ted_med_low_rand = float(randint(25, 50))/100
+        ted_med_high_rand = float(randint(50, 75))/100
+        ted_high_rand = float(randint(75, 100))/100
+
+        uncertainty = 0
+
+        if empty:
+            return float(100)
+        else:
+            if dynamic_mechanism_obtained == 'Static':
+                uncertainty += mech_low_rand * 50
+            elif dynamic_mechanism_obtained == 'Sensed':
+                uncertainty += mech_med_rand * 50
+            elif dynamic_mechanism_obtained == 'Derived':
+                uncertainty += mech_high_rand * 50
+
+            if dynamic_information_source == 'System':
+                uncertainty += source_low_rand * 25
+            elif dynamic_information_source == 'Application':
+                uncertainty += source_high_rand * 25
+
+            if dynamic_information_methodology == 'Direct':
+                uncertainty += method_low_rand * 20
+            elif dynamic_information_methodology == 'Indirect':
+                uncertainty += method_high_rand * 20
+
+            if dynamic_ted == 'F':
+                uncertainty += ted_low_rand * 5
+            elif dynamic_ted == 'FT':
+                uncertainty += ted_med_low_rand * 5
+            elif dynamic_ted == 'MT':
+                uncertainty += ted_med_high_rand * 5
+            elif dynamic_ted == 'ST':
+                uncertainty += ted_high_rand * 5
+
+            if uncertainty == 0:
+                return float(100)
+            else:
+                return math.ceil(uncertainty)
+
 class LocationVisitResource(Resource):
     def save_item(self, request, **kwargs):
         new_location_visit = json.loads(request.GET['data'])
@@ -145,7 +218,8 @@ class LocationVisitResource(Resource):
         return self.create_response(request, {})
 
     def get_dynamic_list(self, request, **kwargs):
-        db_fields = ["location_visits_dynamic_creation_date", "location_visits_dynamic_ted", "location_visits_dynamic_uncertainty_weight",
+        db_fields = ["location_visits_dynamic_creation_date", "location_visits_dynamic_ted",
+                     "location_visits_dynamic_uncertainty_weight",
                      "location_visits_dynamic_information_source", "location_visits_dynamic_mechanism_obtained",
                      "location_visits_dynamic_information_methodology"]
         base_bundle = self.build_bundle(request=request)
@@ -186,8 +260,10 @@ class LocationVisitResource(Resource):
         return self.create_response(request, base_bundle)
 
     def populate_dynamic_attributes(self, lv):
+        is_empty = True
         for attr, value in lv.__dict__.iteritems():
             if value is not None:
+                is_empty = False
                 if lv.location_visits_dynamic_ted is None:
                     lv.location_visits_dynamic_ted = "MT"
                 if lv.location_visits_dynamic_information_methodology is None:
@@ -197,7 +273,15 @@ class LocationVisitResource(Resource):
                 if lv.location_visits_dynamic_mechanism_obtained is None:
                     lv.location_visits_dynamic_mechanism_obtained = "Derived"
                 break
+
+        lv.location_visits_dynamic_uncertainty_weight = Uncertainty.calculate_uncertainty(self, is_empty,
+                                                                    lv.location_visits_dynamic_ted,
+                                                                    lv.location_visits_dynamic_information_source,
+                                                                    lv.location_visits_dynamic_mechanism_obtained,
+                                                                    lv.location_visits_dynamic_information_methodology)
+        lv.location_visits_dynamic_creation_date = datetime.now()
         return lv
+
 
 class GroupResource(Resource):
     def get_item(self, request, **kwargs):
@@ -225,8 +309,8 @@ class GroupResource(Resource):
 
     def get_dynamic_list(self, request, **kwargs):
         db_fields = ["group_dynamic_creation_date", "group_dynamic_ted", "group_dynamic_uncertainty_weight",
-                                  "group_dynamic_information_source", "group_dynamic_mechanism_obtained",
-                                  "group_dynamic_information_methodology"]
+                     "group_dynamic_information_source", "group_dynamic_mechanism_obtained",
+                     "group_dynamic_information_methodology"]
         base_bundle = self.build_bundle(request=request)
         objects = Group.objects.filter(context_id=kwargs['pk']).values(*db_fields)
         json_list = []
@@ -282,8 +366,10 @@ class GroupResource(Resource):
         return self.create_response(request, {})
 
     def populate_dynamic_attributes(self, group):
+        is_empty = True
         for attr, value in group.__dict__.iteritems():
             if value is not None:
+                is_empty = False
                 if group.group_dynamic_ted is None:
                     group.group_dynamic_ted = "MT"
                 if group.group_dynamic_information_methodology is None:
@@ -293,7 +379,14 @@ class GroupResource(Resource):
                 if group.group_dynamic_mechanism_obtained is None:
                     group.group_dynamic_mechanism_obtained = "Derived"
                 break
+        group.location_visits_dynamic_uncertainty_weight = Uncertainty.calculate_uncertainty(self, is_empty,
+                                                                            group.group_dynamic_ted,
+                                                                            group.group_dynamic_information_source,
+                                                                            group.group_dynamic_mechanism_obtained,
+                                                                            group.group_dynamic_information_methodology)
+        group.group_dynamic_creation_date = datetime.now()
         return group
+
 
 class ContextResource(ModelResource):
     class Meta:
@@ -1313,7 +1406,7 @@ class ContextResource(ModelResource):
                         "required": False,
                         "description": "dynamic information methodology of the community"
                     },
-                    }
+                }
             },
         ]
 
@@ -1321,7 +1414,8 @@ class ContextResource(ModelResource):
         return [
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="location"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_location%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_location%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_location"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/time%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="time"),
@@ -1329,7 +1423,8 @@ class ContextResource(ModelResource):
                 self.wrap_view('get_property'), name="dynamic_time"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/duration%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="duration"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_duration%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_duration%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_duration"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/address%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="address"),
@@ -1337,7 +1432,8 @@ class ContextResource(ModelResource):
                 self.wrap_view('get_property'), name="dynamic_address"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/current_location%s$" % (
                 self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="current_location"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_current_location%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_current_location%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_current_location"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/rating%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="rating"),
@@ -1353,27 +1449,33 @@ class ContextResource(ModelResource):
                 self.wrap_view('get_property'), name="dynamic_device"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/application%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="application"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_application%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_application%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_application"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/personalization%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="personalization"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_personalization%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_personalization%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_personalization"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location_visits%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="location_visits"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_location_visits%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_location_visits%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_location_visits"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/location_visits_item%s$" % (
-                self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'), name="location_visits_item"),
+                self._meta.resource_name, trailing_slash()), self.wrap_view('get_property'),
+                name="location_visits_item"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/community%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="community"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_community%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_community%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_community"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="groups"),
             url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/groups_item%s$" % (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="groups_item"),
-            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_groups_item%s$" % (self._meta.resource_name, trailing_slash()),
+            url(r"^(?P<resource_name>%s)/(?P<pk>\d+)/dynamic_groups_item%s$" % (
+                self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_property'), name="dynamic_groups_item"),
 
 
@@ -1431,7 +1533,7 @@ class ContextResource(ModelResource):
         return bundle
 
     # def obj_create(self, bundle,request = None,**kwargs):
-    #     return bundle
+    # return bundle
 
     def get_property(self, request, **kwargs):
         api_method = request.path.split("/")[-2]
@@ -1467,13 +1569,12 @@ class ContextResource(ModelResource):
                 elif request.method == 'PUT':
                     return groups_resource.update_item(request, **kwargs)
 
-
         kwargs["api_method"] = api_method
         child_resource = ContextPropertyResource()
         if "dynamic" in api_method:
             if "location_visits" in api_method:
                 child_resource = LocationVisitResource()
-            elif "groups_item"  in api_method:
+            elif "groups_item" in api_method:
                 child_resource = GroupResource()
             return child_resource.get_dynamic_list(request, **kwargs)
         if request.method == 'GET':

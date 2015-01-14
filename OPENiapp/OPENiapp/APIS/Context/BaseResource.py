@@ -1,4 +1,5 @@
 import ast
+from datetime import datetime
 
 from django.db import transaction
 from tastypie import fields
@@ -102,7 +103,6 @@ class ContextAwareResource(ModelResource):
         return bundle
 
     def populate_dynamic_attributes(self, context_bundle):
-
         properties = {
             "location": ["latitude", "longitude", "height", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
             "time": ["created", "edited", "deleted", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
@@ -124,13 +124,16 @@ class ContextAwareResource(ModelResource):
         }
 
         for var in properties:
+            is_empty = True
+            ted = var+"_dynamic_ted"
+            method = var+"_dynamic_information_methodology"
+            source = var+"_dynamic_information_source"
+            mechanism = var+"_dynamic_mechanism_obtained"
+            creation_date = var+"_dynamic_creation_date"
+
             for cat_attr in properties[var]:
                 if getattr(context_bundle, var+"_"+cat_attr) is not None:
-                    ted = var+"_dynamic_ted"
-                    method = var+"_dynamic_information_methodology"
-                    source = var+"_dynamic_information_source"
-                    mechanism = var+"_dynamic_mechanism_obtained"
-
+                    is_empty = False
                     if "time" == var:
                         if getattr(context_bundle, ted) is None:
                             setattr(context_bundle, ted, "MT")
@@ -230,9 +233,73 @@ class ContextAwareResource(ModelResource):
                             setattr(context_bundle, source, "Application")
                         if getattr(context_bundle, mechanism) is None:
                             setattr(context_bundle, mechanism, "Derived")
-                    break
 
+                    break
+            if is_empty:
+                setattr(context_bundle, var+"_dynamic_uncertainty_weight", self.calculate_uncertainty(True, "", "", "", ""))
+            else:
+                setattr(context_bundle, var+"_dynamic_uncertainty_weight", self.calculate_uncertainty(False,
+                                                getattr(context_bundle, ted), getattr(context_bundle, source),
+                                                getattr(context_bundle, mechanism), getattr(context_bundle, method)))
+            setattr(context_bundle, creation_date, datetime.now())
         return context_bundle
+
+    def calculate_uncertainty(self, empty, dynamic_ted, dynamic_information_source, dynamic_mechanism_obtained,
+                              dynamic_information_methodology):
+
+        from random import randint
+        import math
+
+        mech_low_rand = float(randint(0, 30))/100
+        mech_med_rand = float(randint(30, 60))/100
+        mech_high_rand = float(randint(60, 100))/100
+
+        source_low_rand = float(randint(0, 35))/100
+        source_high_rand = float(randint(35, 100))/100
+
+        method_low_rand = float(randint(0, 30))/100
+        method_high_rand = float(randint(30, 100))/100
+
+        ted_low_rand = float(randint(0, 25))/100
+        ted_med_low_rand = float(randint(25, 50))/100
+        ted_med_high_rand = float(randint(50, 75))/100
+        ted_high_rand = float(randint(75, 100))/100
+
+        uncertainty = 0
+
+        if empty:
+            return float(100)
+        else:
+            if dynamic_mechanism_obtained == 'Static':
+                uncertainty += mech_low_rand * 50
+            elif dynamic_mechanism_obtained == 'Sensed':
+                uncertainty += mech_med_rand * 50
+            elif dynamic_mechanism_obtained == 'Derived':
+                uncertainty += mech_high_rand * 50
+
+            if dynamic_information_source == 'System':
+                uncertainty += source_low_rand * 25
+            elif dynamic_information_source == 'Application':
+                uncertainty += source_high_rand * 25
+
+            if dynamic_information_methodology == 'Direct':
+                uncertainty += method_low_rand * 20
+            elif dynamic_information_methodology == 'Indirect':
+                uncertainty += method_high_rand * 20
+
+            if dynamic_ted == 'F':
+                uncertainty += ted_low_rand * 5
+            elif dynamic_ted == 'FT':
+                uncertainty += ted_med_low_rand * 5
+            elif dynamic_ted == 'MT':
+                uncertainty += ted_med_high_rand * 5
+            elif dynamic_ted == 'ST':
+                uncertainty += ted_high_rand * 5
+
+            if uncertainty == 0:
+                return float(100)
+            else:
+                return math.ceil(uncertainty)
 
     @transaction.atomic
     def obj_update(self, bundle, **kwargs):
@@ -251,6 +318,7 @@ class ContextAwareResource(ModelResource):
         bundle = self.full_hydrate(bundle)
         if bundle.obj.context.id is None:
             raise BadRequest("context id not found")
+        bundle.obj.context = self.populate_dynamic_attributes(bundle.obj.context)
         bundle.obj.context.save()
         bundle.obj.save()
         return bundle
