@@ -123,7 +123,8 @@ class LocationVisitResource(Resource):
         except:
             raise BadRequest("invalid fields in json request")
         lv.context_id = int(kwargs['pk'])
-        lv.save()
+        # lv.save()
+        self.populate_dynamic_attributes(lv).save()
         return self.create_response(request, {})
 
     def update_item(self, request, **kwargs):
@@ -140,6 +141,7 @@ class LocationVisitResource(Resource):
             location_visits[0].save()
         else:
             raise BadRequest("location visit not found")
+        self.populate_dynamic_attributes(location_visits).save()
         return self.create_response(request, {})
 
     def get_dynamic_list(self, request, **kwargs):
@@ -182,6 +184,20 @@ class LocationVisitResource(Resource):
                 json_list.append(lv_dict)
             base_bundle.data["location_visits"] = json_list
         return self.create_response(request, base_bundle)
+
+    def populate_dynamic_attributes(self, lv):
+        for attr, value in lv.__dict__.iteritems():
+            if value is not None:
+                if lv.location_visits_dynamic_ted is None:
+                    lv.location_visits_dynamic_ted = "MT"
+                if lv.location_visits_dynamic_information_methodology is None:
+                    lv.location_visits_dynamic_information_methodology = "Indirect"
+                if lv.location_visits_dynamic_information_source is None:
+                    lv.location_visits_dynamic_information_source = "Application"
+                if lv.location_visits_dynamic_mechanism_obtained is None:
+                    lv.location_visits_dynamic_mechanism_obtained = "Derived"
+                break
+        return lv
 
 class GroupResource(Resource):
     def get_item(self, request, **kwargs):
@@ -231,7 +247,8 @@ class GroupResource(Resource):
                 group.group_name = group_update['group_name']
             if 'group_type' in group_update:
                 group.group_type = group_update['group_type']
-            group.save()
+            # group.save()
+            self.populate_dynamic_attributes(group).save()
             GroupFriend.objects.filter(group_id=int(request.GET['group_id'])).delete()
             group_friends = []
             for group_friend_updated in group_update['group_friends']:
@@ -249,7 +266,7 @@ class GroupResource(Resource):
             del new_group['group_friends']
         group = Group(**new_group)
         group.context_id = int(kwargs['pk'])
-        group.save()
+        self.populate_dynamic_attributes(group).save()
         group_friends = []
         if new_group_friends is not None:
             for new_group_friend in new_group_friends:
@@ -264,6 +281,19 @@ class GroupResource(Resource):
         GroupFriend.objects.filter(group_id=request.GET['group_id']).delete()
         return self.create_response(request, {})
 
+    def populate_dynamic_attributes(self, group):
+        for attr, value in group.__dict__.iteritems():
+            if value is not None:
+                if group.group_dynamic_ted is None:
+                    group.group_dynamic_ted = "MT"
+                if group.group_dynamic_information_methodology is None:
+                    group.group_dynamic_information_methodology = "Indirect"
+                if group.group_dynamic_information_source is None:
+                    group.group_dynamic_information_source = "Application"
+                if group.group_dynamic_mechanism_obtained is None:
+                    group.group_dynamic_mechanism_obtained = "Derived"
+                break
+        return group
 
 class ContextResource(ModelResource):
     class Meta:
