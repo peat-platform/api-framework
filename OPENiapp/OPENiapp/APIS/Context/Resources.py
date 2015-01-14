@@ -30,6 +30,9 @@ def get_fields(clz):
 
 def convert_to_dbfields(clz, data):
     prefix = re.sub('(?!^)([A-Z]+)', r'_\1', clz.__name__).lower() + 's_'
+    # tmp_dict = []
+    # for s in data:
+    #     tmp_dict.append(s.items())
     return dict(map(lambda (key, value): (prefix + str(key), value), data.items()))
 
 
@@ -62,7 +65,10 @@ properties = {
                         "customer_tag",
                         "users_language", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
     "community": ["list", "dynamic_creation_date", "dynamic_ted", "dynamic_uncertainty_weight", "dynamic_information_source", "dynamic_mechanism_obtained", "dynamic_information_methodology"],
-
+    # group
+    # GroupFriend
+    # Community
+    # LocationVisit
 }
 
 
@@ -176,7 +182,6 @@ class LocationVisitResource(Resource):
                 json_list.append(lv_dict)
             base_bundle.data["location_visits"] = json_list
         return self.create_response(request, base_bundle)
-
 
 class GroupResource(Resource):
     def get_item(self, request, **kwargs):
