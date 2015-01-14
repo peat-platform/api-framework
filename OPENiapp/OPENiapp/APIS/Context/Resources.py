@@ -129,7 +129,7 @@ class ContextPropertyResource(Resource):
         return self.create_response(request, {})
 
 
-class Uncertainty:
+class Uncertainty():
     def calculate_uncertainty(self, empty, dynamic_ted, dynamic_information_source, dynamic_mechanism_obtained,
                               dynamic_information_methodology):
 
@@ -274,7 +274,7 @@ class LocationVisitResource(Resource):
                     lv.location_visits_dynamic_mechanism_obtained = "Derived"
                 break
 
-        lv.location_visits_dynamic_uncertainty_weight = Uncertainty.calculate_uncertainty(self, is_empty,
+        lv.location_visits_dynamic_uncertainty_weight = Uncertainty.calculate_uncertainty(Uncertainty(), is_empty,
                                                                     lv.location_visits_dynamic_ted,
                                                                     lv.location_visits_dynamic_information_source,
                                                                     lv.location_visits_dynamic_mechanism_obtained,
@@ -379,7 +379,7 @@ class GroupResource(Resource):
                 if group.group_dynamic_mechanism_obtained is None:
                     group.group_dynamic_mechanism_obtained = "Derived"
                 break
-        group.location_visits_dynamic_uncertainty_weight = Uncertainty.calculate_uncertainty(self, is_empty,
+        group.group_dynamic_uncertainty_weight = Uncertainty.calculate_uncertainty(Uncertainty(), is_empty,
                                                                             group.group_dynamic_ted,
                                                                             group.group_dynamic_information_source,
                                                                             group.group_dynamic_mechanism_obtained,
