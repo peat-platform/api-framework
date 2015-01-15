@@ -2,7 +2,7 @@ __author__ = 'amertis'
 from django.db import models
 
 
-__all__ = ["OpeniContext", "Group", "GroupFriend", "LocationVisit","Community" "OpeniContextAwareModel", ]
+__all__ = ["OpeniContext", "Group", "GroupFriend", "LocationVisit", "OpeniContextAwareModel"]
 
 
 class OpeniContext(models.Model):

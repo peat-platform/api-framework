@@ -522,7 +522,18 @@ class ContextResource(ModelResource):
     class Meta:
         queryset = OpeniContext.objects.all().prefetch_related("group_set", "locationvisit_set")
         location = fields.DictField()
-        list_allowed_methods = ['get', 'post', 'put']
+        always_return_data = True
+        list_allowed_methods = ['get', 'post']
+        detail_allowed_methods = ['get', 'post', 'put', 'delete']
+        # authentication = Authentication()
+        # authorization = Authorization()
+        excludes = ['id']
+        # include_resource_uri = False
+
+        filtering = {
+            'id': ['exact']
+        }
+
         resource_name = "Context"
 
         extra_actions = [
