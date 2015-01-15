@@ -218,12 +218,12 @@ class GroupFriend(models.Model):
     person_time_person_added = models.TextField(null=True)
     person_target_id = models.TextField(null=True)
     group = models.ForeignKey(Group)
-    person_dynamic_creation_date = models.TextField(null=True)
-    person_dynamic_ted = models.TextField(null=True)
-    person_dynamic_uncertainty_weight = models.TextField(null=True)
-    person_dynamic_information_source = models.TextField(null=True)
-    person_dynamic_mechanism_obtained = models.TextField(null=True)
-    person_dynamic_information_methodology = models.TextField(null=True)
+    # person_dynamic_creation_date = models.TextField(null=True)
+    # person_dynamic_ted = models.TextField(null=True)
+    # person_dynamic_uncertainty_weight = models.TextField(null=True)
+    # person_dynamic_information_source = models.TextField(null=True)
+    # person_dynamic_mechanism_obtained = models.TextField(null=True)
+    # person_dynamic_information_methodology = models.TextField(null=True)
 
 
     class Meta:
