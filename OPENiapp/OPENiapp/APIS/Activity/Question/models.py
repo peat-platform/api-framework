@@ -7,4 +7,4 @@ from OPENiapp.APIS.Secondary.QuestionOption.models import OpeniQuestionOption
 class OpeniQuestion(OpeniContextAwareModel):
     # id is missing because it is the default
     question = models.TextField()
-    options = models.ForeignKey(OpeniQuestionOption)
+    options = models.ForeignKey(OpeniQuestionOption, blank=True, null=True)

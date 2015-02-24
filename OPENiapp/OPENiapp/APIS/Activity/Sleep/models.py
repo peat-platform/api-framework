@@ -4,7 +4,7 @@ from OPENiapp.APIS.models import *
 
 class OpeniSleep(GenericModel):
     # id is missing because it is the default
-    Duration = models.ForeignKey(DurationModel)
+    Duration = models.ForeignKey(DurationModel, blank=True, null=True)
     deep = models.TextField()
     rem = models.TextField()
     light = models.TextField()

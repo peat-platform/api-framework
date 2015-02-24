@@ -6,7 +6,7 @@ from OPENiapp.APIS.models import GenericModel, PlaceModel
 
 class OpeniShop(GenericModel):
     # id is missing because it is the default
-    Place = models.ForeignKey(PlaceModel)
+    Place = models.ForeignKey(PlaceModel, blank=True, null=True)
     region = models.TextField()
     currency = models.TextField()
     description = models.TextField()
