@@ -16,7 +16,7 @@ class AdNetworks(models.Model):
 
 class OpeniApplication(GenericModel):
     # id is missing because it is the default
-    Application = models.ForeignKey(ApplicationModel)
+    Application = models.ForeignKey(ApplicationModel, blank=True, null=True)
     adtype = models.ForeignKey(AdTypeModel)
     adservices = models.ForeignKey(AdServices)
     adnetworks = models.ForeignKey(AdNetworks)
