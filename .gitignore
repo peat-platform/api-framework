@@ -22,3 +22,4 @@ OPENiapp/OPENiapp/Providers/Youtube/client_secrets.json
 
 # This should probably leave. Michael?
 checkio.py
+OPENiapp/cloudletClient/data.json
