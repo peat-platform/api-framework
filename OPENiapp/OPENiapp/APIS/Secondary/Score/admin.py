@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import OpeniScore
+from OPENiapp.admin import api_admin
 
 
 class ScoreAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(OpeniScore, ScoreAdmin)
+api_admin.register(OpeniScore, ScoreAdmin)

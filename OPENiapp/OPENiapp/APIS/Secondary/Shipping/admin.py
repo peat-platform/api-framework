@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import OpeniShipping
+from OPENiapp.admin import api_admin
 
 
 class ShippingAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(OpeniShipping, ShippingAdmin)
+api_admin.register(OpeniShipping, ShippingAdmin)

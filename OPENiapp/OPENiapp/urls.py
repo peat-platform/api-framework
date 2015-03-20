@@ -12,6 +12,8 @@ from django.conf.urls.static import static
 
 from views import *
 
+from .admin import api_admin, social_apps
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -22,7 +24,9 @@ urlpatterns = patterns('',
                        url(r'^$', home, name='home'),
 
                        url(r'^admin/', include(admin.site.urls), name='admin'),
-                       url(r'^apiadmin/', include(admin.site.urls), name='admin'),
+                       url(r'^apiadmin/', include(social_apps.urls), name='apiadmin'),
+                       url(r'^object-admin/', include(api_admin.urls)),
+                       url(r'^apps-admin/', include(social_apps.urls)),
 
 
                        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

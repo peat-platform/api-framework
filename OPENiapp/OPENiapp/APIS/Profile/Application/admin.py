@@ -2,10 +2,11 @@ __author__ = 'mpetyx'
 
 from django.contrib import admin
 from .models import OpeniApplication
+from OPENiapp.admin import api_admin
 
 
 class ApplicationAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(OpeniApplication, ApplicationAdmin)
+api_admin.register(OpeniApplication, ApplicationAdmin)

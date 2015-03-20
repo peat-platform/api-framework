@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import OpeniRefund
+from OPENiapp.admin import api_admin
 
 
 class RefundAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(OpeniRefund, RefundAdmin)
+api_admin.register(OpeniRefund, RefundAdmin)

@@ -5,4 +5,4 @@ __author__ = 'mpetyx'
 #     pass
 #
 #
-# admin.site.register(OpeniUser, UserAdmin)
+# api_admin.register(OpeniUser, UserAdmin)
