@@ -3,6 +3,7 @@ Every test command saves its results by overwriting test_results.txt in the same
 
 
 
+
 python manage.py test OPENiapp.PhotoResourceTest > test_results.txt 2>&1 & test_results.txt
 This is a class which contains the following tests for page http://localhost:1988/media/photo/?format=json:
 - No unauthorized user sees the page
