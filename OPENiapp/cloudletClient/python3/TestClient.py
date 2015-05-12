@@ -16,7 +16,7 @@ if __name__ == '__main__':
     # print client.get_object_list()
 
     sample_object = {
-        "@openi_type": "t_0e09a80a6411bb7203e1d4e3bd1fc85f-321",
+        "@type": "t_0e09a80a6411bb7203e1d4e3bd1fc85f-321",
         "@data": {
             "name": "michael",
             "service": "vril",

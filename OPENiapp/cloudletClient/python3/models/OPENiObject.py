@@ -24,7 +24,7 @@ class OPENiObject:
             '@id': 'str',
             '@location': 'str',
             '@cloudlet': 'str',
-            '@openi_type': 'str',
+            '@type': 'str',
             '@data': 'Map',
             '_date_created': 'datetime',
             '_date_modified': 'datetime',
@@ -40,7 +40,7 @@ class OPENiObject:
         #The Object's Cloudlet Id.
         self['@cloudlet'] = None # str
         #OPENi Type that this object is an instance of.
-        self['@openi_type'] = None # str
+        self['@type'] = None # str
         #The Object's values.
         self['@data'] = None # Map
         #Date that the Type was created.

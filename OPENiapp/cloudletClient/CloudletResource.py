@@ -140,7 +140,7 @@ class CloudletResource(GenericResource):
         current_type = self.client.getTypeId(typeId=self.Meta.resource_name)
 
         to_be_created = {
-            "@openi_type": current_type,
+            "@type": current_type,
             "@data": bundle.data
         }
 

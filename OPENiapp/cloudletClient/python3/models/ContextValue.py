@@ -22,7 +22,7 @@ class ContextValue:
     def __init__(self):
         self.swaggerTypes = {
             '@id': 'str',
-            '@openi_type': 'str'
+            '@type': 'str'
 
         }
 
@@ -30,5 +30,5 @@ class ContextValue:
         #Identifier for the context
         self['@id'] = None # str
         #The type's semantic context (optional?)
-        self['@openi_type'] = None # str
+        self['@type'] = None # str
         
