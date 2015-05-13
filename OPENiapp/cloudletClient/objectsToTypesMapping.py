@@ -4,7 +4,8 @@ import json
 
 import requests
 
-base_server = "https://demo2.openi-ict.eu"
+
+base_server = "https://localhost"
 next_path = "/api/v1/types?offset=0"
 
 mapping = {}
