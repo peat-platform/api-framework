@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 
 from OPENiapp.APIS.Context.models import OpeniContext
 from OPENiapp.Providers.generic import execution
+from OPENiapp.APIS.permissions import Permissions
 
 
 __author__ = 'amertis'
@@ -61,6 +62,15 @@ class ContextAwareResource(ModelResource):
 
         request_method = request.META['REQUEST_METHOD'].lower()
         method = request_method + '_' + resource_name
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print request_method
+        # print resource_name
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        if not Permissions(request).permissions_verified(method=request_method,object_type=resource_name):
+            return {"Permissions are not verified for the specific request."}
         # If there is a connection in the url then add it to the method
         if connection != "":
             method += '_' + connection
