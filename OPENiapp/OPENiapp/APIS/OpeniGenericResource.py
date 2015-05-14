@@ -5,7 +5,6 @@ from tastypie.utils import trailing_slash
 from tastypie import fields
 
 from OPENiapp.APIS.Context.BaseResource import ContextAwareResource
-from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.OPENiAuthentication import Authentication
 from OPENiapp.APIS.Context.Resources import ContextResource
 from OPENiapp.APIS.resources import *
