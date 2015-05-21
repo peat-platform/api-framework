@@ -80,7 +80,7 @@ class Permissions:
         auth_token = request.META['HTTP_AUTHORIZATION']
 
         headers = {"content-type": "application/json", "Authorization": str(auth_token)}
-        self.body = requests.get(url="https://demo2.openi-ict.eu/api/v1/permissions/", verify=False, headers=headers).json()
+        self.body = requests.get(url="https://localhost:8443/api/v1/permissions/", verify=False, headers=headers).json()
 
     def getTypeId(self, typeId):
         return self.__typesMapping[str(typeId)]
