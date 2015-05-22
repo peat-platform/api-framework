@@ -6,11 +6,10 @@ import json
 class Permissions:
 
     def __init__(self, request):
-
-         self.__typesMapping = {
+        self.__typesMapping = {
             "Account": "t_774cc4bd416ed4f56feda461005fbba3-893",
             "Address": "t_6a03ca9ab321ef9863218d0f141dfa7b-819",
-            "Application": "t_5fe2cc6ce3d41bf89681dfb82e5edbbb-501",
+             "Application": "t_5fe2cc6ce3d41bf89681dfb82e5edbbb-501",
             "Article": "t_4f89584a3b28c3a375405b40bd0276e8-735",
             "Audio": "t_f6c242993d1d8f7c690411fdc41e68a2-733",
             "Badge": "t_fc20846048e073d737ce8b9737cf02ec-525",
