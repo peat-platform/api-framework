@@ -100,7 +100,8 @@ class Permissions:
     def print_permissions(self):
 
         for perm in self.body:
-            print perm
+            print "permission:", perm
+            # print perm
 
     def permissions_verified(self, method, object_type):
 
