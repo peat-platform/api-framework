@@ -11,31 +11,26 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class PersonModelResource(OpeniResource):
     class Meta:
-        queryset = PersonModel.objects.all()
-        list_allowed_methods = ['get', 'post']
         resource_name = "Person"
-        authorization = Authorization()
+        object_class = PersonModel
 
 
 class FromResource(OpeniResource):
     class Meta:
-        queryset = FromModel.objects.all()
         resource_name = "From"
-        authorization = Authorization()
+        object_class = FromModel
 
 
 class TimeResource(OpeniResource):
     class Meta:
-        queryset = TimeModel.objects.all()
         resource_name = "Time"
-        authorization = Authorization()
+        object_class = TimeModel
 
 
 class DurationResource(OpeniResource):
     class Meta:
-        queryset = DurationModel.objects.all()
         resource_name = "Duration"
-        authorization = Authorization()
+        object_class = DurationModel
         extra_actions = [
             {
                 "name": "",
@@ -136,70 +131,55 @@ class DurationResource(OpeniResource):
 
 class LocationResource(OpeniResource):
     class Meta:
-        queryset = LocationModel.objects.all()
         resource_name = "Location"
-        authorization = Authorization()
+        object_class  = LocationModel
 
 
 class AddressResource(OpeniResource):
     class Meta:
-        queryset = AddressModel.objects.all()
         resource_name = "Address"
-        authorization = Authorization()
+        object_class = AddressModel
 
 
 class TagsResource(OpeniResource):
     class Meta:
-        queryset = TagsModel.objects.all()
         resource_name = "BaseTags"
-        authorization = Authorization()
+        object_class = TagsModel
 
 
 class BaseSizeResource(OpeniResource):
     class Meta:
-        queryset = SizeModel.objects.all()
         resource_name = "Size"
-        authorization = Authorization()
+        object_class = SizeModel
 
 
 class BaseApplicationResource(OpeniResource):
     class Meta:
-        queryset = ApplicationModel.objects.all()
         resource_name = "Application"
-        authorization = Authorization()
+        object_class = ApplicationModel
 
 
 class BaseFileResource(OpeniResource):
     class Meta:
-        queryset = BaseFileModel.objects.all()
         resource_name = "BaseFile"
-        authorization = Authorization()
-
+        object_class = BaseFileModel
 
 class BaseOrganizationResource(OpeniResource):
     class Meta:
-        queryset = OrganizationModel.objects.all()
-        resource_name = "Application"
-        authorization = Authorization()
-
+        resource_name = "Organization"
+        object_class = OrganizationModel
 
 class BasePlaceResource(OpeniResource):
     class Meta:
-        queryset = PlaceModel.objects.all()
         resource_name = "BasePlace"
-        authorization = Authorization()
-
+        object_class = PlaceModel
 
 class BaseProductResource(OpeniResource):
     class Meta:
-        queryset = ProductModel.objects.all()
         resource_name = "BaseProduct"
-        authorization = Authorization()
-
+        object_class = ProductModel
 
 class BaseServiceResource(OpeniResource):
     class Meta:
-        queryset = ServiceModel.objects.all()
         resource_name = "BaseService"
-        authorization = Authorization()
-
+        object_class = ServiceModel
