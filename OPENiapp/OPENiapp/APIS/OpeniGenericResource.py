@@ -6,13 +6,15 @@ from tastypie import fields
 
 from OPENiapp.APIS.Context.BaseResource import ContextAwareResource
 from OPENiapp.APIS.OPENiAuthentication import Authentication
+from OPENiapp.APIS.OPENiAuthorization import Authorization
 from OPENiapp.APIS.Context.Resources import ContextResource
-from OPENiapp.APIS.resources import *
+from tastypie.serializers import Serializer
+# from OPENiapp.APIS.resources import FromResource
 
 
 class GenericResource(ContextAwareResource):
     context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True) # ,related_name='Context'
-    From = fields.ForeignKey(FromResource, 'From', null=True, blank=True) # ,related_name='Context'
+    # From = fields.ForeignKey(FromResource, 'From', null=True, blank=True) # ,related_name='Context'
     # Time = fields.ForeignKey(TimeResource, 'Time', null=True, blank=True) # ,related_name='Context'
 
     def request_method(self, bundle):

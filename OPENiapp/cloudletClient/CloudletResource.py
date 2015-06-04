@@ -1,11 +1,15 @@
 __author__ = 'mpetyx'
 
-from OPENiapp.APIS.OpeniGenericResource import GenericResource
-from tastypie.bundle import Bundle
 import json
 import re
 import logging
 
+from tastypie.bundle import Bundle
+from tastypie import http
+
+from tastypie.exceptions import ImmediateHttpResponse
+
+from OPENiapp.APIS.OpeniGenericResource import GenericResource
 from .client import CloudletClient
 
 
@@ -33,7 +37,6 @@ class CloudletResource(GenericResource):
     def cloudlet_client(self):
         self.client = CloudletClient()
 
-
     def detail_uri_kwargs(self, bundle_or_obj):
 
         print  bundle_or_obj
@@ -50,12 +53,11 @@ class CloudletResource(GenericResource):
 
         return kwargs
 
-
     def get_object_list(self, request):
 
         print "get all"
 
-        host       = "https://" + request.META['HTTP_HOST']
+        host = "https://" + request.META['HTTP_HOST']
         host = "https://demo2.openi-ict.eu"
         auth_token = request.META['HTTP_AUTHORIZATION']
         results = []
@@ -71,12 +73,12 @@ class CloudletResource(GenericResource):
                 logging.error(type(result))
                 Time = {
                     "created_time": "1-1-1111",
-              "deleted_time": "string",
-              "id": "integer",
-              "edited_time": "string",
-                "resource_uri": "string"
+                    "deleted_time": "string",
+                    "id": "integer",
+                    "edited_time": "string",
+                    "resource_uri": "string"
                 }
-                result["Time"] = CloudletObject(Time) #temp["_date_created"]
+                result["Time"] = CloudletObject(Time)  # temp["_date_created"]
                 result['object_type'] = str(self.Meta.resource_name)
                 result['url'] = temp["@location"]
                 results.append(CloudletObject(initial=result))
@@ -84,7 +86,6 @@ class CloudletResource(GenericResource):
             results = []
 
         return results
-
 
     def obj_get_list(self, bundle, **kwargs):
         # Filtering disabled for brevity...
@@ -96,7 +97,6 @@ class CloudletResource(GenericResource):
             return self.obj_get(bundle, **kwargs)
         else:
             return self.get_object_list(bundle.request)
-
 
     def obj_get(self, bundle, **kwargs):
 
@@ -110,26 +110,25 @@ class CloudletResource(GenericResource):
         self.cloudlet_client()
         cloudletObj = self.client.get_object_by_id(host=host, auth_token=auth_token, id=id)
 
-        temp =  json.loads(cloudletObj['body'])
+        temp = json.loads(cloudletObj['body'])
 
         result = temp["@data"]
         Time = {
-                "created_time": "1-1-1111",
-          "deleted_time": "string",
-          "id": "integer",
-          "edited_time": "string",
+            "created_time": "1-1-1111",
+            "deleted_time": "string",
+            "id": "integer",
+            "edited_time": "string",
             "resource_uri": "string"
-            }
-        result["Time"] = CloudletObject(Time) #temp["_date_created"]
+        }
+        result["Time"] = CloudletObject(Time)  # temp["_date_created"]
         result['object_type'] = str(self.Meta.resource_name)
         result['url'] = temp["@location"]
 
         return [CloudletObject(initial=result)]
 
-
     def obj_create(self, bundle, **kwargs):
 
-        #bundle       = self.full_hydrate(bundle)
+        # bundle       = self.full_hydrate(bundle)
 
         host = "https://" + bundle.request.META['HTTP_HOST']
         host = "https://demo2.openi-ict.eu"
@@ -152,10 +151,8 @@ class CloudletResource(GenericResource):
 
         return bundle
 
-
     def obj_update(self, bundle, **kwargs):
         return self.obj_create(bundle, **kwargs)
-
 
     def obj_delete_list(self, bundle, **kwargs):
         bucket = self._bucket()
@@ -164,14 +161,12 @@ class CloudletResource(GenericResource):
             obj = bucket.get(key)
             obj.delete()
 
-
     def obj_delete(self, bundle, **kwargs):
 
         id = kwargs['pk']
 
         self.cloudlet_client()
         self.client.delete(id)
-
 
     def rollback(self, bundles):
         pass
