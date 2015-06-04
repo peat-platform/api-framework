@@ -9,7 +9,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
 class NotebookResource(OpeniResource):
-    Notes = fields.ForeignKey(NoteResource, 'Notes', null=True, blank=True)
+    Note = fields.ForeignKey(NoteResource, 'Note', null=True, blank=True)
 
     class Meta(GenericMeta):
         queryset = OpeniNotebook.objects.all()
