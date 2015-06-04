@@ -143,7 +143,7 @@ class AddressResource(OpeniResource):
 
 class TagsResource(OpeniResource):
     class Meta:
-        resource_name = "BaseTags"
+        resource_name = "BaseTag"
         object_class = TagsModel
 
 
