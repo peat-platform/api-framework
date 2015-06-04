@@ -9,7 +9,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
 class PlaceResource(OpeniResource):
-    Place = fields.ForeignKey(BasePlaceResource, 'Place', null=True, blank=True)
+    BasePlace = fields.ForeignKey(BasePlaceResource, 'BasePlace', null=True, blank=True)
 
     class Meta(GenericMeta):
         queryset = OpeniPlace.objects.all()
