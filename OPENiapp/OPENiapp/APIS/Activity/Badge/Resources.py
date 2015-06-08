@@ -7,11 +7,6 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 
 class BadgeResource(OpeniResource):
-    # uuid = fields.CharField(attribute='uuid')
-    # title = fields.CharField(attribute='title')
-    # description = fields.CharField(attribute='description')
-    # icon = fields.CharField(attribute='icon')
-
 
     class Meta(GenericMeta):
         object_class = OpeniBadge

@@ -8,7 +8,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class StatusResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniStatus.objects.all()
+        object_class = OpeniStatus
         resource_name = 'Status'
         extra_actions = [
             {

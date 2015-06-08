@@ -8,7 +8,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class TravelResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniTravel.objects.all()
+        object_class = OpeniTravel
         resource_name = 'Travel'
         extra_actions = [
             {
