@@ -5,9 +5,6 @@ import re
 import logging
 
 from tastypie.bundle import Bundle
-from tastypie import http
-
-from tastypie.exceptions import ImmediateHttpResponse
 
 from OPENiapp.APIS.OpeniGenericResource import GenericResource
 from .client import CloudletClient
@@ -47,9 +44,6 @@ class CloudletResource(GenericResource):
             kwargs['pk'] = bundle_or_obj.obj.uuid
         else:
             kwargs['pk'] = bundle_or_obj.uuid
-
-        # Need to be removed
-        # kwargs['pk'] = "omorfia"
 
         return kwargs
 
@@ -105,14 +99,19 @@ class CloudletResource(GenericResource):
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         id = kwargs['id']
 
+        if bundle.request.method == 'DELETE':
+            self.obj_delete(bundle,**kwargs)
+            return []
 
         # TODO i could filter here from the obj_get_list
         self.cloudlet_client()
         cloudletObj = self.client.get_object_by_id(host=host, auth_token=auth_token, id=id)
 
         temp = json.loads(cloudletObj['body'])
-
-        result = temp["@data"]
+        try:
+            result = temp["@data"]
+        except:
+            return []
         Time = {
             "created_time": "1-1-1111",
             "deleted_time": "string",
@@ -155,18 +154,16 @@ class CloudletResource(GenericResource):
         return self.obj_create(bundle, **kwargs)
 
     def obj_delete_list(self, bundle, **kwargs):
-        bucket = self._bucket()
-
-        for key in bucket.get_keys():
-            obj = bucket.get(key)
-            obj.delete()
+        self.obj_delete(bundle,kwargs)
 
     def obj_delete(self, bundle, **kwargs):
 
-        id = kwargs['pk']
+        id = kwargs['id']
+        host = "https://demo2.openi-ict.eu"
+        auth_token = bundle.request.META['HTTP_AUTHORIZATION']
 
+        print "deletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedelete"
+        logging.error(
+            "deletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedelete")
         self.cloudlet_client()
-        self.client.delete(id)
-
-    def rollback(self, bundles):
-        pass
+        self.client.delete(host=host, auth_token=auth_token, id=id)
