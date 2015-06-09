@@ -30,7 +30,8 @@ class GenericResource(ContextAwareResource):
 
         try:
             if "get" in bundle_or_obj.request.method.lower():
-                id = bundle_or_obj.data['url'].replace("https://demo2.openi-ict.eu/api/v1/objects/","")
+                #id = bundle_or_obj.data['url'].replace("https://demo2.openi-ict.eu/api/v1/objects/","")
+                id = bundle_or_obj.data['url'].replace("https://localhost/api/v1/objects/","")
                 id = id.split("/")[1]
                 return "/v.04/"+self.Meta.resource_name+"/"+id
             else:

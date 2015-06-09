@@ -12,7 +12,7 @@ import os
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-CLOUDLET_SERVER = "https://demo2.openi-ict.eu/api/v1/cloudlets"
+CLOUDLET_SERVER = "https://localhost/api/v1/cloudlets"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
