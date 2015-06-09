@@ -81,7 +81,7 @@ class GenericResource(ContextAwareResource):
 
 class GenericMeta:
     always_return_data = True
-    list_allowed_methods = ['get', 'post']
+    list_allowed_methods = ['get', 'post','put','delete']
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()
     authorization = Authorization()

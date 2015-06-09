@@ -12,7 +12,7 @@ class AccountResource(OpeniResource):
     Person = fields.ForeignKey(PersonModelResource, 'Person', null=True, blank=True)
 
     class Meta(GenericMeta):
-        queryset = OpeniAccount.objects.all()
+        object_class =OpeniAccount
         resource_name = 'Account'
 
         extra_actions = [

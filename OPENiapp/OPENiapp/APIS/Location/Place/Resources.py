@@ -12,7 +12,7 @@ class PlaceResource(OpeniResource):
     BasePlace = fields.ForeignKey(BasePlaceResource, 'BasePlace', null=True, blank=True)
 
     class Meta(GenericMeta):
-        queryset = OpeniPlace.objects.all()
+        object_class = OpeniPlace
         resource_name = 'Place'
 
         extra_actions = [

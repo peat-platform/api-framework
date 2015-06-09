@@ -8,7 +8,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class RouteResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniRoute.objects.all()
+        object_class = OpeniRoute
         resource_name = 'Route'
         extra_actions = [
             {
