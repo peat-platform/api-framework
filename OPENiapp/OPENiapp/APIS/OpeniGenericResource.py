@@ -14,6 +14,7 @@ from tastypie.serializers import Serializer
 
 class GenericResource(ContextAwareResource):
     context = fields.ForeignKey(ContextResource, 'context', null=True, blank=True) # ,related_name='Context'
+    id = fields.CharField('id',null=True,blank=True)
     # From = fields.ForeignKey(FromResource, 'From', null=True, blank=True) # ,related_name='Context'
     # Time = fields.ForeignKey(TimeResource, 'Time', null=True, blank=True) # ,related_name='Context'
 
@@ -85,12 +86,12 @@ class GenericMeta:
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authentication = Authentication()
     authorization = Authorization()
-    excludes = ['id']
+    # excludes = ['id']
     # include_resource_uri = False
 
-    filtering = {
-        'id': ['exact']
-    }
+    # filtering = {
+    #     'id': ['exact']
+    # }
 
     # class OpeniResource(CloudletResource):
     #

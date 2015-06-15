@@ -18,7 +18,7 @@ class ApplicationResource(OpeniResource):
         # object_class = OpeniApplication
         object_class = ApplicationModel
 
-        resource_name = 'Application'
+        resource_name = 'OPENiApplication'
 
         extra_actions = [
             {

@@ -6,6 +6,7 @@ from OPENiapp.APIS.models import TagsModel, AddressModel, PersonModel, FromModel
     LocationModel, OrganizationModel, BaseFileModel, ApplicationModel, SizeModel, PlaceModel, ServiceModel, ProductModel
 # from OPENIResource import OpeniResource
 from OPENiapp.APIS.OPENIResource import OpeniResource
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 
 
 
@@ -154,8 +155,8 @@ class BaseSizeResource(OpeniResource):
 
 
 class BaseApplicationResource(OpeniResource):
-    class Meta:
-        resource_name = "BaseApplication"
+    class Meta(GenericMeta):
+        resource_name = "Application"
         object_class = ApplicationModel
 
 

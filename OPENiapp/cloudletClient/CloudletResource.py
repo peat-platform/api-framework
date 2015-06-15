@@ -49,7 +49,6 @@ class CloudletResource(GenericResource):
 
     def get_object_list(self, request):
 
-        print "get all"
 
         host = "https://" + request.META['HTTP_HOST']
         host = "https://demo2.openi-ict.eu"
@@ -75,12 +74,13 @@ class CloudletResource(GenericResource):
                 result["Time"] = CloudletObject(Time)  # temp["_date_created"]
                 result['object_type'] = str(self.Meta.resource_name)
                 result['url'] = temp["@location"]
-                result['id'] = "michalis"
+                # result['id'] = "michalis"
+                result['id'] = temp["@id"]
                 results.append(CloudletObject(initial=result))
         except:
             print "something crashed"
 
-        return [results]
+        return results
 
     def obj_get_list(self, bundle, **kwargs):
         # Filtering disabled for brevity...
@@ -147,7 +147,9 @@ class CloudletResource(GenericResource):
         resp = self.client.post_object(host=host, auth_token=auth_token, object=to_be_created)
         print resp
 
-        bundle.obj.url = resp['body']
+        id = resp['body'].replace("""{\"@id\":\"""","")
+        id = id.replace("}","")
+        bundle.obj.id = id
 
         return bundle
 
@@ -163,7 +165,6 @@ class CloudletResource(GenericResource):
         host = "https://demo2.openi-ict.eu"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
 
-        print "deletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedelete"
         logging.error(
             "deletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedeletedelete")
         self.cloudlet_client()
