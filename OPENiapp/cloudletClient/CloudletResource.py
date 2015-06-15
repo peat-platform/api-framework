@@ -52,13 +52,13 @@ class CloudletResource(GenericResource):
         print "get all"
 
         host = "https://" + request.META['HTTP_HOST']
-        #host = "https://demo2.openi-ict.eu"
+        host = "https://demo2.openi-ict.eu"
         auth_token = request.META['HTTP_AUTHORIZATION']
         results = []
 
         self.cloudlet_client()
         resp = self.client.get_objects_by_type(host=host, auth_token=auth_token, type=self.Meta.resource_name)
-        print resp
+        print resp.__dict__
         data = resp.json()
 
         try:
@@ -75,11 +75,12 @@ class CloudletResource(GenericResource):
                 result["Time"] = CloudletObject(Time)  # temp["_date_created"]
                 result['object_type'] = str(self.Meta.resource_name)
                 result['url'] = temp["@location"]
+                result['id'] = "michalis"
                 results.append(CloudletObject(initial=result))
         except:
-            results = []
+            print "something crashed"
 
-        return results
+        return [results]
 
     def obj_get_list(self, bundle, **kwargs):
         # Filtering disabled for brevity...
@@ -95,7 +96,7 @@ class CloudletResource(GenericResource):
     def obj_get(self, bundle, **kwargs):
 
         host = "https://" + bundle.request.META['HTTP_HOST']
-        #host = "https://demo2.openi-ict.eu"
+        host = "https://demo2.openi-ict.eu"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         id = kwargs['id']
 
@@ -130,7 +131,7 @@ class CloudletResource(GenericResource):
         # bundle       = self.full_hydrate(bundle)
 
         host = "https://" + bundle.request.META['HTTP_HOST']
-        #host = "https://demo2.openi-ict.eu"
+        host = "https://demo2.openi-ict.eu"
         auth_token = bundle.request.META['HTTP_AUTHORIZATION']
         bundle.obj = CloudletObject(initial=kwargs)
 

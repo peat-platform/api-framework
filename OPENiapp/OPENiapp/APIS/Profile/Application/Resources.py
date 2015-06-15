@@ -1,14 +1,23 @@
 __author__ = 'mpetyx'
 
-from .models import OpeniApplication
+from .models import OpeniApplication, ApplicationModel
 
 from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 from OPENiapp.APIS.OPENIResource import OpeniResource
+from tastypie import fields
 
 
 class ApplicationResource(OpeniResource):
+    title = fields.CharField(attribute='title', null=True, blank=True)
+    description = fields.CharField(attribute='description', null=True, blank=True)
+    version = fields.CharField(attribute='version', null=True, blank=True)
+    icon = fields.CharField(attribute='icon', null=True, blank=True)
+    developer = fields.CharField(attribute='developer', null=True, blank=True)
+
     class Meta(GenericMeta):
-        object_class = OpeniApplication
+        # object_class = OpeniApplication
+        object_class = ApplicationModel
+
         resource_name = 'Application'
 
         extra_actions = [

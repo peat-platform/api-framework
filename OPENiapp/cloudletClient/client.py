@@ -111,8 +111,10 @@ class CloudletClient:
 
         headers = {"content-type": "application/json", "Authorization": str(auth_token)}
 
+
         r = requests.post(url=str(host) + ":443/api/v1/objects/", data=json.dumps(object), headers=headers,
                           verify=False)
+
 
         return {"status code": r.status_code, "body": r.text}  # , "json response":r.json()}
 

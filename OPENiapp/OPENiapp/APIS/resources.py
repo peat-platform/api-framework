@@ -155,7 +155,7 @@ class BaseSizeResource(OpeniResource):
 
 class BaseApplicationResource(OpeniResource):
     class Meta:
-        resource_name = "Application"
+        resource_name = "BaseApplication"
         object_class = ApplicationModel
 
 

@@ -2,7 +2,7 @@ __author__ = 'mpetyx'
 
 import requests
 import json
-
+from tastypie.http import HttpResponse
 
 class Permissions:
     def __init__(self, request):
@@ -104,8 +104,11 @@ class Permissions:
         elif method == 'delete':
             method = 'DELETE'
 
-        for perm in self.body:
-            if perm['access_type'] == method and self.getTypeId(object_type.title()) == perm['ref']:
-                return 1
+        try:
+            for perm in self.body:
+                if perm['access_type'] == method and self.getTypeId(object_type.title()) == perm['ref']:
+                    return 1
+        except:
+            pass
 
         return 0
