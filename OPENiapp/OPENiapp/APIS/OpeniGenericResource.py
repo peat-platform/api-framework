@@ -60,7 +60,10 @@ class GenericResource(ContextAwareResource):
 
         for obj in to_be_serialized[self._meta.collection_name]:
             bundle = self.build_bundle(obj=obj, request=request)
-            bundles.append(self.full_dehydrate(bundle, for_list=True))
+            try:
+                bundles.append(self.full_dehydrate(bundle, for_list=True))
+            except:
+                continue
 
         to_be_serialized[self._meta.collection_name] = bundles
         to_be_serialized = self.alter_list_data_to_serialize(request, to_be_serialized)
