@@ -7,6 +7,7 @@ from OPENiapp.APIS.models import TagsModel, AddressModel, PersonModel, FromModel
 # from OPENIResource import OpeniResource
 from OPENiapp.APIS.OPENIResource import OpeniResource
 from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from tastypie import fields
 
 
 
@@ -171,6 +172,8 @@ class BaseOrganizationResource(OpeniResource):
         object_class = OrganizationModel
 
 class BasePlaceResource(OpeniResource):
+    Location = fields.ForeignKey(LocationResource, 'Location', null=True, blank=True)
+
     class Meta:
         resource_name = "BasePlace"
         object_class = PlaceModel
