@@ -10,6 +10,7 @@ from tastypie import fields, utils
 class ProductResource(OpeniResource):
 
     price = fields.FloatField(attribute='price', null=True, blank=True)
+    category = fields.CharField(attribute='category', null=True, blank=True)
     amount = fields.IntegerField(attribute='amount', null=True, blank=True)
 
     class Meta(GenericMeta):

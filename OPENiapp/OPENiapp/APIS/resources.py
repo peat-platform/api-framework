@@ -156,6 +156,8 @@ class BaseSizeResource(OpeniResource):
 
 
 class BaseApplicationResource(OpeniResource):
+    category = fields.CharField(attribute='category', null=True, blank=True)
+
     class Meta(GenericMeta):
         resource_name = "Application"
         object_class = ApplicationModel
