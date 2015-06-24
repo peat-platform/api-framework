@@ -1,8 +1,7 @@
 __author__ = 'mpetyx'
 
 import requests
-import json
-from tastypie.http import HttpResponse
+
 
 class Permissions:
     def __init__(self, request):
@@ -81,7 +80,7 @@ class Permissions:
         auth_token = request.META['HTTP_AUTHORIZATION']
 
         headers = {"content-type": "application/json", "Authorization": str(auth_token)}
-        self.body = requests.get(url="https://localhost:8443/api/v1/permissions/", verify=False,
+        self.body = requests.get(url="https://demo2.openi-ict.eu/api/v1/permissions/", verify=False,
                                  headers=headers).json()
 
     def getTypeId(self, typeId):
@@ -106,8 +105,9 @@ class Permissions:
 
         try:
             for perm in self.body:
-                if perm['access_type'] == method and self.getTypeId(object_type.title()) == perm['ref']:
-                    return 1
+                if 'access_type' in perm.keys():
+                    if perm['access_type'] == method and self.getTypeId(object_type.title()) == perm['ref']:
+                        return 1
         except:
             pass
 
