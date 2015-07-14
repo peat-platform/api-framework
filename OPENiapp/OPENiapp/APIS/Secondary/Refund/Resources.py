@@ -6,7 +6,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class RefundResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniRefund.objects.all()
+        object_class = OpeniRefund
         resource_name = 'Refund'
         extra_actions = [
             {

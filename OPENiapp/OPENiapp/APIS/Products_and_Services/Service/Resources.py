@@ -8,7 +8,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class ServiceResource(OpeniResource):
     class Meta(GenericMeta):
-        queryset = OpeniService.objects.all()
+        object_class = OpeniService
         resource_name = 'Service'
         extra_actions = [
             {

@@ -4,12 +4,19 @@ from .models import OpeniProduct
 
 from OPENiapp.APIS.OpeniGenericResource import GenericMeta
 from OPENiapp.APIS.OPENIResource import OpeniResource
+from tastypie import fields, utils
 
 
 class ProductResource(OpeniResource):
+
+    price = fields.FloatField(attribute='price', null=True, blank=True)
+    category = fields.CharField(attribute='category', null=True, blank=True)
+    amount = fields.IntegerField(attribute='amount', null=True, blank=True)
+
     class Meta(GenericMeta):
-        queryset = OpeniProduct.objects.all()
         resource_name = 'Product'
+        object_class = OpeniProduct
+
         extra_actions = [
             {
                 "name": "",

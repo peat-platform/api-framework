@@ -248,6 +248,8 @@ INSTALLED_APPS = (
     'OPENiapp.APIS.Secondary.Shipping',
     'OPENiapp.APIS.Secondary.Tag',
 
+    # 'OPENiapp.cloudletClient',
+    # 'cloudletClient.client'
     'cloudletClient',
 
     'tastypie',

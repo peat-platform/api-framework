@@ -1,35 +1,38 @@
 __author__ = 'mpetyx'
 
-from tastypie.resources import ModelResource
+# from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 from OPENiapp.APIS.models import TagsModel, AddressModel, PersonModel, FromModel, TimeModel, DurationModel, \
     LocationModel, OrganizationModel, BaseFileModel, ApplicationModel, SizeModel, PlaceModel, ServiceModel, ProductModel
 # from OPENIResource import OpeniResource
+from OPENiapp.APIS.OPENIResource import OpeniResource
+from OPENiapp.APIS.OpeniGenericResource import GenericMeta
+from tastypie import fields
 
 
-class PersonModelResource(ModelResource):
+
+class PersonModelResource(OpeniResource):
     class Meta:
-        queryset = PersonModel.objects.all()
-        list_allowed_methods = ['get', 'post']
         resource_name = "Person"
+        object_class = PersonModel
 
 
-class FromResource(ModelResource):
+class FromResource(OpeniResource):
     class Meta:
-        queryset = FromModel.objects.all()
         resource_name = "From"
+        object_class = FromModel
 
 
-class TimeResource(ModelResource):
+class TimeResource(OpeniResource):
     class Meta:
-        queryset = TimeModel.objects.all()
         resource_name = "Time"
+        object_class = TimeModel
 
 
-class DurationResource(ModelResource):
+class DurationResource(OpeniResource):
     class Meta:
-        queryset = DurationModel.objects.all()
         resource_name = "Duration"
+        object_class = DurationModel
         extra_actions = [
             {
                 "name": "",
@@ -128,72 +131,61 @@ class DurationResource(ModelResource):
         ]
 
 
-class LocationResource(ModelResource):
+class LocationResource(OpeniResource):
     class Meta:
-        queryset = LocationModel.objects.all()
         resource_name = "Location"
-        authorization = Authorization()
+        object_class  = LocationModel
 
 
-class AddressResource(ModelResource):
+class AddressResource(OpeniResource):
     class Meta:
-        queryset = AddressModel.objects.all()
         resource_name = "Address"
-        authorization = Authorization()
+        object_class = AddressModel
 
 
-class TagsResource(ModelResource):
+class TagsResource(OpeniResource):
     class Meta:
-        queryset = TagsModel.objects.all()
-        resource_name = "BaseTags"
-        authorization = Authorization()
+        resource_name = "BaseTag"
+        object_class = TagsModel
 
 
-class BaseSizeResource(ModelResource):
+class BaseSizeResource(OpeniResource):
     class Meta:
-        queryset = SizeModel.objects.all()
         resource_name = "Size"
-        authorization = Authorization()
+        object_class = SizeModel
 
 
-class BaseApplicationResource(ModelResource):
-    class Meta:
-        queryset = ApplicationModel.objects.all()
+class BaseApplicationResource(OpeniResource):
+    category = fields.CharField(attribute='category', null=True, blank=True)
+
+    class Meta(GenericMeta):
         resource_name = "Application"
-        authorization = Authorization()
+        object_class = ApplicationModel
 
 
-class BaseFileResource(ModelResource):
+class BaseFileResource(OpeniResource):
     class Meta:
-        queryset = BaseFileModel.objects.all()
         resource_name = "BaseFile"
-        authorization = Authorization()
+        object_class = BaseFileModel
 
-
-class BaseOrganizationResource(ModelResource):
+class BaseOrganizationResource(OpeniResource):
     class Meta:
-        queryset = OrganizationModel.objects.all()
-        resource_name = "Application"
-        authorization = Authorization()
+        resource_name = "Organization"
+        object_class = OrganizationModel
 
+class BasePlaceResource(OpeniResource):
+    Location = fields.ForeignKey(LocationResource, 'Location', null=True, blank=True)
 
-class BasePlaceResource(ModelResource):
     class Meta:
-        queryset = PlaceModel.objects.all()
         resource_name = "BasePlace"
-        authorization = Authorization()
+        object_class = PlaceModel
 
-
-class BaseProductResource(ModelResource):
+class BaseProductResource(OpeniResource):
     class Meta:
-        queryset = ProductModel.objects.all()
         resource_name = "BaseProduct"
-        authorization = Authorization()
+        object_class = ProductModel
 
-
-class BaseServiceResource(ModelResource):
+class BaseServiceResource(OpeniResource):
     class Meta:
-        queryset = ServiceModel.objects.all()
         resource_name = "BaseService"
-        authorization = Authorization()
-
+        object_class = ServiceModel

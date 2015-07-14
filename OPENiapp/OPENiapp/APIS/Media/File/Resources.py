@@ -13,7 +13,7 @@ from OPENiapp.APIS.OPENIResource import OpeniResource
 
 class FileResource(OpeniResource):
     Duration = fields.ForeignKey(DurationResource, 'Duration', null=True, blank=True)
-    Tag = fields.ForeignKey(TagResource, 'Tag', null=True, blank=True)
+    Tag = fields.ForeignKey(TagResource, 'Tags', null=True, blank=True)
     BaseFile = fields.ForeignKey(BaseFileResource, 'BaseFile', null=True, blank=True)
 
     class Meta(GenericMeta):

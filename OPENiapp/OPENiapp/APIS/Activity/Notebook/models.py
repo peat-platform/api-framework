@@ -8,4 +8,4 @@ class OpeniNotebook(GenericModel):
     # id is missing because it is the default
     title = models.TextField()
     description = models.TextField()
-    Notes = models.ForeignKey(OpeniNote)
+    Notes = models.ManyToManyField(OpeniNote)

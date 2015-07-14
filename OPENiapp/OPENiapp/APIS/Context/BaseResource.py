@@ -62,8 +62,18 @@ class ContextAwareResource(ModelResource):
 
         request_method = request.META['REQUEST_METHOD'].lower()
         method = request_method + '_' + resource_name
-        if not Permissions(request).permissions_verified(method=request_method,object_type=resource_name):
-            return {"Permissions are not verified for the specific request."}
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print request_method
+        # print resource_name
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        try:
+            if not Permissions(request).permissions_verified(method=request_method,object_type=resource_name):
+                return [{"error":" CBS Permissions are not verified for the specific request."}]
+        except:
+            return [{"error":"CBS Permissions are not verified for the specific request."}]
         # If there is a connection in the url then add it to the method
         if connection != "":
             method += '_' + connection
